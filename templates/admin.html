@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration TokyOh! Anglet | Tableau de Bord</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        torii: '#dc2626',
+                        sumi: '#18181b'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mincho: ['"Shippori Mincho"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-stone-100 text-stone-800 font-sans min-h-screen flex flex-col antialiased selection:bg-red-500 selection:text-white">
+
+    <!-- Top Admin Header -->
+    <header class="bg-stone-900 text-white border-b border-stone-800 sticky top-0 z-30 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand logo -->
+                <div class="flex items-center gap-3">
+                    <img src="/static/images/logo.png" alt="TokyOh!" class="h-10 w-auto">
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <span class="font-mincho text-xl font-bold tracking-wide">Toky<span class="text-red-500">Oh!</span></span>
+                            <span class="text-[10px] bg-stone-800 text-amber-400 font-bold px-1.5 py-0.5 rounded uppercase tracking-wider border border-stone-700">Admin</span>
+                        </div>
+                        <p class="text-[10px] text-stone-400">Administration Anglet</p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center gap-3">
+                    <a href="/" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 bg-stone-800 hover:bg-stone-700 text-stone-200 px-3 py-1.5 rounded-lg text-xs font-semibold border border-stone-700 transition">
+                        <i class="fas fa-external-link-alt text-amber-400 text-[10px]"></i>
+                        <span>Voir le site public</span>
+                    </a>
+                    <button onclick="handleLogout()" class="inline-flex items-center gap-1.5 bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-red-500/30 transition">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="hidden sm:inline">Déconnexion</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Admin Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full space-y-6">
+
+        <!-- Stat Overview Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-xl shrink-0">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <div>
+                    <span class="text-xs text-stone-400 font-bold uppercase tracking-wider block">Total Plats</span>
+                    <span id="stat-total-dishes" class="text-2xl font-bold font-mincho text-stone-900">--</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl shrink-0">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <div>
+                    <span class="text-xs text-stone-400 font-bold uppercase tracking-wider block">Catégories</span>
+                    <span id="stat-total-cats" class="text-2xl font-bold font-mincho text-stone-900">--</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl shrink-0">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div>
+                    <span class="text-xs text-stone-400 font-bold uppercase tracking-wider block">Réservations</span>
+                    <span id="stat-total-res" class="text-2xl font-bold font-mincho text-stone-900">--</span>
+                </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-stone-200 shadow-sm flex items-center gap-4">
+                <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <div>
+                    <span class="text-xs text-stone-400 font-bold uppercase tracking-wider block">En attente</span>
+                    <span id="stat-pending-res" class="text-2xl font-bold font-mincho text-red-600">--</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="bg-white rounded-2xl border border-stone-200 shadow-sm p-1.5 flex gap-1.5 overflow-x-auto no-scrollbar">
+            <button onclick="switchTab('dishes')" id="tab-btn-dishes" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-stone-900 text-white shadow transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-bowl-food"></i>
+                <span>Gestion des Plats</span>
+            </button>
+            <button onclick="switchTab('hero')" id="tab-btn-hero" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-image text-red-500"></i>
+                <span>Bannière Hero & Accueil</span>
+            </button>
+            <button onclick="switchTab('categories')" id="tab-btn-categories" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-folder-tree"></i>
+                <span>Catégories</span>
+            </button>
+            <button onclick="switchTab('reservations')" id="tab-btn-reservations" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-calendar-days"></i>
+                <span>Réservations</span>
+                <span id="tab-res-badge" class="hidden bg-red-600 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold">0</span>
+            </button>
+            <button onclick="switchTab('lexicon')" id="tab-btn-lexicon" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-book-open text-blue-500"></i>
+                <span>Lexique Japonais</span>
+            </button>
+            <button onclick="switchTab('allergens')" id="tab-btn-allergens" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-shield-halved text-amber-500"></i>
+                <span>Guide Allergènes</span>
+            </button>
+            <button onclick="switchTab('settings')" id="tab-btn-settings" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-store"></i>
+                <span>Infos du Restaurant</span>
+            </button>
+            <button onclick="switchTab('security')" id="tab-btn-security" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-key"></i>
+                <span>Sécurité</span>
+            </button>
+        </div>
+
+        <!-- ================= TAB 1: DISHES ================= -->
+        <section id="tab-content-dishes" class="tab-pane space-y-4">
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6">
+                <!-- Action bar -->
+                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-6">
+                    <div class="flex flex-1 items-center gap-3">
+                        <div class="relative flex-1 max-w-sm">
+                            <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+                            <input type="text" id="admin-dish-search" onkeyup="filterAdminDishes()" placeholder="Rechercher par nom, kanji..." class="w-full pl-9 pr-4 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition">
+                        </div>
+                        <select id="admin-dish-cat-filter" onchange="filterAdminDishes()" class="px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs font-medium focus:outline-none focus:border-red-500 transition">
+                            <option value="all">Toutes les catégories</option>
+                        </select>
+                    </div>
+
+                    <button onclick="openDishModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow transition flex items-center justify-center gap-2">
+                        <i class="fas fa-plus"></i>
+                        <span>Ajouter un Plat</span>
+                    </button>
+                </div>
+
+                <!-- Dishes Table -->
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-stone-200 text-stone-400 font-bold uppercase tracking-wider text-[11px] bg-stone-50">
+                                <th class="py-3 px-4 rounded-l-xl">Plat</th>
+                                <th class="py-3 px-4">Catégorie</th>
+                                <th class="py-3 px-4">Prix (€)</th>
+                                <th class="py-3 px-4">Disponibilité</th>
+                                <th class="py-3 px-4">Badge</th>
+                                <th class="py-3 px-4 text-right rounded-r-xl">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-dishes-tbody" class="divide-y divide-stone-100">
+                            <!-- Populated via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB: HERO & ACCUEIL ================= -->
+        <section id="tab-content-hero" class="tab-pane hidden space-y-6">
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 sm:p-8">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-stone-100 pb-4 mb-6 gap-3">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-red-600 font-bold text-xs uppercase tracking-wider mb-1">
+                            <i class="fas fa-magic"></i>
+                            <span>Personnalisation Visuelle</span>
+                        </div>
+                        <h3 class="font-mincho text-2xl font-bold text-stone-900">Bannière Principale & En-tête (Hero Section)</h3>
+                        <p class="text-xs text-stone-500 mt-1">Modifiez directement la photo principale, les badges, le prix affiché et tous les textes du haut de la page d'accueil.</p>
+                    </div>
+                    <a href="/#hero" target="_blank" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition">
+                        <i class="fas fa-eye text-stone-400"></i>
+                        <span>Aperçu sur le site</span>
+                    </a>
+                </div>
+
+                <form onsubmit="handleSaveHero(event)" class="space-y-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Left column: Textes & Titres -->
+                        <div class="lg:col-span-7 space-y-4">
+                            <div class="border-b border-stone-100 pb-2">
+                                <h4 class="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fas fa-pen text-red-500"></i>
+                                    <span>Textes & Slogans</span>
+                                </h4>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Badge supérieur (En haut du titre)
+                                </label>
+                                <input type="text" id="hero-badge-input" placeholder="ex: NOUVEAU À ANGLET • HALLES DES 5 CANTONS" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition">
+                                <span class="text-[10px] text-stone-400 mt-0.5 block">Affiché avec le point clignotant rouge au-dessus du titre.</span>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Grand Titre de l'Établissement *
+                                </label>
+                                <input type="text" id="hero-title-input" required placeholder="ex: TokyOh! Anglet" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition font-bold">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Slogan Accrocheur (Jaune d'or) *
+                                </label>
+                                <input type="text" id="hero-slogan-input" required placeholder="ex: L'énergie de Tokyo dans votre assiette !" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition text-amber-600 font-semibold">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Paragraphe de Présentation (Français)
+                                </label>
+                                <textarea id="hero-story-fr-input" rows="3" placeholder="Présentation de la cuisine, de l'ambiance et des ingrédients..." class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Paragraphe de Présentation (Tiếng Việt)
+                                </label>
+                                <textarea id="hero-story-vi-input" rows="3" placeholder="Giới thiệu quán bằng tiếng Việt..." class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition"></textarea>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Paragraphe de Présentation (English)
+                                </label>
+                                <textarea id="hero-story-en-input" rows="3" placeholder="Restaurant story in English..." class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Right column: Visuel du Plat & Overlays -->
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="border-b border-stone-100 pb-2">
+                                <h4 class="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fas fa-image text-amber-500"></i>
+                                    <span>Photo Principale & Éléments Graphiques</span>
+                                </h4>
+                            </div>
+
+                            <!-- Hero Main Image Box -->
+                            <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-3">
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                                    Grande Photo du Plat (Hero Image)
+                                </label>
+                                
+                                <div class="relative w-full h-48 rounded-xl overflow-hidden bg-stone-900 border border-stone-300 shadow-inner group">
+                                    <img id="admin-hero-img-preview" src="/static/images/dishes/hero_bento.jpg" alt="Hero Preview" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">
+                                        <i class="fas fa-camera mr-1.5"></i> Aperçu actuel
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">
+                                        <i class="fas fa-upload text-red-500 mr-1"></i> Télécharger une nouvelle photo depuis l'ordinateur :
+                                    </label>
+                                    <input type="file" accept="image/*" onchange="handleHeroImageUpload(this)" class="block w-full text-xs text-stone-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-stone-900 file:text-white hover:file:bg-stone-800 cursor-pointer">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] text-stone-500 mb-1">Ou chemin/URL de l'image :</label>
+                                    <input type="text" id="hero-img-url-input" oninput="updateHeroImgPreview(this.value)" class="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                            </div>
+
+                            <!-- Overlays on the Hero Image -->
+                            <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-3">
+                                <span class="text-xs font-bold text-stone-700 uppercase tracking-wider block">
+                                    Étiquette & Prix Incrustés sur la Photo
+                                </span>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] text-stone-500 mb-1">Huy hiệu (Badge rouge)</label>
+                                        <input type="text" id="hero-dish-badge-input" placeholder="ex: BEST SELLER" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 font-bold text-red-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] text-stone-500 mb-1">Prix affiché</label>
+                                        <input type="text" id="hero-dish-price-input" placeholder="ex: 13,90 €" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 font-bold">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] text-stone-500 mb-1">Nom du plat mis en avant</label>
+                                    <input type="text" id="hero-dish-name-input" placeholder="ex: Lunch Katsu Bento" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 font-semibold">
+                                </div>
+                            </div>
+
+                            <!-- Mascot / Sticker Image Box -->
+                            <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-3">
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                                    Sticker / Mascot Flottant
+                                </label>
+                                
+                                <div class="flex items-center gap-4">
+                                    <img id="admin-hero-mascot-preview" src="/static/images/bento_box_art.jpg" alt="Mascot Preview" class="w-16 h-16 rounded-xl object-contain border border-stone-300 bg-white p-1">
+                                    <div class="flex-1 space-y-1.5">
+                                        <div>
+                                            <label class="block text-[11px] text-stone-600 mb-1">
+                                                <i class="fas fa-upload text-amber-500 mr-1"></i> Remplacer le mascot :
+                                            </label>
+                                            <input type="file" accept="image/*" onchange="handleHeroMascotUpload(this)" class="block w-full text-xs text-stone-500 file:mr-2 file:py-1 file:px-2.5 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-stone-800 file:text-white hover:file:bg-stone-700 cursor-pointer">
+                                        </div>
+                                        <input type="text" id="hero-mascot-url-input" oninput="updateHeroMascotPreview(this.value)" class="w-full px-2.5 py-1 bg-white border border-stone-300 rounded-lg text-xs focus:outline-none focus:border-red-500">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-3">
+                        <button type="submit" id="save-hero-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-red-600/30 hover:shadow-red-600/50 flex items-center gap-2">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Enregistrer la Bannière Hero</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= TAB 2: CATEGORIES ================= -->
+        <section id="tab-content-categories" class="tab-pane hidden space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Add Category Form -->
+                <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 space-y-4">
+                    <h3 class="font-mincho text-lg font-bold text-stone-900 border-b border-stone-100 pb-3">
+                        <i class="fas fa-plus text-red-500 mr-1.5"></i> Ajouter une Catégorie
+                    </h3>
+                    <form onsubmit="handleCreateCategory(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Identifiant (Slug) *</label>
+                            <input type="text" id="cat-slug" required placeholder="ex: plats-chauds" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom en Français *</label>
+                            <input type="text" id="cat-name-fr" required placeholder="ex: Plats Chauds" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom en Tiếng Việt</label>
+                            <input type="text" id="cat-name-vi" placeholder="ex: Món Nóng" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom en Anglais</label>
+                            <input type="text" id="cat-name-en" placeholder="ex: Hot Dishes" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Kanji Japonais</label>
+                            <input type="text" id="cat-kanji" placeholder="ex: 温かい料理" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Ordre d'affichage</label>
+                            <input type="number" id="cat-sort" value="10" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <button type="submit" class="w-full bg-stone-900 hover:bg-stone-800 text-white font-bold py-2.5 rounded-xl text-xs uppercase tracking-wider transition">
+                            Créer la catégorie
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Categories List -->
+                <div class="lg:col-span-2 bg-white rounded-3xl border border-stone-200 shadow-sm p-6">
+                    <h3 class="font-mincho text-lg font-bold text-stone-900 border-b border-stone-100 pb-3 mb-4">
+                        Catégories Existantes
+                    </h3>
+                    <div id="admin-categories-list" class="space-y-3">
+                        <!-- Injected via JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 3: RESERVATIONS ================= -->
+        <section id="tab-content-reservations" class="tab-pane hidden space-y-4">
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-6">
+                    <div>
+                        <h3 class="font-mincho text-xl font-bold text-stone-900">Demandes de Réservations</h3>
+                        <p class="text-xs text-stone-500">Gérez les réservations de tables envoyées par les clients.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <select id="admin-res-status-filter" onchange="filterAdminReservations()" class="px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs font-medium focus:outline-none focus:border-red-500">
+                            <option value="all">Tous les statuts</option>
+                            <option value="pending">En attente uniquement</option>
+                            <option value="confirmed">Confirmées</option>
+                            <option value="cancelled">Annulées</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="border-b border-stone-200 text-stone-400 font-bold uppercase tracking-wider text-[11px] bg-stone-50">
+                                <th class="py-3 px-4 rounded-l-xl">Client</th>
+                                <th class="py-3 px-4">Contact</th>
+                                <th class="py-3 px-4">Date & Heure</th>
+                                <th class="py-3 px-4">Convives</th>
+                                <th class="py-3 px-4">Notes / Allergies</th>
+                                <th class="py-3 px-4">Statut</th>
+                                <th class="py-3 px-4 text-right rounded-r-xl">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-reservations-tbody" class="divide-y divide-stone-100">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB 4: SETTINGS ================= -->
+        <section id="tab-content-settings" class="tab-pane hidden space-y-6">
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 sm:p-8">
+                <div class="border-b border-stone-100 pb-4 mb-6">
+                    <h3 class="font-mincho text-xl font-bold text-stone-900">Coordonnées & Informations du Restaurant</h3>
+                    <p class="text-xs text-stone-500">Modifiez les informations affichées sur le site public en temps réel.</p>
+                </div>
+
+                <form onsubmit="handleUpdateInfo(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom de l'établissement *</label>
+                            <input type="text" id="info-name" required class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Slogan Principal</label>
+                            <input type="text" id="info-slogan" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Sous-titre / Tagline</label>
+                            <input type="text" id="info-tagline" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Téléphone de Contact</label>
+                            <input type="text" id="info-phone" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Adresse Complète</label>
+                            <input type="text" id="info-address" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Repère de localisation</label>
+                            <input type="text" id="info-location" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Email</label>
+                            <input type="email" id="info-email" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Horaires de Service</label>
+                            <input type="text" id="info-hours" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                    </div>
+
+                    <div class="border-t border-stone-100 pt-5">
+                        <h4 class="text-xs font-bold text-stone-700 uppercase tracking-wider mb-3">Liens Plateformes & Réseaux Sociaux</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1"><i class="fas fa-motorcycle text-emerald-500 mr-1"></i> Uber Eats URL</label>
+                                <input type="url" id="info-ubereats" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1"><i class="fas fa-bicycle text-teal-500 mr-1"></i> Deliveroo URL</label>
+                                <input type="url" id="info-deliveroo" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1"><i class="fab fa-instagram text-rose-500 mr-1"></i> Instagram URL</label>
+                                <input type="url" id="info-instagram" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1"><i class="fab fa-facebook text-blue-600 mr-1"></i> Facebook URL</label>
+                                <input type="url" id="info-facebook" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1"><i class="fab fa-tiktok text-stone-900 mr-1"></i> TikTok URL</label>
+                                <input type="url" id="info-tiktok" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-stone-100 pt-5 space-y-4">
+                        <h4 class="text-xs font-bold text-stone-700 uppercase tracking-wider">Histoire & Présentation (Histoire de TokyOh!)</h4>
+                        <div>
+                            <label class="block text-[11px] text-stone-500 mb-1">En Français</label>
+                            <textarea id="info-story-fr" rows="3" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] text-stone-500 mb-1">En Tiếng Việt</label>
+                            <textarea id="info-story-vi" rows="3" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-stone-100 flex justify-end">
+                        <button type="submit" id="save-info-btn" class="bg-stone-900 hover:bg-stone-800 text-white font-bold px-6 py-3 rounded-xl text-xs uppercase tracking-wider transition shadow flex items-center gap-2">
+                            <i class="fas fa-save text-amber-400"></i>
+                            <span>Enregistrer les modifications</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= TAB 5: SECURITY ================= -->
+        <section id="tab-content-security" class="tab-pane hidden max-w-lg mx-auto">
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 sm:p-8 space-y-5">
+                <div class="border-b border-stone-100 pb-3">
+                    <h3 class="font-mincho text-xl font-bold text-stone-900">Modifier le Mot de Passe Admin</h3>
+                    <p class="text-xs text-stone-500">Sécurisez l'accès à votre espace d'administration.</p>
+                </div>
+
+                <form onsubmit="handleChangePassword(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Ancien mot de passe *</label>
+                        <input type="password" id="old-pw" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nouveau mot de passe *</label>
+                        <input type="password" id="new-pw" required minlength="6" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Confirmer le nouveau mot de passe *</label>
+                        <input type="password" id="confirm-pw" required minlength="6" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+
+                    <div id="pw-alert" class="hidden p-3 rounded-xl text-xs font-semibold text-center"></div>
+
+                    <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-xs uppercase tracking-wider transition shadow">
+                        Mettre à jour le mot de passe
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= TAB: LEXICON ================= -->
+        <section id="tab-content-lexicon" class="tab-pane hidden space-y-4">
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6">
+                <!-- Action bar -->
+                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="font-mincho text-xl font-bold text-stone-900">Lexique Culinaire Japonais</h2>
+                        <p class="text-xs text-stone-400">Gérez les termes culinaires (kanji, définitions multilingues et photos explicatives)</p>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="relative">
+                            <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-xs"></i>
+                            <input type="text" oninput="filterLexicon(this.value)" placeholder="Rechercher un terme..." class="pl-9 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs focus:outline-none focus:border-red-500 w-48 sm:w-64">
+                        </div>
+                        <button onclick="openLexiconModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition flex items-center gap-2 shrink-0 shadow">
+                            <i class="fas fa-plus"></i>
+                            <span>Nouveau Terme</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lexicon Table -->
+                <div class="overflow-x-auto border border-stone-200/60 rounded-2xl">
+                    <table class="w-full text-left text-xs text-stone-600">
+                        <thead class="bg-stone-50 text-stone-700 uppercase font-bold text-[10px] tracking-wider border-b border-stone-200">
+                            <tr>
+                                <th class="py-3.5 px-4">Photo</th>
+                                <th class="py-3.5 px-4">Terme & Kanji</th>
+                                <th class="py-3.5 px-4">Définition (FR)</th>
+                                <th class="py-3.5 px-4">Définition (VI)</th>
+                                <th class="py-3.5 px-4">Ordre</th>
+                                <th class="py-3.5 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-lexicon-tbody" class="divide-y divide-stone-100">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TAB: ALLERGENS ================= -->
+        <section id="tab-content-allergens" class="tab-pane hidden space-y-6">
+            <!-- Header Texts Configuration Card -->
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 sm:p-8">
+                <div class="border-b border-stone-100 pb-4 mb-6 flex items-center justify-between">
+                    <div>
+                        <h2 class="font-mincho text-xl font-bold text-stone-900">En-tête & Textes de la Section Allergènes</h2>
+                        <p class="text-xs text-stone-400">Modifiez le badge, les titres, descriptions et le message de prévention de la section</p>
+                    </div>
+                    <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        <i class="fas fa-shield-halved mr-1"></i> Transparence
+                    </span>
+                </div>
+
+                <form onsubmit="handleSaveAllergenHeaders(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Badge de la Section</label>
+                            <input type="text" id="allergen-badge-input" placeholder="ex: TRANSPARENCE ALIMENTAIRE" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Titre (Français) *</label>
+                            <input type="text" id="allergen-title-fr-input" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Titre (Tiếng Việt)</label>
+                            <input type="text" id="allergen-title-vi-input" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Titre (English)</label>
+                            <input type="text" id="allergen-title-en-input" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Description (Français)</label>
+                            <textarea id="allergen-desc-fr-input" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Description (Tiếng Việt)</label>
+                            <textarea id="allergen-desc-vi-input" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Description (English)</label>
+                            <textarea id="allergen-desc-en-input" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Note de Prévention (Français)</label>
+                            <textarea id="allergen-note-fr-input" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Note de Prévention (Tiếng Việt)</label>
+                            <textarea id="allergen-note-vi-input" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                        </div>
+                        <div class="sm:col-span-2">
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Note de Prévention (English)</label>
+                            <textarea id="allergen-note-en-input" rows="2" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex justify-end">
+                        <button type="submit" id="allergen-headers-save-btn" class="bg-stone-900 hover:bg-stone-800 text-white font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow flex items-center gap-2">
+                            <i class="fas fa-save text-amber-400"></i>
+                            <span>Enregistrer les Textes de l'En-tête</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Allergen Items List Card -->
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6">
+                <div class="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="font-mincho text-xl font-bold text-stone-900">Liste des Allergènes Répertoriés</h2>
+                        <p class="text-xs text-stone-400">Ajoutez, modifiez ou supprimez les allergènes, leurs icônes/photos et leurs exemples de plats</p>
+                    </div>
+                    <button onclick="openAllergenModal()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition flex items-center gap-2 shrink-0 shadow">
+                        <i class="fas fa-plus"></i>
+                        <span>Nouvel Allergène</span>
+                    </button>
+                </div>
+
+                <!-- Allergen Table -->
+                <div class="overflow-x-auto border border-stone-200/60 rounded-2xl">
+                    <table class="w-full text-left text-xs text-stone-600">
+                        <thead class="bg-stone-50 text-stone-700 uppercase font-bold text-[10px] tracking-wider border-b border-stone-200">
+                            <tr>
+                                <th class="py-3.5 px-4">Visuel / Icône</th>
+                                <th class="py-3.5 px-4">Nom (FR)</th>
+                                <th class="py-3.5 px-4">Nom (VI)</th>
+                                <th class="py-3.5 px-4">Nom (EN)</th>
+                                <th class="py-3.5 px-4">Exemples de plats</th>
+                                <th class="py-3.5 px-4">Ordre</th>
+                                <th class="py-3.5 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-allergens-tbody" class="divide-y divide-stone-100">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= MODAL: ADD / EDIT DISH ================= -->
+    <div id="dish-form-modal" onclick="if(event.target.id === 'dish-form-modal') closeDishFormModal()" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 cursor-pointer">
+        <div onclick="event.stopPropagation()" class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl p-6 sm:p-8 relative cursor-default">
+            <div class="flex justify-between items-center border-b border-stone-100 pb-4 mb-5">
+                <h3 id="modal-dish-heading" class="font-mincho text-xl font-bold text-stone-900">
+                    Ajouter un Nouveau Plat
+                </h3>
+                <button onclick="closeDishFormModal()" class="text-stone-400 hover:text-stone-800 text-lg w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleSaveDish(event)" class="space-y-4">
+                <input type="hidden" id="dish-form-id" value="">
+
+                <!-- Category & Price -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Catégorie *</label>
+                        <select id="dish-form-cat" required class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                            <!-- Injected via JS -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Prix en Euros (€) *</label>
+                        <input type="number" step="0.10" id="dish-form-price" required placeholder="ex: 13.90" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                </div>
+
+                <!-- Names in FR, VI, EN, Kanji -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom en Français *</label>
+                        <input type="text" id="dish-form-name-fr" required placeholder="ex: Lunch Katsu" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom en Tiếng Việt</label>
+                        <input type="text" id="dish-form-name-vi" placeholder="ex: Cơm Bento Katsu Đặc Biệt" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom en Anglais</label>
+                        <input type="text" id="dish-form-name-en" placeholder="ex: Signature Lunch Katsu Bento" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom Japonais / Kanji</label>
+                        <input type="text" id="dish-form-kanji" placeholder="ex: ランチカツ弁当" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                </div>
+
+                <!-- Descriptions -->
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Description (Français) *</label>
+                    <textarea id="dish-form-desc-fr" rows="2" placeholder="Description des ingrédients, cuisson, accompagnements..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Description (Tiếng Việt)</label>
+                    <textarea id="dish-form-desc-vi" rows="2" placeholder="Mô tả món ăn bằng tiếng Việt..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                </div>
+
+                <!-- Badges and Options -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Badge Spécial (optionnel)</label>
+                        <input type="text" id="dish-form-badge" placeholder="ex: BEST SELLER, HEALTHY, POPULAIRE" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Tags Diététiques (séparés par virgule)</label>
+                        <input type="text" id="dish-form-dietary" placeholder="ex: vegan,healthy" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Allergènes Présents</label>
+                        <input type="text" id="dish-form-allergens" placeholder="ex: gluten,soja,sesame" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Options de Protéines</label>
+                        <input type="text" id="dish-form-proteins" placeholder="ex: Porc, Poulet, Crevettes, Tofu" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                </div>
+
+                <!-- Image Upload & Preview -->
+                <div class="border border-stone-200 p-4 rounded-2xl bg-stone-50 space-y-3">
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                        <i class="fas fa-image text-amber-500 mr-1"></i> Photo du Plat
+                    </label>
+                    <div class="flex items-center gap-4">
+                        <img id="dish-form-img-preview" src="/static/images/dishes/hero_bento.jpg" alt="Preview" class="w-20 h-20 rounded-xl object-cover border border-stone-300 bg-white">
+                        <div class="flex-1 space-y-2">
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1">Télécharger depuis votre ordinateur :</label>
+                                <input type="file" id="dish-file-input" accept="image/*" onchange="handleImageUpload(this)" class="block w-full text-xs text-stone-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-stone-900 file:text-white hover:file:bg-stone-800 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1">Ou URL de l'image :</label>
+                                <input type="text" id="dish-form-img-url" oninput="updateImagePreview(this.value)" placeholder="/static/images/dishes/..." class="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs focus:outline-none focus:border-red-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeDishFormModal()" class="px-5 py-2.5 rounded-xl border border-stone-300 text-stone-700 hover:bg-stone-100 font-bold text-xs uppercase tracking-wider transition">
+                        Annuler
+                    </button>
+                    <button type="submit" id="dish-save-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow">
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: ADD / EDIT LEXICON ================= -->
+    <div id="lexicon-form-modal" onclick="if(event.target.id === 'lexicon-form-modal') closeLexiconModal()" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 cursor-pointer">
+        <div onclick="event.stopPropagation()" class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl p-6 sm:p-8 relative cursor-default">
+            <div class="flex justify-between items-center border-b border-stone-100 pb-4 mb-5">
+                <h3 id="modal-lexicon-heading" class="font-mincho text-xl font-bold text-stone-900">
+                    Ajouter un Terme Culinaire
+                </h3>
+                <button onclick="closeLexiconModal()" class="text-stone-400 hover:text-stone-800 text-lg w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleSaveLexicon(event)" class="space-y-4">
+                <input type="hidden" id="lexicon-form-id" value="">
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="sm:col-span-2">
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Terme (Romaji / Nom) *</label>
+                        <input type="text" id="lexicon-form-term" required placeholder="ex: Edamame, Karaage, Katsu" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Kanji / Hiragana</label>
+                        <input type="text" id="lexicon-form-kanji" placeholder="ex: 枝豆, 唐揚げ" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 font-mincho">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Définition en Français *</label>
+                    <textarea id="lexicon-form-def-fr" required rows="2" placeholder="Description de l'ingrédient ou de la spécialité en français..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Définition en Tiếng Việt</label>
+                    <textarea id="lexicon-form-def-vi" rows="2" placeholder="Mô tả thuật ngữ bằng tiếng Việt..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Définition en Anglais</label>
+                    <textarea id="lexicon-form-def-en" rows="2" placeholder="Description in English..." class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Ordre d'affichage</label>
+                        <input type="number" id="lexicon-form-sort" value="10" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                </div>
+
+                <!-- Image Upload & Preview -->
+                <div class="border border-stone-200 p-4 rounded-2xl bg-stone-50 space-y-3">
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                        <i class="fas fa-image text-amber-500 mr-1"></i> Illustration du Terme (Optionnel)
+                    </label>
+                    <div class="flex items-center gap-4">
+                        <img id="lexicon-form-img-preview" src="/static/images/dishes/hero_bento.jpg" alt="Preview" class="w-20 h-20 rounded-xl object-cover border border-stone-300 bg-white">
+                        <div class="flex-1 space-y-2">
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1">Télécharger depuis votre ordinateur :</label>
+                                <input type="file" id="lexicon-file-input" accept="image/*" onchange="handleLexiconImageUpload(this)" class="block w-full text-xs text-stone-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-stone-900 file:text-white hover:file:bg-stone-800 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1">Ou URL de l'image :</label>
+                                <input type="text" id="lexicon-form-img-url" oninput="updateLexiconImgPreview(this.value)" placeholder="/static/images/dishes/..." class="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs focus:outline-none focus:border-red-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeLexiconModal()" class="px-5 py-2.5 rounded-xl border border-stone-300 text-stone-700 hover:bg-stone-100 font-bold text-xs uppercase tracking-wider transition">
+                        Annuler
+                    </button>
+                    <button type="submit" id="lexicon-save-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow">
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: ADD / EDIT ALLERGEN ================= -->
+    <div id="allergen-form-modal" onclick="if(event.target.id === 'allergen-form-modal') closeAllergenModal()" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4 cursor-pointer">
+        <div onclick="event.stopPropagation()" class="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto custom-scrollbar shadow-2xl p-6 sm:p-8 relative cursor-default">
+            <div class="flex justify-between items-center border-b border-stone-100 pb-4 mb-5">
+                <h3 id="modal-allergen-heading" class="font-mincho text-xl font-bold text-stone-900">
+                    Ajouter un Allergène
+                </h3>
+                <button onclick="closeAllergenModal()" class="text-stone-400 hover:text-stone-800 text-lg w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form onsubmit="handleSaveAllergen(event)" class="space-y-4">
+                <input type="hidden" id="allergen-form-id" value="">
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom (Français) *</label>
+                        <input type="text" id="allergen-form-name-fr" required placeholder="ex: Gluten (Blé)" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom (Tiếng Việt)</label>
+                        <input type="text" id="allergen-form-name-vi" placeholder="ex: Gluten (Lúa mì)" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Nom (English)</label>
+                        <input type="text" id="allergen-form-name-en" placeholder="ex: Gluten (Wheat)" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Icône Emoji</label>
+                        <input type="text" id="allergen-form-icon" placeholder="ex: 🌾 ou 🦐 ou 🥜" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Ordre d'affichage</label>
+                        <input type="number" id="allergen-form-sort" value="10" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Exemples de plats (FR)</label>
+                        <input type="text" id="allergen-form-example-fr" placeholder="ex: Sauces, Panko, Nouilles" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Exemples de plats (VI)</label>
+                        <input type="text" id="allergen-form-example-vi" placeholder="ex: Sốt Katsu, Bột xù" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">Exemples de plats (EN)</label>
+                        <input type="text" id="allergen-form-example-en" placeholder="ex: Sauces, Panko, Noodles" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                    </div>
+                </div>
+
+                <!-- Image Upload & Preview -->
+                <div class="border border-stone-200 p-4 rounded-2xl bg-stone-50 space-y-3">
+                    <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                        <i class="fas fa-image text-amber-500 mr-1"></i> Illustration / Photo de l'Allergène (Optionnel)
+                    </label>
+                    <div class="flex items-center gap-4">
+                        <div id="allergen-form-img-preview-box" class="w-20 h-20 rounded-xl border border-stone-300 bg-white flex items-center justify-center overflow-hidden">
+                            <span id="allergen-form-icon-preview" class="text-3xl">🌾</span>
+                            <img id="allergen-form-img-preview" src="" alt="Preview" class="w-full h-full object-cover hidden">
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1">Télécharger une image :</label>
+                                <input type="file" id="allergen-file-input" accept="image/*" onchange="handleAllergenImageUpload(this)" class="block w-full text-xs text-stone-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-stone-900 file:text-white hover:file:bg-stone-800 cursor-pointer">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-stone-500 mb-1">Ou URL de l'image :</label>
+                                <input type="text" id="allergen-form-img-url" oninput="updateAllergenImgPreview(this.value)" placeholder="/static/images/..." class="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs focus:outline-none focus:border-red-500">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-3">
+                    <button type="button" onclick="closeAllergenModal()" class="px-5 py-2.5 rounded-xl border border-stone-300 text-stone-700 hover:bg-stone-100 font-bold text-xs uppercase tracking-wider transition">
+                        Annuler
+                    </button>
+                    <button type="submit" id="allergen-save-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2.5 rounded-xl text-xs uppercase tracking-wider transition shadow">
+                        Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-stone-900 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 border border-stone-700 text-xs font-semibold">
+        <i id="toast-icon" class="fas fa-check-circle text-emerald-400 text-base"></i>
+        <span id="toast-msg">Opération réussie.</span>
+    </div>
+
+    <!-- ADMIN JAVASCRIPT APPLICATION -->
+    <script>
+        let allDishes = [];
+        let allCategories = [];
+        let allReservations = [];
+        let allLexicon = [];
+        let allAdminAllergens = [];
+        let restaurantInfo = {};
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await loadAllData();
+        });
+
+        async function loadAllData() {
+            await fetchCategories();
+            await fetchDishes();
+            await fetchReservations();
+            await fetchAdminLexicon();
+            await fetchAdminAllergens();
+            await fetchInfo();
+            updateStats();
+        }
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById(`tab-content-${tabId}`);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.admin-tab').forEach(btn => {
+                btn.className = 'admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap';
+            });
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.className = 'admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider bg-stone-900 text-white shadow transition flex items-center gap-2 whitespace-nowrap';
+            }
+        }
+
+        // Fetch Dishes
+        async function fetchDishes() {
+            try {
+                const res = await fetch('/api/dishes');
+                allDishes = await res.json();
+                renderAdminDishes(allDishes);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Render Dishes Table
+        function renderAdminDishes(dishes) {
+            const tbody = document.getElementById('admin-dishes-tbody');
+            if (!tbody) return;
+
+            if (dishes.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-stone-400">Aucun plat trouvé.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            dishes.forEach(dish => {
+                const imgSrc = dish.image_url || '/static/images/dishes/hero_bento.jpg';
+                const isAvail = dish.is_available === 1;
+
+                html += `
+                    <tr class="hover:bg-stone-50/80 transition">
+                        <td class="py-3 px-4">
+                            <div class="flex items-center gap-3">
+                                <img src="${imgSrc}" alt="${dish.name_fr}" class="w-12 h-12 rounded-xl object-cover border border-stone-200 shadow-sm shrink-0">
+                                <div>
+                                    <span class="font-bold text-stone-900 block">${dish.name_fr}</span>
+                                    <span class="text-stone-400 font-mincho text-[11px]">${dish.kanji || ''}</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="py-3 px-4 text-stone-600 font-medium">
+                            ${dish.category_name || '--'}
+                        </td>
+                        <td class="py-3 px-4 font-bold text-stone-900 font-mincho text-sm">
+                            ${dish.price.toFixed(2).replace('.', ',')} €
+                        </td>
+                        <td class="py-3 px-4">
+                            <button onclick="toggleAvailability(${dish.id})" class="px-2.5 py-1 rounded-full text-[11px] font-bold transition ${isAvail ? 'bg-emerald-100 text-emerald-800 hover:bg-emerald-200' : 'bg-rose-100 text-rose-800 hover:bg-rose-200'}">
+                                <i class="fas ${isAvail ? 'fa-check' : 'fa-times'} mr-1"></i>
+                                ${isAvail ? 'En vente' : 'Épuisé'}
+                            </button>
+                        </td>
+                        <td class="py-3 px-4">
+                            ${dish.badge ? `<span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${dish.badge}</span>` : '<span class="text-stone-300">-</span>'}
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <div class="flex items-center justify-end gap-1.5">
+                                <button onclick="editDish(${dish.id})" class="w-8 h-8 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-700 transition flex items-center justify-center text-xs" title="Modifier">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button onclick="deleteDish(${dish.id})" class="w-8 h-8 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 transition flex items-center justify-center text-xs" title="Supprimer">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterAdminDishes() {
+            const query = document.getElementById('admin-dish-search').value.toLowerCase().trim();
+            const catFilter = document.getElementById('admin-dish-cat-filter').value;
+
+            let filtered = allDishes.filter(d => {
+                if (catFilter !== 'all' && d.category_id != catFilter) return false;
+                if (query) {
+                    const str = (d.name_fr + ' ' + (d.name_vi || '') + ' ' + (d.kanji || '')).toLowerCase();
+                    if (!str.includes(query)) return false;
+                }
+                return true;
+            });
+            renderAdminDishes(filtered);
+        }
+
+        async function toggleAvailability(dishId) {
+            try {
+                const res = await fetch(`/api/dishes/${dishId}/availability`, {method: 'PATCH'});
+                if (res.ok) {
+                    const data = await res.json();
+                    showToast(data.is_available === 1 ? 'Plat marqué en vente' : 'Plat marqué épuisé');
+                    await fetchDishes();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Dish Modal Add/Edit
+        function openDishModal(dish = null) {
+            const modal = document.getElementById('dish-form-modal');
+            const heading = document.getElementById('modal-dish-heading');
+            
+            // Populate category options
+            const catSelect = document.getElementById('dish-form-cat');
+            catSelect.innerHTML = allCategories.map(c => `<option value="${c.id}">${c.name_fr} (${c.kanji || ''})</option>`).join('');
+
+            if (dish) {
+                heading.textContent = `Modifier le Plat : ${dish.name_fr}`;
+                document.getElementById('dish-form-id').value = dish.id;
+                document.getElementById('dish-form-cat').value = dish.category_id;
+                document.getElementById('dish-form-price').value = dish.price;
+                document.getElementById('dish-form-name-fr').value = dish.name_fr;
+                document.getElementById('dish-form-name-vi').value = dish.name_vi || '';
+                document.getElementById('dish-form-name-en').value = dish.name_en || '';
+                document.getElementById('dish-form-kanji').value = dish.kanji || '';
+                document.getElementById('dish-form-desc-fr').value = dish.description_fr || '';
+                document.getElementById('dish-form-desc-vi').value = dish.description_vi || '';
+                document.getElementById('dish-form-badge').value = dish.badge || '';
+                document.getElementById('dish-form-dietary').value = dish.dietary_tags || '';
+                document.getElementById('dish-form-allergens').value = dish.allergens || '';
+                document.getElementById('dish-form-proteins').value = dish.protein_options || '';
+                document.getElementById('dish-form-img-url').value = dish.image_url || '';
+                document.getElementById('dish-form-img-preview').src = dish.image_url || '/static/images/dishes/hero_bento.jpg';
+            } else {
+                heading.textContent = 'Ajouter un Nouveau Plat';
+                document.getElementById('dish-form-id').value = '';
+                document.getElementById('dish-form-price').value = '';
+                document.getElementById('dish-form-name-fr').value = '';
+                document.getElementById('dish-form-name-vi').value = '';
+                document.getElementById('dish-form-name-en').value = '';
+                document.getElementById('dish-form-kanji').value = '';
+                document.getElementById('dish-form-desc-fr').value = '';
+                document.getElementById('dish-form-desc-vi').value = '';
+                document.getElementById('dish-form-badge').value = '';
+                document.getElementById('dish-form-dietary').value = '';
+                document.getElementById('dish-form-allergens').value = '';
+                document.getElementById('dish-form-proteins').value = '';
+                document.getElementById('dish-form-img-url').value = '/static/images/dishes/hero_bento.jpg';
+                document.getElementById('dish-form-img-preview').src = '/static/images/dishes/hero_bento.jpg';
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeDishFormModal() {
+            document.getElementById('dish-form-modal').classList.add('hidden');
+        }
+
+        function editDish(id) {
+            const dish = allDishes.find(d => d.id === id);
+            if (dish) openDishModal(dish);
+        }
+
+        async function deleteDish(id) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer définitivement ce plat ?')) return;
+            try {
+                const res = await fetch(`/api/dishes/${id}`, {method: 'DELETE'});
+                if (res.ok) {
+                    showToast('Plat supprimé.');
+                    await fetchDishes();
+                    updateStats();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Save Dish (Add or Update)
+        async function handleSaveDish(e) {
+            e.preventDefault();
+            const id = document.getElementById('dish-form-id').value;
+            const payload = {
+                category_id: document.getElementById('dish-form-cat').value,
+                price: parseFloat(document.getElementById('dish-form-price').value),
+                name_fr: document.getElementById('dish-form-name-fr').value.trim(),
+                name_vi: document.getElementById('dish-form-name-vi').value.trim(),
+                name_en: document.getElementById('dish-form-name-en').value.trim(),
+                kanji: document.getElementById('dish-form-kanji').value.trim(),
+                description_fr: document.getElementById('dish-form-desc-fr').value.trim(),
+                description_vi: document.getElementById('dish-form-desc-vi').value.trim(),
+                badge: document.getElementById('dish-form-badge').value.trim(),
+                dietary_tags: document.getElementById('dish-form-dietary').value.trim(),
+                allergens: document.getElementById('dish-form-allergens').value.trim(),
+                protein_options: document.getElementById('dish-form-proteins').value.trim(),
+                image_url: document.getElementById('dish-form-img-url').value.trim()
+            };
+
+            const url = id ? `/api/dishes/${id}` : '/api/dishes';
+            const method = id ? 'PUT' : 'POST';
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    showToast(id ? 'Plat mis à jour avec succès !' : 'Nouveau plat créé !');
+                    closeDishFormModal();
+                    await fetchDishes();
+                    updateStats();
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Erreur lors de l\'enregistrement.');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Image upload handler
+        async function handleImageUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                showToast('Téléchargement de l\'image en cours...', 'info');
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    document.getElementById('dish-form-img-url').value = data.url;
+                    document.getElementById('dish-form-img-preview').src = data.url;
+                    showToast('Image téléchargée et optimisée !');
+                } else {
+                    alert(data.error || 'Échec du téléchargement.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de l\'envoi de l\'image.');
+            }
+        }
+
+        function updateImagePreview(url) {
+            document.getElementById('dish-form-img-preview').src = url || '/static/images/dishes/hero_bento.jpg';
+        }
+
+        // Fetch Categories
+        async function fetchCategories() {
+            try {
+                const res = await fetch('/api/categories');
+                allCategories = await res.json();
+
+                // Populate filter dropdown in Dishes tab
+                const select = document.getElementById('admin-dish-cat-filter');
+                select.innerHTML = '<option value="all">Toutes les catégories</option>' + 
+                    allCategories.map(c => `<option value="${c.id}">${c.name_fr}</option>`).join('');
+
+                renderCategoriesList();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function renderCategoriesList() {
+            const container = document.getElementById('admin-categories-list');
+            if (!container) return;
+
+            let html = '';
+            allCategories.forEach(cat => {
+                html += `
+                    <div class="flex items-center justify-between p-4 bg-stone-50 border border-stone-200 rounded-2xl">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-stone-900">${cat.name_fr}</span>
+                                <span class="font-mincho text-xs text-red-600 font-semibold">${cat.kanji || ''}</span>
+                                <span class="text-[10px] bg-stone-200 text-stone-600 px-1.5 py-0.5 rounded font-mono">slug: ${cat.slug}</span>
+                            </div>
+                            <span class="text-xs text-stone-400 block mt-0.5">Vi: ${cat.name_vi} • En: ${cat.name_en} • Ordre: ${cat.sort_order}</span>
+                        </div>
+                        <button onclick="deleteCategory(${cat.id})" class="text-stone-400 hover:text-red-600 p-2 text-xs transition" title="Supprimer">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        async function handleCreateCategory(e) {
+            e.preventDefault();
+            const payload = {
+                slug: document.getElementById('cat-slug').value.trim(),
+                name_fr: document.getElementById('cat-name-fr').value.trim(),
+                name_vi: document.getElementById('cat-name-vi').value.trim(),
+                name_en: document.getElementById('cat-name-en').value.trim(),
+                kanji: document.getElementById('cat-kanji').value.trim(),
+                sort_order: parseInt(document.getElementById('cat-sort').value)
+            };
+
+            try {
+                const res = await fetch('/api/categories', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) {
+                    showToast('Catégorie ajoutée avec succès !');
+                    e.target.reset();
+                    await fetchCategories();
+                    updateStats();
+                } else {
+                    const err = await res.json();
+                    alert(err.error || 'Erreur lors de la création.');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function deleteCategory(id) {
+            if (!confirm('Supprimer cette catégorie ? Attention : la catégorie ne doit contenir aucun plat.')) return;
+            try {
+                const res = await fetch(`/api/categories/${id}`, {method: 'DELETE'});
+                const data = await res.json();
+                if (res.ok) {
+                    showToast('Catégorie supprimée.');
+                    await fetchCategories();
+                    updateStats();
+                } else {
+                    alert(data.error || 'Impossible de supprimer.');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Fetch Reservations
+        async function fetchReservations() {
+            try {
+                const res = await fetch('/api/admin/reservations');
+                allReservations = await res.json();
+                renderReservationsTable(allReservations);
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        function renderReservationsTable(list) {
+            const tbody = document.getElementById('admin-reservations-tbody');
+            if (!tbody) return;
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-stone-400">Aucune réservation pour le moment.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            list.forEach(r => {
+                let badgeClass = 'bg-amber-100 text-amber-800';
+                let statusText = 'En attente';
+                if (r.status === 'confirmed') {
+                    badgeClass = 'bg-emerald-100 text-emerald-800';
+                    statusText = 'Confirmé';
+                } else if (r.status === 'cancelled') {
+                    badgeClass = 'bg-stone-200 text-stone-600 line-through';
+                    statusText = 'Annulé';
+                }
+
+                html += `
+                    <tr class="hover:bg-stone-50/80 transition">
+                        <td class="py-3 px-4 font-bold text-stone-900">${r.customer_name}</td>
+                        <td class="py-3 px-4">
+                            <a href="tel:${r.phone}" class="text-red-600 font-bold hover:underline block">${r.phone}</a>
+                            <span class="text-[11px] text-stone-400 block">${r.email || '-'}</span>
+                        </td>
+                        <td class="py-3 px-4 font-semibold text-stone-800">
+                            ${r.reservation_date} à ${r.reservation_time}
+                        </td>
+                        <td class="py-3 px-4 font-bold">
+                            <span class="bg-stone-100 px-2 py-1 rounded-md text-stone-700">${r.guests} pers.</span>
+                        </td>
+                        <td class="py-3 px-4 text-stone-500 max-w-xs truncate">${r.notes || '-'}</td>
+                        <td class="py-3 px-4">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${badgeClass}">
+                                ${statusText}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <div class="flex items-center justify-end gap-1.5">
+                                ${r.status !== 'confirmed' ? `
+                                    <button onclick="updateResStatus(${r.id}, 'confirmed')" class="px-2 py-1 rounded bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[11px] font-bold" title="Confirmer">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                ` : ''}
+                                ${r.status !== 'cancelled' ? `
+                                    <button onclick="updateResStatus(${r.id}, 'cancelled')" class="px-2 py-1 rounded bg-stone-100 hover:bg-stone-200 text-stone-600 text-[11px] font-bold" title="Annuler">
+                                        <i class="fas fa-ban"></i>
+                                    </button>
+                                ` : ''}
+                                <button onclick="deleteReservation(${r.id})" class="px-2 py-1 rounded bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-bold" title="Supprimer">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterAdminReservations() {
+            const filter = document.getElementById('admin-res-status-filter').value;
+            let filtered = allReservations;
+            if (filter !== 'all') {
+                filtered = allReservations.filter(r => r.status === filter);
+            }
+            renderReservationsTable(filtered);
+        }
+
+        async function updateResStatus(id, newStatus) {
+            try {
+                const res = await fetch(`/api/admin/reservations/${id}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({status: newStatus})
+                });
+                if (res.ok) {
+                    showToast(`Réservation ${newStatus === 'confirmed' ? 'confirmée' : 'annulée'} !`);
+                    await fetchReservations();
+                    updateStats();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function deleteReservation(id) {
+            if (!confirm('Supprimer cette réservation ?')) return;
+            try {
+                const res = await fetch(`/api/admin/reservations/${id}`, {method: 'DELETE'});
+                if (res.ok) {
+                    showToast('Réservation supprimée.');
+                    await fetchReservations();
+                    updateStats();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Fetch & Update Restaurant Settings & Hero
+        async function fetchInfo() {
+            try {
+                const res = await fetch('/api/info');
+                restaurantInfo = await res.json();
+
+                const setVal = (id, v) => {
+                    const el = document.getElementById(id);
+                    if (el) el.value = v || '';
+                };
+
+                // General settings tab
+                setVal('info-name', restaurantInfo.name);
+                setVal('info-slogan', restaurantInfo.slogan);
+                setVal('info-tagline', restaurantInfo.tagline);
+                setVal('info-phone', restaurantInfo.phone);
+                setVal('info-address', restaurantInfo.address);
+                setVal('info-location', restaurantInfo.location_detail);
+                setVal('info-email', restaurantInfo.email);
+                setVal('info-hours', restaurantInfo.opening_hours);
+                setVal('info-ubereats', restaurantInfo.ubereats_url);
+                setVal('info-deliveroo', restaurantInfo.deliveroo_url);
+                setVal('info-instagram', restaurantInfo.instagram_url);
+                setVal('info-facebook', restaurantInfo.facebook_url);
+                setVal('info-tiktok', restaurantInfo.tiktok_url);
+                setVal('info-story-fr', restaurantInfo.story_fr);
+                setVal('info-story-vi', restaurantInfo.story_vi);
+
+                // Hero banner tab
+                setVal('hero-badge-input', restaurantInfo.hero_badge);
+                setVal('hero-title-input', restaurantInfo.name);
+                setVal('hero-slogan-input', restaurantInfo.slogan);
+                setVal('hero-story-fr-input', restaurantInfo.story_fr);
+                setVal('hero-story-vi-input', restaurantInfo.story_vi);
+                setVal('hero-story-en-input', restaurantInfo.story_en);
+                setVal('hero-img-url-input', restaurantInfo.hero_image_url);
+                setVal('hero-dish-badge-input', restaurantInfo.hero_dish_badge);
+                setVal('hero-dish-price-input', restaurantInfo.hero_dish_price);
+                setVal('hero-dish-name-input', restaurantInfo.hero_dish_name);
+                setVal('hero-mascot-url-input', restaurantInfo.hero_mascot_url);
+
+                // Allergen section headers
+                setVal('allergen-badge-input', restaurantInfo.allergen_badge);
+                setVal('allergen-title-fr-input', restaurantInfo.allergen_title_fr);
+                setVal('allergen-title-vi-input', restaurantInfo.allergen_title_vi);
+                setVal('allergen-title-en-input', restaurantInfo.allergen_title_en);
+                setVal('allergen-desc-fr-input', restaurantInfo.allergen_desc_fr);
+                setVal('allergen-desc-vi-input', restaurantInfo.allergen_desc_vi);
+                setVal('allergen-desc-en-input', restaurantInfo.allergen_desc_en);
+                setVal('allergen-note-fr-input', restaurantInfo.allergen_note_fr);
+                setVal('allergen-note-vi-input', restaurantInfo.allergen_note_vi);
+                setVal('allergen-note-en-input', restaurantInfo.allergen_note_en);
+
+                const heroImgPreview = document.getElementById('admin-hero-img-preview');
+                if (heroImgPreview) {
+                    heroImgPreview.src = restaurantInfo.hero_image_url || '/static/images/dishes/hero_bento.jpg';
+                }
+
+                const mascotPreview = document.getElementById('admin-hero-mascot-preview');
+                if (mascotPreview) {
+                    mascotPreview.src = restaurantInfo.hero_mascot_url || '/static/images/bento_box_art.jpg';
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Hero Image Upload & Handlers
+        async function handleHeroImageUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                showToast('Téléchargement de la photo principale...', 'info');
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    document.getElementById('hero-img-url-input').value = data.url;
+                    document.getElementById('admin-hero-img-preview').src = data.url;
+                    showToast('Photo principale Hero téléchargée !');
+                } else {
+                    alert(data.error || 'Échec du téléchargement.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de l\'envoi de la photo.');
+            }
+        }
+
+        function updateHeroImgPreview(url) {
+            const preview = document.getElementById('admin-hero-img-preview');
+            if (preview) preview.src = url || '/static/images/dishes/hero_bento.jpg';
+        }
+
+        async function handleHeroMascotUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                showToast('Téléchargement du sticker/mascot...', 'info');
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    document.getElementById('hero-mascot-url-input').value = data.url;
+                    document.getElementById('admin-hero-mascot-preview').src = data.url;
+                    showToast('Sticker / Mascot téléchargé !');
+                } else {
+                    alert(data.error || 'Échec du téléchargement.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de l\'envoi.');
+            }
+        }
+
+        function updateHeroMascotPreview(url) {
+            const preview = document.getElementById('admin-hero-mascot-preview');
+            if (preview) preview.src = url || '/static/images/bento_box_art.jpg';
+        }
+
+        async function handleSaveHero(e) {
+            e.preventDefault();
+            const btn = document.getElementById('save-hero-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> <span>Enregistrement...</span>`;
+
+            const payload = {
+                ...restaurantInfo,
+                hero_badge: document.getElementById('hero-badge-input').value.trim(),
+                name: document.getElementById('hero-title-input').value.trim(),
+                slogan: document.getElementById('hero-slogan-input').value.trim(),
+                story_fr: document.getElementById('hero-story-fr-input').value.trim(),
+                story_vi: document.getElementById('hero-story-vi-input').value.trim(),
+                story_en: document.getElementById('hero-story-en-input').value.trim(),
+                hero_image_url: document.getElementById('hero-img-url-input').value.trim(),
+                hero_dish_badge: document.getElementById('hero-dish-badge-input').value.trim(),
+                hero_dish_price: document.getElementById('hero-dish-price-input').value.trim(),
+                hero_dish_name: document.getElementById('hero-dish-name-input').value.trim(),
+                hero_mascot_url: document.getElementById('hero-mascot-url-input').value.trim()
+            };
+
+            try {
+                const res = await fetch('/api/info', {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    restaurantInfo = data.data || payload;
+                    // Sync Settings tab fields
+                    document.getElementById('info-name').value = restaurantInfo.name || '';
+                    document.getElementById('info-slogan').value = restaurantInfo.slogan || '';
+                    document.getElementById('info-story-fr').value = restaurantInfo.story_fr || '';
+                    document.getElementById('info-story-vi').value = restaurantInfo.story_vi || '';
+
+                    showToast('Bannière Hero mise à jour avec succès !');
+                } else {
+                    alert(data.error || 'Erreur lors de la mise à jour de la bannière.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de la sauvegarde.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-check-circle mr-2"></i> <span>Enregistrer la Bannière Hero</span>`;
+            }
+        }
+
+        async function handleUpdateInfo(e) {
+            e.preventDefault();
+            const btn = document.getElementById('save-info-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Sauvegarde...`;
+
+            const payload = {
+                ...restaurantInfo,
+                name: document.getElementById('info-name').value.trim(),
+                slogan: document.getElementById('info-slogan').value.trim(),
+                tagline: document.getElementById('info-tagline').value.trim(),
+                phone: document.getElementById('info-phone').value.trim(),
+                address: document.getElementById('info-address').value.trim(),
+                location_detail: document.getElementById('info-location').value.trim(),
+                email: document.getElementById('info-email').value.trim(),
+                opening_hours: document.getElementById('info-hours').value.trim(),
+                ubereats_url: document.getElementById('info-ubereats').value.trim(),
+                deliveroo_url: document.getElementById('info-deliveroo').value.trim(),
+                instagram_url: document.getElementById('info-instagram').value.trim(),
+                facebook_url: document.getElementById('info-facebook').value.trim(),
+                tiktok_url: document.getElementById('info-tiktok').value.trim(),
+                story_fr: document.getElementById('info-story-fr').value.trim(),
+                story_vi: document.getElementById('info-story-vi').value.trim()
+            };
+
+            try {
+                const res = await fetch('/api/info', {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    restaurantInfo = data.data || payload;
+                    // Sync Hero tab inputs
+                    document.getElementById('hero-title-input').value = restaurantInfo.name || '';
+                    document.getElementById('hero-slogan-input').value = restaurantInfo.slogan || '';
+                    document.getElementById('hero-story-fr-input').value = restaurantInfo.story_fr || '';
+                    document.getElementById('hero-story-vi-input').value = restaurantInfo.story_vi || '';
+
+                    showToast('Informations du restaurant mises à jour !');
+                } else {
+                    alert('Erreur lors de la mise à jour.');
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-save text-amber-400 mr-2"></i> <span>Enregistrer les modifications</span>`;
+            }
+        }
+
+        // ================= ALLERGEN HEADERS =================
+        async function handleSaveAllergenHeaders(e) {
+            e.preventDefault();
+            const btn = document.getElementById('allergen-headers-save-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Sauvegarde...`;
+
+            const payload = {
+                ...restaurantInfo,
+                allergen_badge: document.getElementById('allergen-badge-input').value.trim(),
+                allergen_title_fr: document.getElementById('allergen-title-fr-input').value.trim(),
+                allergen_title_vi: document.getElementById('allergen-title-vi-input').value.trim(),
+                allergen_title_en: document.getElementById('allergen-title-en-input').value.trim(),
+                allergen_desc_fr: document.getElementById('allergen-desc-fr-input').value.trim(),
+                allergen_desc_vi: document.getElementById('allergen-desc-vi-input').value.trim(),
+                allergen_desc_en: document.getElementById('allergen-desc-en-input').value.trim(),
+                allergen_note_fr: document.getElementById('allergen-note-fr-input').value.trim(),
+                allergen_note_vi: document.getElementById('allergen-note-vi-input').value.trim(),
+                allergen_note_en: document.getElementById('allergen-note-en-input').value.trim()
+            };
+
+            try {
+                const res = await fetch('/api/info', {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    restaurantInfo = data.data || payload;
+                    showToast('Textes de la section Allergènes mis à jour !');
+                } else {
+                    alert(data.error || 'Erreur lors de la mise à jour.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de la sauvegarde.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-save text-amber-400 mr-2"></i> <span>Enregistrer les Textes de l'En-tête</span>`;
+            }
+        }
+
+        // ================= LEXICON MANAGEMENT =================
+        async function fetchAdminLexicon() {
+            try {
+                const res = await fetch('/api/lexicon');
+                allLexicon = await res.json();
+                renderAdminLexicon(allLexicon);
+            } catch (err) {
+                console.error('Error fetching lexicon:', err);
+            }
+        }
+
+        function renderAdminLexicon(items) {
+            const tbody = document.getElementById('admin-lexicon-tbody');
+            if (!tbody) return;
+
+            if (items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-stone-400">Aucun terme culinaire trouvé.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            items.forEach(item => {
+                const imgDisplay = item.image_url 
+                    ? `<img src="${item.image_url}" alt="${item.term}" class="w-12 h-12 rounded-xl object-cover border border-stone-200 shadow-sm shrink-0">`
+                    : `<div class="w-12 h-12 rounded-xl bg-stone-100 border border-stone-200 flex items-center justify-center text-stone-400 text-xs shrink-0"><i class="fas fa-image"></i></div>`;
+
+                html += `
+                    <tr class="hover:bg-stone-50/80 transition">
+                        <td class="py-3 px-4">${imgDisplay}</td>
+                        <td class="py-3 px-4">
+                            <span class="font-bold text-stone-900 block">${item.term}</span>
+                            <span class="text-stone-400 font-mincho text-[11px]">${item.kanji || ''}</span>
+                        </td>
+                        <td class="py-3 px-4 max-w-xs">
+                            <p class="line-clamp-2 text-stone-600">${item.definition_fr}</p>
+                        </td>
+                        <td class="py-3 px-4 max-w-xs">
+                            <p class="line-clamp-2 text-stone-500">${item.definition_vi || '-'}</p>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-stone-400">${item.sort_order}</td>
+                        <td class="py-3 px-4 text-right">
+                            <div class="inline-flex items-center gap-1.5">
+                                <button onclick="openLexiconModal(${item.id})" class="p-2 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded-lg transition" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteLexiconItem(${item.id}, '${item.term.replace(/'/g, "\\'")}')" class="p-2 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function filterLexicon(query) {
+            const q = query.trim().toLowerCase();
+            if (!q) {
+                renderAdminLexicon(allLexicon);
+                return;
+            }
+            const filtered = allLexicon.filter(item => 
+                item.term.toLowerCase().includes(q) ||
+                (item.kanji && item.kanji.toLowerCase().includes(q)) ||
+                item.definition_fr.toLowerCase().includes(q) ||
+                (item.definition_vi && item.definition_vi.toLowerCase().includes(q))
+            );
+            renderAdminLexicon(filtered);
+        }
+
+        function openLexiconModal(id = null) {
+            const modal = document.getElementById('lexicon-form-modal');
+            const heading = document.getElementById('modal-lexicon-heading');
+            
+            if (id) {
+                const item = allLexicon.find(x => x.id === id);
+                if (!item) return;
+                heading.textContent = 'Modifier le Terme : ' + item.term;
+                document.getElementById('lexicon-form-id').value = item.id;
+                document.getElementById('lexicon-form-term').value = item.term;
+                document.getElementById('lexicon-form-kanji').value = item.kanji || '';
+                document.getElementById('lexicon-form-def-fr').value = item.definition_fr || '';
+                document.getElementById('lexicon-form-def-vi').value = item.definition_vi || '';
+                document.getElementById('lexicon-form-def-en').value = item.definition_en || '';
+                document.getElementById('lexicon-form-sort').value = item.sort_order;
+                document.getElementById('lexicon-form-img-url').value = item.image_url || '';
+                updateLexiconImgPreview(item.image_url);
+            } else {
+                heading.textContent = 'Ajouter un Nouveau Terme';
+                document.getElementById('lexicon-form-id').value = '';
+                document.getElementById('lexicon-form-term').value = '';
+                document.getElementById('lexicon-form-kanji').value = '';
+                document.getElementById('lexicon-form-def-fr').value = '';
+                document.getElementById('lexicon-form-def-vi').value = '';
+                document.getElementById('lexicon-form-def-en').value = '';
+                document.getElementById('lexicon-form-sort').value = (allLexicon.length + 1) * 10;
+                document.getElementById('lexicon-form-img-url').value = '';
+                updateLexiconImgPreview('');
+            }
+            document.getElementById('lexicon-file-input').value = '';
+            modal.classList.remove('hidden');
+        }
+
+        function closeLexiconModal() {
+            const modal = document.getElementById('lexicon-form-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function updateLexiconImgPreview(url) {
+            const preview = document.getElementById('lexicon-form-img-preview');
+            if (preview) {
+                preview.src = url && url.trim() !== '' ? url : '/static/images/dishes/hero_bento.jpg';
+            }
+        }
+
+        async function handleLexiconImageUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                showToast("Téléchargement de l'image...", "info");
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    document.getElementById('lexicon-form-img-url').value = data.url;
+                    updateLexiconImgPreview(data.url);
+                    showToast("Image téléchargée với succès !");
+                } else {
+                    alert(data.error || 'Échec du téléchargement.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur lors du téléchargement.');
+            }
+        }
+
+        async function handleSaveLexicon(e) {
+            e.preventDefault();
+            const btn = document.getElementById('lexicon-save-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Sauvegarde...`;
+
+            const id = document.getElementById('lexicon-form-id').value;
+            const payload = {
+                term: document.getElementById('lexicon-form-term').value.trim(),
+                kanji: document.getElementById('lexicon-form-kanji').value.trim(),
+                definition_fr: document.getElementById('lexicon-form-def-fr').value.trim(),
+                definition_vi: document.getElementById('lexicon-form-def-vi').value.trim(),
+                definition_en: document.getElementById('lexicon-form-def-en').value.trim(),
+                image_url: document.getElementById('lexicon-form-img-url').value.trim(),
+                sort_order: parseInt(document.getElementById('lexicon-form-sort').value) || 0
+            };
+
+            const url = id ? `/api/lexicon/${id}` : '/api/lexicon';
+            const method = id ? 'PUT' : 'POST';
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    closeLexiconModal();
+                    await fetchAdminLexicon();
+                    showToast(id ? 'Terme modifié avec succès !' : 'Terme ajouté avec succès !');
+                } else {
+                    alert(data.error || 'Erreur lors de la sauvegarde.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de la sauvegarde.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Enregistrer';
+            }
+        }
+
+        async function deleteLexiconItem(id, term) {
+            if (!confirm(`Êtes-vous sûr de vouloir supprimer le terme culinaire "${term}" ?`)) return;
+
+            try {
+                const res = await fetch(`/api/lexicon/${id}`, {method: 'DELETE'});
+                if (res.ok) {
+                    await fetchAdminLexicon();
+                    showToast('Terme supprimé !');
+                } else {
+                    const data = await res.json();
+                    alert(data.error || 'Erreur lors de la suppression.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de la suppression.');
+            }
+        }
+
+        // ================= ALLERGENS MANAGEMENT =================
+        async function fetchAdminAllergens() {
+            try {
+                const res = await fetch('/api/allergens');
+                allAdminAllergens = await res.json();
+                renderAdminAllergens(allAdminAllergens);
+            } catch (err) {
+                console.error('Error fetching allergens:', err);
+            }
+        }
+
+        function renderAdminAllergens(items) {
+            const tbody = document.getElementById('admin-allergens-tbody');
+            if (!tbody) return;
+
+            if (items.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-stone-400">Aucun allergène répertorié.</td></tr>`;
+                return;
+            }
+
+            let html = '';
+            items.forEach(item => {
+                const visualDisplay = item.image_url && item.image_url.trim() !== ''
+                    ? `<img src="${item.image_url}" alt="${item.name_fr}" class="w-10 h-10 rounded-xl object-cover border border-stone-200 shadow-sm shrink-0">`
+                    : `<div class="w-10 h-10 rounded-xl bg-amber-100/60 flex items-center justify-center text-xl shrink-0">${item.icon || '⚠️'}</div>`;
+
+                html += `
+                    <tr class="hover:bg-stone-50/80 transition">
+                        <td class="py-3 px-4">${visualDisplay}</td>
+                        <td class="py-3 px-4 font-bold text-stone-900">${item.name_fr}</td>
+                        <td class="py-3 px-4 text-stone-600">${item.name_vi || '-'}</td>
+                        <td class="py-3 px-4 text-stone-600">${item.name_en || '-'}</td>
+                        <td class="py-3 px-4 text-stone-500 max-w-xs">
+                            <span class="line-clamp-2">${item.example_dish_fr || '-'}</span>
+                        </td>
+                        <td class="py-3 px-4 font-mono text-stone-400">${item.sort_order}</td>
+                        <td class="py-3 px-4 text-right">
+                            <div class="inline-flex items-center gap-1.5">
+                                <button onclick="openAllergenModal(${item.id})" class="p-2 text-stone-500 hover:text-stone-900 hover:bg-stone-100 rounded-lg transition" title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button onclick="deleteAllergenItem(${item.id}, '${item.name_fr.replace(/'/g, "\\'")}')" class="p-2 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition" title="Supprimer">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            tbody.innerHTML = html;
+        }
+
+        function openAllergenModal(id = null) {
+            const modal = document.getElementById('allergen-form-modal');
+            const heading = document.getElementById('modal-allergen-heading');
+
+            if (id) {
+                const item = allAdminAllergens.find(x => x.id === id);
+                if (!item) return;
+                heading.textContent = 'Modifier l\'Allergène : ' + item.name_fr;
+                document.getElementById('allergen-form-id').value = item.id;
+                document.getElementById('allergen-form-name-fr').value = item.name_fr;
+                document.getElementById('allergen-form-name-vi').value = item.name_vi || '';
+                document.getElementById('allergen-form-name-en').value = item.name_en || '';
+                document.getElementById('allergen-form-icon').value = item.icon || '';
+                document.getElementById('allergen-form-sort').value = item.sort_order;
+                document.getElementById('allergen-form-example-fr').value = item.example_dish_fr || '';
+                document.getElementById('allergen-form-example-vi').value = item.example_dish_vi || '';
+                document.getElementById('allergen-form-example-en').value = item.example_dish_en || '';
+                document.getElementById('allergen-form-img-url').value = item.image_url || '';
+                updateAllergenImgPreview(item.image_url, item.icon);
+            } else {
+                heading.textContent = 'Ajouter un Nouvel Allergène';
+                document.getElementById('allergen-form-id').value = '';
+                document.getElementById('allergen-form-name-fr').value = '';
+                document.getElementById('allergen-form-name-vi').value = '';
+                document.getElementById('allergen-form-name-en').value = '';
+                document.getElementById('allergen-form-icon').value = '⚠️';
+                document.getElementById('allergen-form-sort').value = (allAdminAllergens.length + 1) * 10;
+                document.getElementById('allergen-form-example-fr').value = '';
+                document.getElementById('allergen-form-example-vi').value = '';
+                document.getElementById('allergen-form-example-en').value = '';
+                document.getElementById('allergen-form-img-url').value = '';
+                updateAllergenImgPreview('', '⚠️');
+            }
+            document.getElementById('allergen-file-input').value = '';
+            modal.classList.remove('hidden');
+        }
+
+        function closeAllergenModal() {
+            const modal = document.getElementById('allergen-form-modal');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function updateAllergenImgPreview(url, icon = null) {
+            const imgEl = document.getElementById('allergen-form-img-preview');
+            const iconEl = document.getElementById('allergen-form-icon-preview');
+            if (!icon && document.getElementById('allergen-form-icon')) {
+                icon = document.getElementById('allergen-form-icon').value;
+            }
+
+            if (url && url.trim() !== '') {
+                imgEl.src = url;
+                imgEl.classList.remove('hidden');
+                iconEl.classList.add('hidden');
+            } else {
+                iconEl.textContent = icon || '⚠️';
+                iconEl.classList.remove('hidden');
+                imgEl.classList.add('hidden');
+            }
+        }
+
+        async function handleAllergenImageUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                showToast("Téléchargement de l'image de l'allergène...", "info");
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    document.getElementById('allergen-form-img-url').value = data.url;
+                    updateAllergenImgPreview(data.url);
+                    showToast("Image téléchargée avec succès !");
+                } else {
+                    alert(data.error || 'Échec du téléchargement.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur lors du téléchargement.');
+            }
+        }
+
+        async function handleSaveAllergen(e) {
+            e.preventDefault();
+            const btn = document.getElementById('allergen-save-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-1"></i> Sauvegarde...`;
+
+            const id = document.getElementById('allergen-form-id').value;
+            const payload = {
+                name_fr: document.getElementById('allergen-form-name-fr').value.trim(),
+                name_vi: document.getElementById('allergen-form-name-vi').value.trim(),
+                name_en: document.getElementById('allergen-form-name-en').value.trim(),
+                icon: document.getElementById('allergen-form-icon').value.trim(),
+                image_url: document.getElementById('allergen-form-img-url').value.trim(),
+                example_dish_fr: document.getElementById('allergen-form-example-fr').value.trim(),
+                example_dish_vi: document.getElementById('allergen-form-example-vi').value.trim(),
+                example_dish_en: document.getElementById('allergen-form-example-en').value.trim(),
+                sort_order: parseInt(document.getElementById('allergen-form-sort').value) || 0
+            };
+
+            const url = id ? `/api/allergens/${id}` : '/api/allergens';
+            const method = id ? 'PUT' : 'POST';
+
+            try {
+                const res = await fetch(url, {
+                    method: method,
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    closeAllergenModal();
+                    await fetchAdminAllergens();
+                    showToast(id ? 'Allergène modifié avec succès !' : 'Allergène ajouté avec succès !');
+                } else {
+                    alert(data.error || 'Erreur lors de la sauvegarde.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de la sauvegarde.');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Enregistrer';
+            }
+        }
+
+        async function deleteAllergenItem(id, name) {
+            if (!confirm(`Êtes-vous sûr de vouloir supprimer l'allergène "${name}" ?`)) return;
+
+            try {
+                const res = await fetch(`/api/allergens/${id}`, {method: 'DELETE'});
+                if (res.ok) {
+                    await fetchAdminAllergens();
+                    showToast('Allergène supprimé !');
+                } else {
+                    const data = await res.json();
+                    alert(data.error || 'Erreur lors de la suppression.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de la suppression.');
+            }
+        }
+
+        // Change Password
+        async function handleChangePassword(e) {
+            e.preventDefault();
+            const alertBox = document.getElementById('pw-alert');
+            const oldPw = document.getElementById('old-pw').value;
+            const newPw = document.getElementById('new-pw').value;
+            const confirmPw = document.getElementById('confirm-pw').value;
+
+            if (newPw !== confirmPw) {
+                alertBox.className = 'p-3 rounded-xl text-xs font-semibold text-center bg-red-50 text-red-700 border border-red-200';
+                alertBox.textContent = 'Les nouveaux mots de passe ne correspondent pas.';
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/admin/change-password', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({old_password: oldPw, new_password: newPw})
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    alertBox.className = 'p-3 rounded-xl text-xs font-semibold text-center bg-emerald-50 text-emerald-700 border border-emerald-200';
+                    alertBox.textContent = 'Mot de passe modifié avec succès !';
+                    alertBox.classList.remove('hidden');
+                    e.target.reset();
+                } else {
+                    alertBox.className = 'p-3 rounded-xl text-xs font-semibold text-center bg-red-50 text-red-700 border border-red-200';
+                    alertBox.textContent = data.error || 'Erreur lors du changement.';
+                    alertBox.classList.remove('hidden');
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Logout
+        async function handleLogout() {
+            try {
+                await fetch('/api/admin/logout', {method: 'POST'});
+                window.location.href = '/admin/login';
+            } catch (err) {
+                window.location.href = '/admin/login';
+            }
+        }
+
+        // Update Stat Counters
+        function updateStats() {
+            document.getElementById('stat-total-dishes').textContent = allDishes.length;
+            document.getElementById('stat-total-cats').textContent = allCategories.length;
+            document.getElementById('stat-total-res').textContent = allReservations.length;
+
+            const pending = allReservations.filter(r => r.status === 'pending').length;
+            document.getElementById('stat-pending-res').textContent = pending;
+
+            const badge = document.getElementById('tab-res-badge');
+            if (pending > 0) {
+                badge.textContent = pending;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // Toast Helper
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const text = document.getElementById('toast-msg');
+
+            text.textContent = msg;
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle text-emerald-400 text-base';
+            } else {
+                icon.className = 'fas fa-info-circle text-blue-400 text-base';
+            }
+
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
