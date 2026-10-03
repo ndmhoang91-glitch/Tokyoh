@@ -1183,17 +1183,17 @@
             const modalBtn = document.getElementById('modal-reserve-btn');
 
             if (isEn === 0) {
-                if (resSection) resSection.classList.add('hidden');
-                if (navBtn) navBtn.classList.add('hidden');
-                if (mobileLink) mobileLink.classList.add('hidden');
-                if (heroBtn) heroBtn.classList.add('hidden');
-                if (modalBtn) modalBtn.classList.add('hidden');
+                if (resSection) resSection.style.setProperty('display', 'none', 'important');
+                if (navBtn) navBtn.style.setProperty('display', 'none', 'important');
+                if (mobileLink) mobileLink.style.setProperty('display', 'none', 'important');
+                if (heroBtn) heroBtn.style.setProperty('display', 'none', 'important');
+                if (modalBtn) modalBtn.style.setProperty('display', 'none', 'important');
             } else {
-                if (resSection) resSection.classList.remove('hidden');
-                if (navBtn) navBtn.classList.remove('hidden');
-                if (mobileLink) mobileLink.classList.remove('hidden');
-                if (heroBtn) heroBtn.classList.remove('hidden');
-                if (modalBtn) modalBtn.classList.remove('hidden');
+                if (resSection) resSection.style.removeProperty('display');
+                if (navBtn) navBtn.style.removeProperty('display');
+                if (mobileLink) mobileLink.style.removeProperty('display');
+                if (heroBtn) heroBtn.style.removeProperty('display');
+                if (modalBtn) modalBtn.style.removeProperty('display');
             }
         }
 
