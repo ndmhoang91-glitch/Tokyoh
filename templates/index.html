@@ -120,7 +120,7 @@
                 <!-- Language Selector -->
                 <div class="flex items-center bg-stone-800 rounded px-1.5 py-0.5 border border-stone-700">
                     <button onclick="setLanguage('fr')" id="lang-btn-fr" class="px-1.5 py-0.5 text-[11px] font-bold rounded bg-red-600 text-white transition">FR</button>
-                    <button onclick="setLanguage('vi')" id="lang-btn-vi" class="px-1.5 py-0.5 text-[11px] font-bold rounded text-stone-400 hover:text-white transition">VI</button>
+                    <button onclick="setLanguage('es')" id="lang-btn-es" class="px-1.5 py-0.5 text-[11px] font-bold rounded text-stone-400 hover:text-white transition">ES</button>
                     <button onclick="setLanguage('en')" id="lang-btn-en" class="px-1.5 py-0.5 text-[11px] font-bold rounded text-stone-400 hover:text-white transition">EN</button>
                 </div>
             </div>
@@ -958,41 +958,41 @@
                 modal_order: "Commander en livraison",
                 modal_reserve: "Réserver sur place"
             },
-            vi: {
-                nav_menu: "Thực Đơn",
-                nav_gourmand: "Set Bento Đại Tiệc",
-                nav_lexicon: "Từ Điển Món Nhật",
-                nav_allergens: "Dị Ứng",
-                nav_fidelity: "Tích Điểm",
-                nav_contact: "Địa Chỉ & Liên Hệ",
-                nav_reserve: "Đặt Bàn",
-                nav_order: "Đặt Món",
-                hero_badge: "MỚI TẠI ANGLET • CHỢ HALLES DES 5 CANTONS",
-                feat_dinein: "Ăn Tại Quán",
-                feat_dinein_sub: "Không khí Tokyo",
-                feat_takeaway: "Mang Đi",
-                feat_takeaway_sub: "Nhanh chóng tiện lợi",
-                feat_delivery: "Giao Tận Nơi",
-                cta_menu: "Khám Phá Menu",
-                cta_reserve: "Đặt Bàn Trước",
-                feat_1_title: "100% Tự Làm",
-                feat_1_desc: "Nấu mới mỗi sáng",
-                feat_2_title: "Nguyên Liệu Tươi",
-                feat_2_desc: "Rau củ & cá ngừ hảo hạng",
-                feat_3_title: "Bột Chiên Panko",
-                feat_3_desc: "Giòn rụm khó cưỡng",
-                feat_4_title: "Món Chay Phong Phú",
-                feat_4_desc: "Đậu hũ non & hạt edamame",
-                menu_subtitle: "THỰC ĐƠN NHÀ HÀNG",
-                menu_title: "Tinh Hoa Ẩm Thực Nhật Bản",
-                menu_desc: "Khám phá các hộp cơm bento chuẩn vị, món khai vị giòn tan và tráng miệng thanh mát xứ Phù Tang. Giá cả minh bạch, nguyên liệu chọn lọc.",
-                lex_subtitle: "CẨM NANG ẨM THỰC • 用語集",
-                lex_title: "Từ Điển Các Món Ngon Nhật Bản",
-                lex_desc: "Tìm hiểu ý nghĩa và nét độc đáo của từng món ăn Nhật có trong thực đơn TokyOh! để dễ dàng chọn món chuẩn gu của bạn.",
-                res_title: "Đặt Bàn Tại Nhà Hàng TokyOh!",
-                res_desc: "Dù là bữa trưa nhanh hay bữa tối sum vầy cùng gia đình và bạn bè tại Anglet, hãy đặt bàn trước để chúng tôi chuẩn bị đón tiếp chu đáo nhất.",
-                modal_order: "Đặt giao tận nơi",
-                modal_reserve: "Đặt bàn tại quán"
+            es: {
+                nav_menu: "La Carta",
+                nav_gourmand: "Menú Gourmet",
+                nav_lexicon: "Glosario Japonés",
+                nav_allergens: "Alérgenos",
+                nav_fidelity: "Fidelidad",
+                nav_contact: "Ubicación & Contacto",
+                nav_reserve: "Reservar",
+                nav_order: "Pedir Online",
+                hero_badge: "NUEVO EN ANGLET • HALLES DES 5 CANTONS",
+                feat_dinein: "En Local",
+                feat_dinein_sub: "Ambiente Tokio",
+                feat_takeaway: "Para Llevar",
+                feat_takeaway_sub: "Listo para degustar",
+                feat_delivery: "A Domicilio",
+                cta_menu: "Explorar la Carta",
+                cta_reserve: "Reservar una mesa",
+                feat_1_title: "100% Casero",
+                feat_1_desc: "Cocinado cada mañana",
+                feat_2_title: "Ingredientes Frescos",
+                feat_2_desc: "Verduras & atún seleccionado",
+                feat_3_title: "Rebozado Panko",
+                feat_3_desc: "Crujiente incomparable",
+                feat_4_title: "Opciones Veganas",
+                feat_4_desc: "Tofu crujiente & edamame",
+                menu_subtitle: "LA CARTA DEL RESTAURANTE",
+                menu_title: "Especialidades Japonesas",
+                menu_desc: "Descubra nuestros bentos tradicionales, bocados crujientes y dulces de Tokio. Precios claros, ingredientes certificados y opciones personalizables.",
+                lex_subtitle: "DICCIONARIO CULINARIO • 用語集",
+                lex_title: "Glosario Culinario Japonés",
+                lex_desc: "¿Curioso por saber más sobre la gastronomía japonesa? Descubra los secretos y significados de cada palabra de nuestra carta para componer su comida perfecta.",
+                res_title: "Reserve su Mesa en TokyOh!",
+                res_desc: "Para un almuerzo rápido o una cena con amigos en Anglet, reserve su mesa en pocos clics. Confirmación inmediata.",
+                modal_order: "Pedir a domicilio",
+                modal_reserve: "Reservar en el local"
             },
             en: {
                 nav_menu: "Our Menu",
@@ -1049,7 +1049,7 @@
         // Language switch
         function setLanguage(lang) {
             currentLang = lang;
-            ['fr', 'vi', 'en'].forEach(l => {
+            ['fr', 'es', 'en'].forEach(l => {
                 const btn = document.getElementById(`lang-btn-${l}`);
                 if (btn) {
                     if (l === lang) {
@@ -1175,8 +1175,8 @@
             if (!restaurantInfoData) return;
             const storyEl = document.getElementById('hero-story');
             if (!storyEl) return;
-            if (lang === 'vi' && restaurantInfoData.story_vi) {
-                storyEl.textContent = restaurantInfoData.story_vi;
+            if (lang === 'es' && restaurantInfoData.story_es) {
+                storyEl.textContent = restaurantInfoData.story_es;
             } else if (lang === 'en' && restaurantInfoData.story_en) {
                 storyEl.textContent = restaurantInfoData.story_en;
             } else if (restaurantInfoData.story_fr) {
@@ -1216,7 +1216,7 @@
             const container = document.getElementById('category-tabs-container');
             if (!container || !menuData) return;
 
-            const allLabel = currentLang === 'vi' ? 'Tất cả món' : (currentLang === 'en' ? 'All Dishes' : 'Tous les plats');
+            const allLabel = currentLang === 'es' ? 'Todos los platos' : (currentLang === 'en' ? 'All Dishes' : 'Tous les plats');
             let html = `
                 <button onclick="selectCategory('all')" id="cat-tab-all" class="cat-tab shrink-0 whitespace-nowrap px-5 py-2.5 rounded-xl font-bold text-sm ${activeCategory === 'all' ? 'bg-red-600 text-white shadow-sm' : 'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50'} transition flex items-center gap-1.5">
                     <span class="font-mincho text-xs opacity-80">全部</span>
@@ -1225,7 +1225,7 @@
             `;
 
             menuData.categories.forEach(cat => {
-                const catName = currentLang === 'vi' ? cat.name_vi : (currentLang === 'en' ? cat.name_en : cat.name_fr);
+                const catName = currentLang === 'es' ? (cat.name_es || cat.name_fr) : (currentLang === 'en' ? cat.name_en : cat.name_fr);
                 const isActive = activeCategory === cat.slug;
                 html += `
                     <button onclick="selectCategory('${cat.slug}')" id="cat-tab-${cat.slug}" class="cat-tab shrink-0 whitespace-nowrap px-5 py-2.5 rounded-xl font-bold text-sm ${isActive ? 'bg-red-600 text-white shadow-sm' : 'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50'} transition flex items-center gap-1.5">
@@ -1292,10 +1292,10 @@
                 // Search query
                 if (currentSearchQuery) {
                     const textFr = (dish.name_fr + ' ' + (dish.description_fr || '')).toLowerCase();
-                    const textVi = (dish.name_vi + ' ' + (dish.description_vi || '')).toLowerCase();
-                    const textEn = (dish.name_en + ' ' + (dish.description_en || '')).toLowerCase();
+                    const textEs = ((dish.name_es || '') + ' ' + (dish.description_es || '')).toLowerCase();
+                    const textEn = ((dish.name_en || '') + ' ' + (dish.description_en || '')).toLowerCase();
                     const kanji = (dish.kanji || '').toLowerCase();
-                    if (!textFr.includes(currentSearchQuery) && !textVi.includes(currentSearchQuery) && !textEn.includes(currentSearchQuery) && !kanji.includes(currentSearchQuery)) {
+                    if (!textFr.includes(currentSearchQuery) && !textEs.includes(currentSearchQuery) && !textEn.includes(currentSearchQuery) && !kanji.includes(currentSearchQuery)) {
                         return false;
                     }
                 }
@@ -1315,8 +1315,8 @@
 
             let html = '';
             filtered.forEach(dish => {
-                const title = currentLang === 'vi' ? (dish.name_vi || dish.name_fr) : (currentLang === 'en' ? (dish.name_en || dish.name_fr) : dish.name_fr);
-                const desc = currentLang === 'vi' ? (dish.description_vi || dish.description_fr) : (currentLang === 'en' ? (dish.description_en || dish.description_fr) : dish.description_fr);
+                const title = currentLang === 'es' ? (dish.name_es || dish.name_fr) : (currentLang === 'en' ? (dish.name_en || dish.name_fr) : dish.name_fr);
+                const desc = currentLang === 'es' ? (dish.description_es || dish.description_fr) : (currentLang === 'en' ? (dish.description_en || dish.description_fr) : dish.description_fr);
                 const priceFormatted = dish.price.toFixed(2).replace('.', ',') + ' €';
 
                 // Badge badge styling
@@ -1415,8 +1415,8 @@
             if (!dish) return;
 
             const modal = document.getElementById('dish-modal');
-            const title = currentLang === 'vi' ? (dish.name_vi || dish.name_fr) : (currentLang === 'en' ? (dish.name_en || dish.name_fr) : dish.name_fr);
-            const desc = currentLang === 'vi' ? (dish.description_vi || dish.description_fr) : (currentLang === 'en' ? (dish.description_en || dish.description_fr) : dish.description_fr);
+            const title = currentLang === 'es' ? (dish.name_es || dish.name_fr) : (currentLang === 'en' ? (dish.name_en || dish.name_fr) : dish.name_fr);
+            const desc = currentLang === 'es' ? (dish.description_es || dish.description_fr) : (currentLang === 'en' ? (dish.description_en || dish.description_fr) : dish.description_fr);
 
             document.getElementById('modal-img').src = dish.image_url || '/static/images/dishes/hero_bento.jpg';
             document.getElementById('modal-title').textContent = title;
@@ -1506,7 +1506,7 @@
 
             let html = '';
             lexiconData.forEach(item => {
-                const def = currentLang === 'vi' ? (item.definition_vi || item.definition_fr) : (currentLang === 'en' ? (item.definition_en || item.definition_fr) : item.definition_fr);
+                const def = currentLang === 'es' ? (item.definition_es || item.definition_fr) : (currentLang === 'en' ? (item.definition_en || item.definition_fr) : item.definition_fr);
                 html += `
                     <div class="bg-stone-50 hover:bg-white p-5 rounded-2xl border border-stone-200/80 hover:border-red-300 hover:shadow-md transition duration-200">
                         <div class="flex items-baseline justify-between mb-2">
@@ -1541,8 +1541,8 @@
 
             let html = '';
             allergensData.forEach(item => {
-                const name = currentLang === 'vi' ? (item.name_vi || item.name_fr) : (currentLang === 'en' ? (item.name_en || item.name_fr) : item.name_fr);
-                const example = currentLang === 'vi' ? (item.example_dish_vi || item.example_dish_fr) : (currentLang === 'en' ? (item.example_dish_en || item.example_dish_fr) : item.example_dish_fr);
+                const name = currentLang === 'es' ? (item.name_es || item.name_fr) : (currentLang === 'en' ? (item.name_en || item.name_fr) : item.name_fr);
+                const example = currentLang === 'es' ? (item.example_dish_es || item.example_dish_fr) : (currentLang === 'en' ? (item.example_dish_en || item.example_dish_fr) : item.example_dish_fr);
 
                 html += `
                     <div class="p-3 rounded-xl bg-stone-50 border border-stone-100 hover:bg-white hover:border-amber-200 hover:shadow-sm transition duration-200 text-center flex flex-col items-center justify-center">
@@ -1563,20 +1563,20 @@
             }
             const titleEl = document.getElementById('allergen-main-title');
             if (titleEl) {
-                if (lang === 'vi' && restaurantInfoData.allergen_title_vi) titleEl.textContent = restaurantInfoData.allergen_title_vi;
+                if (lang === 'es' && restaurantInfoData.allergen_title_es) titleEl.textContent = restaurantInfoData.allergen_title_es;
                 else if (lang === 'en' && restaurantInfoData.allergen_title_en) titleEl.textContent = restaurantInfoData.allergen_title_en;
                 else if (restaurantInfoData.allergen_title_fr) titleEl.textContent = restaurantInfoData.allergen_title_fr;
             }
             const descEl = document.getElementById('allergen-main-desc');
             if (descEl) {
-                if (lang === 'vi' && restaurantInfoData.allergen_desc_vi) descEl.textContent = restaurantInfoData.allergen_desc_vi;
+                if (lang === 'es' && restaurantInfoData.allergen_desc_es) descEl.textContent = restaurantInfoData.allergen_desc_es;
                 else if (lang === 'en' && restaurantInfoData.allergen_desc_en) descEl.textContent = restaurantInfoData.allergen_desc_en;
                 else if (restaurantInfoData.allergen_desc_fr) descEl.textContent = restaurantInfoData.allergen_desc_fr;
             }
             const noteEl = document.getElementById('allergen-notice-text');
             if (noteEl) {
                 let noteText = restaurantInfoData.allergen_note_fr || '';
-                if (lang === 'vi' && restaurantInfoData.allergen_note_vi) noteText = restaurantInfoData.allergen_note_vi;
+                if (lang === 'es' && restaurantInfoData.allergen_note_es) noteText = restaurantInfoData.allergen_note_es;
                 else if (lang === 'en' && restaurantInfoData.allergen_note_en) noteText = restaurantInfoData.allergen_note_en;
                 if (noteText) {
                     noteEl.innerHTML = `<i class="fas fa-info-circle text-amber-500 mr-1"></i> ${noteText}`;

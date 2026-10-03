@@ -113,14 +113,15 @@ def manage_lexicon():
         return jsonify({'error': 'Le terme est requis.'}), 400
 
     c.execute('''
-    INSERT INTO lexicon (term, kanji, definition_fr, definition_vi, definition_en, image_url, sort_order)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO lexicon (term, kanji, definition_fr, definition_vi, definition_en, definition_es, image_url, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         term,
         (data.get('kanji') or '').strip(),
         (data.get('definition_fr') or '').strip(),
         (data.get('definition_vi') or '').strip(),
         (data.get('definition_en') or '').strip(),
+        (data.get('definition_es') or data.get('definition_vi') or '').strip(),
         (data.get('image_url') or '').strip(),
         int(data.get('sort_order', 0))
     ))
@@ -155,6 +156,7 @@ def update_delete_lexicon(item_id):
         definition_fr = ?,
         definition_vi = ?,
         definition_en = ?,
+        definition_es = ?,
         image_url = ?,
         sort_order = ?
     WHERE id = ?
@@ -164,6 +166,7 @@ def update_delete_lexicon(item_id):
         (data.get('definition_fr') or '').strip(),
         (data.get('definition_vi') or '').strip(),
         (data.get('definition_en') or '').strip(),
+        (data.get('definition_es') or data.get('definition_vi') or '').strip(),
         (data.get('image_url') or '').strip(),
         int(data.get('sort_order', 0)),
         item_id
@@ -194,17 +197,19 @@ def manage_allergens():
         return jsonify({'error': 'Le nom de l\'allergène est requis.'}), 400
 
     c.execute('''
-    INSERT INTO allergens (name_fr, name_vi, name_en, icon, image_url, example_dish_fr, example_dish_vi, example_dish_en, sort_order)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    INSERT INTO allergens (name_fr, name_vi, name_en, name_es, icon, image_url, example_dish_fr, example_dish_vi, example_dish_en, example_dish_es, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         name_fr,
         (data.get('name_vi') or name_fr).strip(),
         (data.get('name_en') or name_fr).strip(),
+        (data.get('name_es') or data.get('name_vi') or name_fr).strip(),
         (data.get('icon') or '⚠️').strip(),
         (data.get('image_url') or '').strip(),
         (data.get('example_dish_fr') or '').strip(),
         (data.get('example_dish_vi') or '').strip(),
         (data.get('example_dish_en') or '').strip(),
+        (data.get('example_dish_es') or data.get('example_dish_vi') or '').strip(),
         int(data.get('sort_order', 0))
     ))
     new_id = c.lastrowid
@@ -236,22 +241,26 @@ def update_delete_allergen(item_id):
         name_fr = ?,
         name_vi = ?,
         name_en = ?,
+        name_es = ?,
         icon = ?,
         image_url = ?,
         example_dish_fr = ?,
         example_dish_vi = ?,
         example_dish_en = ?,
+        example_dish_es = ?,
         sort_order = ?
     WHERE id = ?
     ''', (
         name_fr,
         (data.get('name_vi') or name_fr).strip(),
         (data.get('name_en') or name_fr).strip(),
+        (data.get('name_es') or data.get('name_vi') or name_fr).strip(),
         (data.get('icon') or '⚠️').strip(),
         (data.get('image_url') or '').strip(),
         (data.get('example_dish_fr') or '').strip(),
         (data.get('example_dish_vi') or '').strip(),
         (data.get('example_dish_en') or '').strip(),
+        (data.get('example_dish_es') or data.get('example_dish_vi') or '').strip(),
         int(data.get('sort_order', 0)),
         item_id
     ))
@@ -372,20 +381,22 @@ def manage_dishes():
     c = conn.cursor()
     c.execute('''
     INSERT INTO dishes (
-        category_id, name_fr, name_vi, name_en, kanji,
-        description_fr, description_vi, description_en,
+        category_id, name_fr, name_vi, name_en, name_es, kanji,
+        description_fr, description_vi, description_en, description_es,
         price, image_url, badge, dietary_tags, allergens,
         protein_options, is_available, sort_order
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         int(category_id),
         name_fr,
         data.get('name_vi', ''),
         data.get('name_en', ''),
+        data.get('name_es', data.get('name_vi', '')),
         data.get('kanji', ''),
         data.get('description_fr', ''),
         data.get('description_vi', ''),
         data.get('description_en', ''),
+        data.get('description_es', data.get('description_vi', '')),
         float(price),
         data.get('image_url', '/static/images/dishes/hero_bento.jpg'),
         data.get('badge', ''),
@@ -422,10 +433,12 @@ def update_delete_dish(dish_id):
         name_fr = ?,
         name_vi = ?,
         name_en = ?,
+        name_es = ?,
         kanji = ?,
         description_fr = ?,
         description_vi = ?,
         description_en = ?,
+        description_es = ?,
         price = ?,
         image_url = ?,
         badge = ?,
@@ -440,10 +453,12 @@ def update_delete_dish(dish_id):
         data.get('name_fr', '').strip(),
         data.get('name_vi', ''),
         data.get('name_en', ''),
+        data.get('name_es', data.get('name_vi', '')),
         data.get('kanji', ''),
         data.get('description_fr', ''),
         data.get('description_vi', ''),
         data.get('description_en', ''),
+        data.get('description_es', data.get('description_vi', '')),
         float(data.get('price', 0)),
         data.get('image_url', ''),
         data.get('badge', ''),
@@ -497,6 +512,7 @@ def manage_categories():
     name_fr = (data.get('name_fr') or '').strip()
     name_vi = (data.get('name_vi') or name_fr).strip()
     name_en = (data.get('name_en') or name_fr).strip()
+    name_es = (data.get('name_es') or data.get('name_vi') or name_fr).strip()
     kanji = data.get('kanji', '')
     sort_order = int(data.get('sort_order', 0))
 
@@ -505,9 +521,9 @@ def manage_categories():
         return jsonify({'error': 'Slug et nom requis.'}), 400
 
     c.execute('''
-    INSERT INTO categories (slug, name_fr, name_vi, name_en, kanji, sort_order)
-    VALUES (?, ?, ?, ?, ?, ?)
-    ''', (slug, name_fr, name_vi, name_en, kanji, sort_order))
+    INSERT INTO categories (slug, name_fr, name_vi, name_en, name_es, kanji, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    ''', (slug, name_fr, name_vi, name_en, name_es, kanji, sort_order))
     new_id = c.lastrowid
     conn.commit()
     conn.close()
@@ -539,6 +555,7 @@ def update_delete_category(cat_id):
         name_fr = ?,
         name_vi = ?,
         name_en = ?,
+        name_es = ?,
         kanji = ?,
         sort_order = ?
     WHERE id = ?
@@ -547,6 +564,7 @@ def update_delete_category(cat_id):
         data.get('name_fr', '').strip(),
         data.get('name_vi', '').strip(),
         data.get('name_en', '').strip(),
+        (data.get('name_es') or data.get('name_vi') or '').strip(),
         data.get('kanji', '').strip(),
         int(data.get('sort_order', 0)),
         cat_id
@@ -591,6 +609,7 @@ def update_info():
         story_fr = ?,
         story_vi = ?,
         story_en = ?,
+        story_es = ?,
         hero_badge = ?,
         hero_image_url = ?,
         hero_dish_name = ?,
@@ -601,12 +620,15 @@ def update_info():
         allergen_title_fr = ?,
         allergen_title_vi = ?,
         allergen_title_en = ?,
+        allergen_title_es = ?,
         allergen_desc_fr = ?,
         allergen_desc_vi = ?,
         allergen_desc_en = ?,
+        allergen_desc_es = ?,
         allergen_note_fr = ?,
         allergen_note_vi = ?,
-        allergen_note_en = ?
+        allergen_note_en = ?,
+        allergen_note_es = ?
     WHERE id = 1
     ''', (
         val('name', 'TokyOh! Anglet'),
@@ -625,6 +647,7 @@ def update_info():
         val('story_fr', ''),
         val('story_vi', ''),
         val('story_en', ''),
+        val('story_es', ''),
         val('hero_badge', 'NOUVEAU À ANGLET • HALLES DES 5 CANTONS'),
         val('hero_image_url', '/static/images/dishes/hero_bento.jpg'),
         val('hero_dish_name', 'Lunch Katsu Bento'),
@@ -635,12 +658,15 @@ def update_info():
         val('allergen_title_fr', 'Guide des Allergènes & Recettes Saines'),
         val('allergen_title_vi', 'Cẩm Nang Dị Ứng & Dinh Dưỡng Lành Mạnh'),
         val('allergen_title_en', 'Allergen Guide & Healthy Dining'),
+        val('allergen_title_es', 'Guía de Alérgenos y Nutrición Saludable'),
         val('allergen_desc_fr', 'Conformément à la réglementation française et européenne, nous affichons avec la plus grande transparence l''ensemble des allergènes majeurs présents dans nos préparations.'),
         val('allergen_desc_vi', 'Tuân thủ nghiêm ngặt quy định an toàn thực phẩm của Pháp và EU, chúng tôi công khai minh bạch tất cả các nhóm dị ứng trong thực đơn.'),
         val('allergen_desc_en', 'In full compliance with French and EU food safety standards, we display all major allergens present in our dishes with total transparency.'),
+        val('allergen_desc_es', 'Cumpliendo rigurosamente con la normativa europea de seguridad alimentaria, mostramos con total transparencia todos los alérgenos presentes en nuestras recetas.'),
         val('allergen_note_fr', 'Merci de signaler toute allergie ou intolérance à notre équipe lors de votre commande afin que nous adaptions votre plat avec le plus grand soin.'),
         val('allergen_note_vi', 'Vui lòng thông báo cho nhân viên nếu bạn có bất kỳ dị ứng nào khi gọi món để đầu bếp chế biến phù hợp nhất.'),
-        val('allergen_note_en', 'Please inform our team of any food allergies or intolerances when ordering so we can prepare your dish with extra care.')
+        val('allergen_note_en', 'Please inform our team of any food allergies or intolerances when ordering so we can prepare your dish with extra care.'),
+        val('allergen_note_es', 'Por favor, informe a nuestro equipo de cualquier alergia o intolerancia al realizar su pedido para que podamos adaptar su plato con el mayor cuidado.')
     ))
     conn.commit()
     updated_row = c.execute('SELECT * FROM restaurant_info WHERE id = 1').fetchone()

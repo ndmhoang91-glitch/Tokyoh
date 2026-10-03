@@ -31,6 +31,7 @@ def init_db():
         name_fr TEXT NOT NULL,
         name_vi TEXT NOT NULL,
         name_en TEXT NOT NULL,
+        name_es TEXT,
         kanji TEXT,
         sort_order INTEGER DEFAULT 0
     )
@@ -44,10 +45,12 @@ def init_db():
         name_fr TEXT NOT NULL,
         name_vi TEXT,
         name_en TEXT,
+        name_es TEXT,
         kanji TEXT,
         description_fr TEXT,
         description_vi TEXT,
         description_en TEXT,
+        description_es TEXT,
         price REAL NOT NULL,
         image_url TEXT,
         badge TEXT DEFAULT '',
@@ -80,6 +83,7 @@ def init_db():
         story_fr TEXT,
         story_vi TEXT,
         story_en TEXT,
+        story_es TEXT,
         hero_badge TEXT DEFAULT 'NOUVEAU À ANGLET • HALLES DES 5 CANTONS',
         hero_image_url TEXT DEFAULT '/static/images/dishes/hero_bento.jpg',
         hero_dish_name TEXT DEFAULT 'Lunch Katsu Bento',
@@ -90,12 +94,15 @@ def init_db():
         allergen_title_fr TEXT DEFAULT 'Guide des Allergènes & Recettes Saines',
         allergen_title_vi TEXT DEFAULT 'Cẩm Nang Dị Ứng & Dinh Dưỡng Lành Mạnh',
         allergen_title_en TEXT DEFAULT 'Allergen Guide & Healthy Dining',
+        allergen_title_es TEXT DEFAULT 'Guía de Alérgenos y Nutrición Saludable',
         allergen_desc_fr TEXT DEFAULT 'Conformément à la réglementation française et européenne, nous affichons avec la plus grande transparence l''ensemble des allergènes majeurs présents dans nos préparations.',
         allergen_desc_vi TEXT DEFAULT 'Tuân thủ nghiêm ngặt quy định an toàn thực phẩm của Pháp và EU, chúng tôi công khai minh bạch tất cả các nhóm dị ứng trong thực đơn.',
         allergen_desc_en TEXT DEFAULT 'In full compliance with French and EU food safety standards, we display all major allergens present in our dishes with total transparency.',
+        allergen_desc_es TEXT DEFAULT 'Cumpliendo rigurosamente con la normativa europea de seguridad alimentaria, mostramos con total transparencia todos los alérgenos presentes en nuestras recetas.',
         allergen_note_fr TEXT DEFAULT 'Merci de signaler toute allergie ou intolérance à notre équipe lors de votre commande afin que nous adaptions votre plat với le plus grand soin.',
         allergen_note_vi TEXT DEFAULT 'Vui lòng thông báo cho nhân viên nếu bạn có bất kỳ dị ứng nào khi gọi món để đầu bếp chế biến phù hợp nhất.',
-        allergen_note_en TEXT DEFAULT 'Please inform our team of any food allergies or intolerances when ordering so we can prepare your dish with extra care.'
+        allergen_note_en TEXT DEFAULT 'Please inform our team of any food allergies or intolerances when ordering so we can prepare your dish with extra care.',
+        allergen_note_es TEXT DEFAULT 'Por favor, informe a nuestro equipo de cualquier alergia o intolerancia al realizar su pedido para que podamos adaptar su plato con el mayor cuidado.'
     )
     ''')
 
@@ -134,6 +141,7 @@ def init_db():
         definition_fr TEXT,
         definition_vi TEXT,
         definition_en TEXT,
+        definition_es TEXT,
         image_url TEXT DEFAULT '',
         sort_order INTEGER DEFAULT 0
     )
@@ -146,14 +154,30 @@ def init_db():
         name_fr TEXT NOT NULL,
         name_vi TEXT,
         name_en TEXT,
+        name_es TEXT,
         icon TEXT DEFAULT '⚠️',
         image_url TEXT DEFAULT '',
         example_dish_fr TEXT,
         example_dish_vi TEXT,
         example_dish_en TEXT,
+        example_dish_es TEXT,
         sort_order INTEGER DEFAULT 0
     )
     ''')
+
+    # Ensure Spanish columns exist in existing database tables
+    for tbl, cols in [
+        ('categories', [('name_es', 'TEXT')]),
+        ('dishes', [('name_es', 'TEXT'), ('description_es', 'TEXT')]),
+        ('restaurant_info', [('story_es', 'TEXT'), ('allergen_title_es', 'TEXT'), ('allergen_desc_es', 'TEXT'), ('allergen_note_es', 'TEXT')]),
+        ('lexicon', [('definition_es', 'TEXT')]),
+        ('allergens', [('name_es', 'TEXT'), ('example_dish_es', 'TEXT')])
+    ]:
+        for col, col_type in cols:
+            try:
+                cursor.execute(f"ALTER TABLE {tbl} ADD COLUMN {col} {col_type}")
+            except Exception:
+                pass
 
     conn.commit()
 
