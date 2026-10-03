@@ -415,7 +415,12 @@
                         <h3 class="font-mincho text-xl font-bold text-stone-900">Demandes de Réservations</h3>
                         <p class="text-xs text-stone-500">Gérez les réservations de tables envoyées par les clients.</p>
                     </div>
-                    <div class="flex items-center gap-2">
+                    <div class="flex flex-wrap items-center gap-3">
+                        <button type="button" id="admin-res-toggle-btn" onclick="toggleReservationStatus()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold text-xs bg-emerald-50 text-emerald-700 border border-emerald-300 hover:bg-emerald-100 transition shadow-sm cursor-pointer" title="Activer / Désactiver les réservations en ligne">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" id="res-toggle-dot"></span>
+                            <span>Réservations en ligne : <strong id="res-toggle-label" class="text-emerald-800">ACTIVÉES</strong></span>
+                            <i id="res-toggle-icon" class="fas fa-toggle-on text-emerald-600 text-base ml-1"></i>
+                        </button>
                         <select id="admin-res-status-filter" onchange="filterAdminReservations()" class="px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs font-medium focus:outline-none focus:border-red-500">
                             <option value="all">Tous les statuts</option>
                             <option value="pending">En attente uniquement</option>
@@ -452,6 +457,23 @@
                 <div class="border-b border-stone-100 pb-4 mb-6">
                     <h3 class="font-mincho text-xl font-bold text-stone-900">Coordonnées & Informations du Restaurant</h3>
                     <p class="text-xs text-stone-500">Modifiez les informations affichées sur le site public en temps réel.</p>
+                </div>
+
+                <!-- Module de Réservation Toggle -->
+                <div class="p-4 bg-stone-50 rounded-2xl border border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                    <div>
+                        <h4 class="font-bold text-xs text-stone-800 uppercase tracking-wider flex items-center gap-1.5">
+                            <i class="fas fa-calendar-check text-stone-500"></i>
+                            Service de Réservation de Tables en Ligne
+                        </h4>
+                        <p class="text-xs text-stone-500 mt-0.5">Activez ou désactivez la possibilité pour les clients de réserver une table sur le site.</p>
+                    </div>
+                    <div>
+                        <button type="button" onclick="toggleReservationStatus()" id="admin-res-settings-toggle-btn" class="px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm bg-emerald-600 text-white hover:bg-emerald-700 cursor-pointer">
+                            <i id="res-settings-toggle-icon" class="fas fa-toggle-on text-base"></i>
+                            <span id="res-settings-toggle-label">Actif (En ligne)</span>
+                        </button>
+                    </div>
                 </div>
 
                 <form onsubmit="handleUpdateInfo(event)" class="space-y-6">
@@ -1488,11 +1510,78 @@
             }
         }
 
+        // Toggle Reservation System Status
+        async function toggleReservationStatus() {
+            try {
+                const res = await fetch('/api/reservations/toggle', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'}
+                });
+                const data = await res.json();
+                if (res.ok && data.success) {
+                    if (restaurantInfo) {
+                        restaurantInfo.is_reservation_enabled = data.is_reservation_enabled;
+                    }
+                    updateReservationToggleUI(data.is_reservation_enabled);
+                    showToast(data.message || 'Statut mis à jour');
+                } else {
+                    alert(data.error || 'Erreur lors du changement de statut');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau.');
+            }
+        }
+
+        function updateReservationToggleUI(isEnabled) {
+            const isEn = Number(isEnabled) === 1;
+
+            // Tab 3 Button
+            const btnTab = document.getElementById('admin-res-toggle-btn');
+            const dotTab = document.getElementById('res-toggle-dot');
+            const labelTab = document.getElementById('res-toggle-label');
+            const iconTab = document.getElementById('res-toggle-icon');
+
+            if (btnTab) {
+                if (isEn) {
+                    btnTab.className = "inline-flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold text-xs bg-emerald-50 text-emerald-700 border border-emerald-300 hover:bg-emerald-100 transition shadow-sm cursor-pointer";
+                    if (dotTab) dotTab.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse";
+                    if (labelTab) { labelTab.className = "text-emerald-800"; labelTab.textContent = "ACTIVÉES"; }
+                    if (iconTab) iconTab.className = "fas fa-toggle-on text-emerald-600 text-base ml-1";
+                    btnTab.title = "Cliquez pour désactiver les réservations en ligne";
+                } else {
+                    btnTab.className = "inline-flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold text-xs bg-rose-50 text-rose-700 border border-rose-300 hover:bg-rose-100 transition shadow-sm cursor-pointer";
+                    if (dotTab) dotTab.className = "w-2.5 h-2.5 rounded-full bg-rose-500";
+                    if (labelTab) { labelTab.className = "text-rose-800"; labelTab.textContent = "DÉSACTIVÉES"; }
+                    if (iconTab) iconTab.className = "fas fa-toggle-off text-stone-400 text-base ml-1";
+                    btnTab.title = "Cliquez pour activer les réservations en ligne";
+                }
+            }
+
+            // Tab 4 (Settings) Button
+            const btnSettings = document.getElementById('admin-res-settings-toggle-btn');
+            const iconSettings = document.getElementById('res-settings-toggle-icon');
+            const labelSettings = document.getElementById('res-settings-toggle-label');
+
+            if (btnSettings) {
+                if (isEn) {
+                    btnSettings.className = "px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm bg-emerald-600 text-white hover:bg-emerald-700 cursor-pointer";
+                    if (iconSettings) iconSettings.className = "fas fa-toggle-on text-base";
+                    if (labelSettings) labelSettings.textContent = "Actif (En ligne)";
+                } else {
+                    btnSettings.className = "px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm bg-stone-500 text-white hover:bg-stone-600 cursor-pointer";
+                    if (iconSettings) iconSettings.className = "fas fa-toggle-off text-base";
+                    if (labelSettings) labelSettings.textContent = "Désactivé (Suspendu)";
+                }
+            }
+        }
+
         // Fetch & Update Restaurant Settings & Hero
         async function fetchInfo() {
             try {
                 const res = await fetch('/api/info');
                 restaurantInfo = await res.json();
+                updateReservationToggleUI(restaurantInfo.is_reservation_enabled);
 
                 const setVal = (id, v) => {
                     const el = document.getElementById(id);

@@ -102,7 +102,8 @@ def init_db():
         allergen_note_fr TEXT DEFAULT 'Merci de signaler toute allergie ou intolérance à notre équipe lors de votre commande afin que nous adaptions votre plat với le plus grand soin.',
         allergen_note_vi TEXT DEFAULT 'Vui lòng thông báo cho nhân viên nếu bạn có bất kỳ dị ứng nào khi gọi món để đầu bếp chế biến phù hợp nhất.',
         allergen_note_en TEXT DEFAULT 'Please inform our team of any food allergies or intolerances when ordering so we can prepare your dish with extra care.',
-        allergen_note_es TEXT DEFAULT 'Por favor, informe a nuestro equipo de cualquier alergia o intolerancia al realizar su pedido para que podamos adaptar su plato con el mayor cuidado.'
+        allergen_note_es TEXT DEFAULT 'Por favor, informe a nuestro equipo de cualquier alergia o intolerancia al realizar su pedido para que podamos adaptar su plato con el mayor cuidado.',
+        is_reservation_enabled INTEGER DEFAULT 1
     )
     ''')
 
@@ -165,11 +166,11 @@ def init_db():
     )
     ''')
 
-    # Ensure Spanish columns exist in existing database tables
+    # Ensure Spanish columns and settings exist in existing database tables
     for tbl, cols in [
         ('categories', [('name_es', 'TEXT')]),
         ('dishes', [('name_es', 'TEXT'), ('description_es', 'TEXT')]),
-        ('restaurant_info', [('story_es', 'TEXT'), ('allergen_title_es', 'TEXT'), ('allergen_desc_es', 'TEXT'), ('allergen_note_es', 'TEXT')]),
+        ('restaurant_info', [('story_es', 'TEXT'), ('allergen_title_es', 'TEXT'), ('allergen_desc_es', 'TEXT'), ('allergen_note_es', 'TEXT'), ('is_reservation_enabled', 'INTEGER DEFAULT 1')]),
         ('lexicon', [('definition_es', 'TEXT')]),
         ('allergens', [('name_es', 'TEXT'), ('example_dish_es', 'TEXT')])
     ]:

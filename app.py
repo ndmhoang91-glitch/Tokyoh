@@ -270,6 +270,15 @@ def update_delete_allergen(item_id):
 
 @app.route('/api/reserve', methods=['POST'])
 def create_reservation():
+    conn = database.get_db()
+    c = conn.cursor()
+
+    # Check if online reservations are active
+    info = c.execute('SELECT is_reservation_enabled FROM restaurant_info WHERE id = 1').fetchone()
+    if info and info['is_reservation_enabled'] == 0:
+        conn.close()
+        return jsonify({'error': 'Les réservations en ligne sont actuellement fermées. Veuillez nous contacter directement par téléphone.'}), 400
+
     data = request.get_json() or {}
     name = (data.get('name') or '').strip()
     phone = (data.get('phone') or '').strip()
@@ -280,10 +289,9 @@ def create_reservation():
     notes = (data.get('notes') or '').strip()
 
     if not name or not phone or not date or not time:
+        conn.close()
         return jsonify({'error': 'Veuillez renseigner votre nom, téléphone, date et heure.'}), 400
 
-    conn = database.get_db()
-    c = conn.cursor()
     c.execute('''
     INSERT INTO reservations (customer_name, phone, email, reservation_date, reservation_time, guests, notes, status)
     VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')
@@ -293,6 +301,27 @@ def create_reservation():
     conn.close()
 
     return jsonify({'success': True, 'id': res_id, 'message': 'Réservation enregistrée avec succès.'})
+
+@app.route('/api/reservations/toggle', methods=['POST'])
+def toggle_reservations():
+    if not is_admin():
+        return jsonify({'error': 'Non autorisé.'}), 403
+
+    conn = database.get_db()
+    c = conn.cursor()
+    row = c.execute('SELECT is_reservation_enabled FROM restaurant_info WHERE id = 1').fetchone()
+    current_status = row['is_reservation_enabled'] if row and row['is_reservation_enabled'] is not None else 1
+    new_status = 0 if current_status == 1 else 1
+
+    c.execute('UPDATE restaurant_info SET is_reservation_enabled = ? WHERE id = 1', (new_status,))
+    conn.commit()
+    conn.close()
+
+    return jsonify({
+        'success': True,
+        'is_reservation_enabled': new_status,
+        'message': 'Les réservations en ligne sont désormais ouvertes.' if new_status == 1 else 'Les réservations en ligne sont désormais fermées.'
+    })
 
 # ----------------- ADMIN AUTH API -----------------
 
@@ -628,7 +657,8 @@ def update_info():
         allergen_note_fr = ?,
         allergen_note_vi = ?,
         allergen_note_en = ?,
-        allergen_note_es = ?
+        allergen_note_es = ?,
+        is_reservation_enabled = ?
     WHERE id = 1
     ''', (
         val('name', 'TokyOh! Anglet'),
@@ -666,7 +696,8 @@ def update_info():
         val('allergen_note_fr', 'Merci de signaler toute allergie ou intolérance à notre équipe lors de votre commande afin que nous adaptions votre plat avec le plus grand soin.'),
         val('allergen_note_vi', 'Vui lòng thông báo cho nhân viên nếu bạn có bất kỳ dị ứng nào khi gọi món để đầu bếp chế biến phù hợp nhất.'),
         val('allergen_note_en', 'Please inform our team of any food allergies or intolerances when ordering so we can prepare your dish with extra care.'),
-        val('allergen_note_es', 'Por favor, informe a nuestro equipo de cualquier alergia o intolerancia al realizar su pedido para que podamos adaptar su plato con el mayor cuidado.')
+        val('allergen_note_es', 'Por favor, informe a nuestro equipo de cualquier alergia o intolerancia al realizar su pedido para que podamos adaptar su plato con el mayor cuidado.'),
+        int(val('is_reservation_enabled', 1))
     ))
     conn.commit()
     updated_row = c.execute('SELECT * FROM restaurant_info WHERE id = 1').fetchone()
