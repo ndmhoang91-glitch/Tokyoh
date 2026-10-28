@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Administration | TokyOh! Anglet</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Shippori+Mincho:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-stone-900 text-stone-100 font-['Plus_Jakarta_Sans'] min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+    <!-- Subtle Background Glow -->
+    <div class="absolute w-96 h-96 bg-red-600/10 rounded-full blur-3xl -top-20 -left-20 pointer-events-none"></div>
+    <div class="absolute w-96 h-96 bg-amber-600/10 rounded-full blur-3xl -bottom-20 -right-20 pointer-events-none"></div>
+
+    <div class="max-w-md w-full bg-stone-850 border border-stone-800 rounded-3xl p-8 sm:p-10 shadow-2xl relative z-10">
+        <!-- Logo & Header -->
+        <div class="text-center mb-8">
+            <a href="/" class="inline-block mb-3 hover:scale-105 transition">
+                <img src="/static/images/logo.png" alt="TokyOh! Logo" class="h-20 w-auto mx-auto drop-shadow-md">
+            </a>
+            <h1 class="font-['Shippori_Mincho'] text-2xl font-bold text-white tracking-wide">
+                Toky<span class="text-red-500">Oh!</span> Administration
+            </h1>
+            <p class="text-xs text-stone-400 mt-1">Espace de gestion du restaurant & de la carte</p>
+        </div>
+
+        <!-- Login Form -->
+        <form onsubmit="handleLogin(event)" class="space-y-5">
+            <div>
+                <label class="block text-xs font-bold text-stone-300 uppercase tracking-wider mb-2">
+                    <i class="fas fa-user text-red-500 mr-1.5"></i> Identifiant
+                </label>
+                <input type="text" id="username" required placeholder="admin" value="admin" class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-xl text-sm text-white placeholder-stone-500 focus:outline-none focus:border-red-500 transition">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-stone-300 uppercase tracking-wider mb-2">
+                    <i class="fas fa-key text-amber-500 mr-1.5"></i> Mot de passe
+                </label>
+                <input type="password" id="password" required placeholder="••••••••" value="tokyoh2026" class="w-full px-4 py-3 bg-stone-800 border border-stone-700 rounded-xl text-sm text-white placeholder-stone-500 focus:outline-none focus:border-red-500 transition">
+            </div>
+
+            <div id="login-error" class="hidden p-3.5 bg-red-950/80 border border-red-800 text-red-300 text-xs rounded-xl text-center font-medium"></div>
+
+            <button type="submit" id="submit-btn" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3.5 px-4 rounded-xl text-sm uppercase tracking-wider shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition flex items-center justify-center gap-2">
+                <span>Se connecter</span>
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </form>
+
+        <div class="mt-8 pt-6 border-t border-stone-800 flex items-center justify-between text-xs text-stone-500">
+            <a href="/" class="hover:text-stone-300 transition flex items-center gap-1.5">
+                <i class="fas fa-arrow-left"></i>
+                <span>Retour au site public</span>
+            </a>
+            <span>TokyOh! v1.0</span>
+        </div>
+    </div>
+
+    <script>
+        async function handleLogin(e) {
+            e.preventDefault();
+            const btn = document.getElementById('submit-btn');
+            const errBox = document.getElementById('login-error');
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Connexion...`;
+            errBox.classList.add('hidden');
+
+            try {
+                const res = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({username, password})
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    window.location.href = '/admin';
+                } else {
+                    errBox.textContent = data.error || 'Identifiants invalides.';
+                    errBox.classList.remove('hidden');
+                }
+            } catch (err) {
+                errBox.textContent = 'Erreur réseau lors de la tentative de connexion.';
+                errBox.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<span>Se connecter</span> <i class="fas fa-arrow-right"></i>`;
+            }
+        }
+    </script>
+</body>
+</html>

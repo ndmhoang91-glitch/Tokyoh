@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TokyOh! Anglet | Japanese Street Food & Bentos Authentiques</title>
+    <meta name="description" content="Découvrez TokyOh! à Anglet : bentos croustillants, cuisine japonaise authentique, 100% fait maison. Sur place, à emporter et livraison Uber Eats & Deliveroo.">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Shippori+Mincho:wght@500;700;800&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        torii: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            700: '#b91c1c',
+                            800: '#991b1b',
+                            900: '#7f1d1d'
+                        },
+                        nami: {
+                            800: '#1e3a8a',
+                            900: '#172554'
+                        },
+                        sumi: {
+                            900: '#121214',
+                            800: '#1c1c21',
+                            700: '#27272e'
+                        },
+                        washi: '#FBF9F5',
+                        matcha: '#4D7C0F',
+                        gold: '#D97706'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mincho: ['"Shippori Mincho"', '"Zen Old Mincho"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .japanese-wave {
+            background-image: radial-gradient(circle at 100% 150%, #FAF6EE 24%, white 25%, white 28%, #FAF6EE 29%, #FAF6EE 36%, white 37%, white 40%, transparent 40%, transparent);
+            background-size: 30px 30px;
+        }
+        .text-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+        }
+        .stamp-badge {
+            border: 2px solid #dc2626;
+            color: #dc2626;
+            transform: rotate(-3deg);
+            border-radius: 4px;
+            font-weight: 800;
+        }
+        /* Floating Sakura Petals */
+        .petal {
+            position: absolute;
+            background-color: #ffccd5;
+            border-radius: 150% 0 150% 0;
+            opacity: 0.6;
+            pointer-events: none;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+                opacity: 0.8;
+            }
+            100% {
+                top: 110%;
+                transform: translateX(120px) rotate(360deg);
+                opacity: 0.2;
+            }
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F4EFE6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D97706;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B45309;
+        }
+    </style>
+</head>
+<body class="bg-washi text-stone-800 font-sans antialiased relative overflow-x-hidden selection:bg-red-500 selection:text-white">
+
+    <!-- Sakura Animation Container -->
+    <div id="sakura-container" class="fixed inset-0 pointer-events-none z-10 overflow-hidden"></div>
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-stone-900 text-stone-200 text-xs py-2 px-4 border-b border-stone-800">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-2">
+                <span class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Anglet (64)</span>
+                <span id="top-location-text">999 allée du Cadran, 64600 Anglet — À deux pas des Halles des 5 Cantons</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="top-hours"><i class="far fa-clock text-amber-500 mr-1"></i> 11h30 - 14h30 & 18h30 - 22h00</span>
+                <!-- Language Selector -->
+                <div class="flex items-center bg-stone-800 rounded px-1.5 py-0.5 border border-stone-700">
+                    <button onclick="setLanguage('fr')" id="lang-btn-fr" class="px-1.5 py-0.5 text-[11px] font-bold rounded bg-red-600 text-white transition">FR</button>
+                    <button onclick="setLanguage('es')" id="lang-btn-es" class="px-1.5 py-0.5 text-[11px] font-bold rounded text-stone-400 hover:text-white transition">ES</button>
+                    <button onclick="setLanguage('en')" id="lang-btn-en" class="px-1.5 py-0.5 text-[11px] font-bold rounded text-stone-400 hover:text-white transition">EN</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN NAVBAR -->
+    <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-stone-200 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo & Brand -->
+                <a href="#hero" class="flex items-center gap-3 group">
+                    <img src="/static/images/logo.png" alt="TokyOh! Logo" class="h-14 w-auto object-contain transition group-hover:scale-105 duration-300">
+                    <div class="hidden sm:block">
+                        <div class="flex items-center gap-2">
+                            <img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-8 w-auto object-contain transition group-hover:scale-105 duration-300">
+                            <span class="text-[11px] bg-red-100 text-red-700 font-bold px-1.5 py-0.5 rounded tracking-widest uppercase">Anglet</span>
+                        </div>
+                        <p class="text-[11px] text-stone-500 font-medium tracking-wide">JAPANESE STREET FOOD & BENTOS</p>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8 text-sm font-semibold">
+                    <a href="#menu" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                        <i class="fas fa-utensils text-red-500 text-xs"></i>
+                        <span data-i18n="nav_menu">Le Menu</span>
+                    </a>
+                    <a href="#bento-gourmand-sec" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                        <i class="fas fa-crown text-amber-500 text-xs"></i>
+                        <span data-i18n="nav_gourmand">Formule Gourmande</span>
+                    </a>
+                    <a href="#lexique" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                        <i class="fas fa-book-open text-blue-500 text-xs"></i>
+                        <span data-i18n="nav_lexicon">Lexique Japonais</span>
+                    </a>
+                    <a href="#allergenes" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                        <i class="fas fa-shield-halved text-emerald-500 text-xs"></i>
+                        <span data-i18n="nav_allergens">Allergènes</span>
+                    </a>
+                    <a href="#fidelite" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                        <i class="fas fa-stamp text-red-500 text-xs"></i>
+                        <span data-i18n="nav_fidelity">Fidélité</span>
+                    </a>
+                    <a href="#contact" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                        <i class="fas fa-map-marker-alt text-red-500 text-xs"></i>
+                        <span data-i18n="nav_contact">Accès & Contact</span>
+                    </a>
+                </div>
+
+                <!-- Action CTAs -->
+                <div class="flex items-center gap-3">
+                    <a id="nav-reserve-btn" href="#reservation" class="hidden sm:inline-flex items-center gap-2 bg-stone-900 hover:bg-stone-800 text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg">
+                        <i class="far fa-calendar-alt text-amber-400"></i>
+                        <span data-i18n="nav_reserve">Réserver</span>
+                    </a>
+                    <a id="nav-ubereats-btn" href="https://www.ubereats.com" target="_blank" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg">
+                        <i class="fas fa-motorcycle"></i>
+                        <span data-i18n="nav_order">Commander</span>
+                    </a>
+                    <!-- Mobile Hamburger -->
+                    <button onclick="toggleMobileMenu()" class="md:hidden text-stone-700 hover:text-red-600 text-xl p-2">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile dropdown menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-stone-200 px-6 py-4 space-y-3">
+            <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold border-b border-stone-100" data-i18n="nav_menu">Le Menu</a>
+            <a href="#bento-gourmand-sec" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold border-b border-stone-100" data-i18n="nav_gourmand">Formule Gourmande (+6 €)</a>
+            <a href="#lexique" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold border-b border-stone-100" data-i18n="nav_lexicon">Lexique Culinaire Japonais</a>
+            <a href="#allergenes" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold border-b border-stone-100" data-i18n="nav_allergens">Tableau des Allergènes</a>
+            <a href="#fidelite" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold border-b border-stone-100" data-i18n="nav_fidelity">Programme Fidélité</a>
+            <a id="mobile-nav-reserve-link" href="#reservation" onclick="toggleMobileMenu()" class="block py-2 text-red-600 font-bold border-b border-stone-100" data-i18n="nav_reserve">Réserver une table</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold" data-i18n="nav_contact">Accès & Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header id="hero" class="relative overflow-hidden bg-gradient-to-b from-stone-900 via-stone-900 to-stone-850 text-white pt-12 pb-20 lg:pt-16 lg:pb-28">
+        <!-- Japanese Decorative Pattern Background -->
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+        <div class="absolute -right-20 -bottom-20 w-96 h-96 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Left text content -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-red-600/20 border border-red-500/30 text-red-300 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide">
+                        <span class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                        <span id="hero-badge-text" data-i18n="hero_badge">NOUVEAU À ANGLET • HALLES DES 5 CANTONS</span>
+                    </div>
+
+                    <div class="relative">
+                        <!-- Vertical Japanese kanji watermark -->
+                        <span class="hidden sm:block absolute -left-10 -top-4 text-stone-700/40 text-4xl font-mincho select-none text-vertical">
+                            東京弁当美味
+                        </span>
+                        <h1 id="hero-main-title" class="font-mincho text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
+                            Toky<span class="text-red-500">Oh!</span> Anglet
+                        </h1>
+                        <p id="hero-slogan" class="text-xl sm:text-2xl lg:text-3xl text-amber-300 font-mincho font-medium mt-2">
+                            L'énergie de Tokyo dans votre assiette !
+                        </p>
+                    </div>
+
+                    <p id="hero-story" class="text-stone-300 text-sm sm:text-base leading-relaxed max-w-2xl font-light">
+                        Plongez au cœur de la gastronomie tokyoïte sur la côte basque. Des bentos croustillants, des gyozas dorés, des bols de curry parfumés et des tatakis fondants préparés chaque jour avec amour et des ingrédients d'une fraîcheur absolue.
+                    </p>
+
+                    <!-- Service features badges -->
+                    <div class="grid grid-cols-3 gap-3 pt-2 max-w-lg">
+                        <div class="bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl text-center">
+                            <i class="fas fa-utensils text-red-400 text-lg mb-1"></i>
+                            <h4 class="text-xs font-bold text-white uppercase tracking-wider" data-i18n="feat_dinein">Sur Place</h4>
+                            <p class="text-[11px] text-stone-400" data-i18n="feat_dinein_sub">Ambiance Tokyo</p>
+                        </div>
+                        <div class="bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl text-center">
+                            <i class="fas fa-bag-shopping text-amber-400 text-lg mb-1"></i>
+                            <h4 class="text-xs font-bold text-white uppercase tracking-wider" data-i18n="feat_takeaway">À Emporter</h4>
+                            <p class="text-[11px] text-stone-400" data-i18n="feat_takeaway_sub">Prêt à déguster</p>
+                        </div>
+                        <div class="bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl text-center">
+                            <i class="fas fa-truck-fast text-emerald-400 text-lg mb-1"></i>
+                            <h4 class="text-xs font-bold text-white uppercase tracking-wider" data-i18n="feat_delivery">Livraison</h4>
+                            <p class="text-[11px] text-stone-400">Uber Eats & Deliv.</p>
+                        </div>
+                    </div>
+
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-wrap items-center gap-4 pt-4">
+                        <a href="#menu" class="bg-red-600 hover:bg-red-700 text-white font-bold px-7 py-3.5 rounded-full text-sm uppercase tracking-wider shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition duration-200 flex items-center gap-2 group">
+                            <span data-i18n="cta_menu">Explorer la Carte</span>
+                            <i class="fas fa-arrow-down group-hover:translate-y-1 transition duration-200"></i>
+                        </a>
+                        <a id="hero-reserve-btn" href="#reservation" class="bg-transparent hover:bg-white/10 text-white font-semibold px-6 py-3.5 rounded-full text-sm border border-stone-600 hover:border-white transition duration-200 flex items-center gap-2">
+                            <i class="far fa-calendar-check text-amber-400"></i>
+                            <span data-i18n="cta_reserve">Réserver une table</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Hero Image Showcase -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative mx-auto max-w-md lg:max-w-none">
+                        <!-- Japanese Sun Backdrop -->
+                        <div class="w-72 h-72 sm:w-88 sm:h-88 rounded-full bg-red-600/20 absolute -top-8 -left-8 blur-2xl"></div>
+                        
+                        <div class="relative bg-stone-800/90 border border-stone-700 p-4 sm:p-5 rounded-3xl shadow-2xl overflow-hidden group">
+                            <img id="hero-img" src="/static/images/dishes/hero_bento.jpg" alt="TokyOh Hero" class="w-full h-80 sm:h-96 object-cover rounded-2xl shadow-inner group-hover:scale-105 transition duration-500">
+                            
+                            <!-- Badges on image -->
+                            <div class="absolute top-8 left-8 bg-red-600 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow-md flex items-center gap-1.5">
+                                <i class="fas fa-fire"></i>
+                                <span id="hero-badge-overlay">BEST SELLER</span>
+                            </div>
+
+                            <div class="absolute bottom-8 right-8 bg-stone-900/90 backdrop-blur-md border border-stone-700/80 text-white px-4 py-2 rounded-xl shadow-lg">
+                                <span id="hero-dish-name" class="text-[10px] uppercase tracking-wider text-amber-400 block font-semibold">Lunch Katsu Bento</span>
+                                <span id="hero-dish-price" class="text-xl font-bold font-mincho">13,90 €</span>
+                            </div>
+                        </div>
+
+                        <!-- Mascot sticker floating -->
+                        <div class="absolute -bottom-6 -left-6 bg-white p-2 rounded-2xl shadow-xl border border-stone-200 w-24 sm:w-28 transform -rotate-6 hover:rotate-0 transition">
+                            <img id="hero-mascot-img" src="/static/images/bento_box_art.jpg" alt="TokyOh Mascot" class="w-full h-auto rounded-lg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HIGHLIGHTS / QUALITY COMMITMENT STRIP -->
+    <section class="bg-amber-50/70 border-y border-amber-200/60 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+                <div class="flex items-center justify-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-lg shadow-sm">
+                        <i class="fas fa-bowl-rice"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="text-xs font-bold text-stone-900 uppercase tracking-wider" data-i18n="feat_1_title">100% Fait Maison</h4>
+                        <p class="text-[11px] text-stone-500" data-i18n="feat_1_desc">Cuisiné chaque matin</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-lg shadow-sm">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="text-xs font-bold text-stone-900 uppercase tracking-wider" data-i18n="feat_2_title">Ingrédients Frais</h4>
+                        <p class="text-[11px] text-stone-500" data-i18n="feat_2_desc">Légumes & thon sélectionné</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-lg shadow-sm">
+                        <i class="fas fa-bread-slice"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="text-xs font-bold text-stone-900 uppercase tracking-wider" data-i18n="feat_3_title">Panure Panko</h4>
+                        <p class="text-[11px] text-stone-500" data-i18n="feat_3_desc">Croustillant incomparable</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg shadow-sm">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="text-left">
+                        <h4 class="text-xs font-bold text-stone-900 uppercase tracking-wider" data-i18n="feat_4_title">Options Véganes</h4>
+                        <p class="text-[11px] text-stone-500" data-i18n="feat_4_desc">Tofu croustillant & edamame</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE MENU SECTION -->
+    <section id="menu" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center max-w-3xl mx-auto mb-12">
+            <div class="inline-flex items-center gap-1.5 text-red-600 font-bold text-xs tracking-widest uppercase mb-2">
+                <i class="fas fa-torii-gate"></i>
+                <span data-i18n="menu_subtitle">LA CARTE DU RESTAURANT</span>
+            </div>
+            <h2 class="font-mincho text-3xl sm:text-4xl lg:text-5xl font-bold text-stone-900 mb-4" data-i18n="menu_title">
+                Nos Spécialités Japonaises
+            </h2>
+            <p class="text-stone-600 text-sm sm:text-base" data-i18n="menu_desc">
+                Découvrez nos bentos traditionnels, bouchées croustillantes et douceurs tokyoïtes. Prix clairs, ingrédients certifiés et options personnalisables.
+            </p>
+
+            <!-- Search & Filters Container -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 items-center justify-center">
+                <!-- Search input -->
+                <div class="relative w-full sm:w-80">
+                    <i class="fas fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-sm"></i>
+                    <input type="text" id="menu-search-input" onkeyup="handleMenuSearch(this.value)" placeholder="Rechercher un plat, ingrédient..." class="w-full pl-10 pr-4 py-2.5 bg-white border border-stone-300 rounded-full text-sm focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500 transition shadow-sm">
+                </div>
+                <!-- Dietary filter pills -->
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button onclick="setDietaryFilter('all')" id="filter-diet-all" class="diet-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-stone-900 text-white transition">
+                        Tous
+                    </button>
+                    <button onclick="setDietaryFilter('vegan')" id="filter-diet-vegan" class="diet-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-white border border-stone-300 text-stone-700 hover:border-emerald-500 transition">
+                        🌱 Végane
+                    </button>
+                    <button onclick="setDietaryFilter('healthy')" id="filter-diet-healthy" class="diet-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-white border border-stone-300 text-stone-700 hover:border-blue-500 transition">
+                        🥗 Healthy
+                    </button>
+                    <button onclick="setDietaryFilter('bestseller')" id="filter-diet-bestseller" class="diet-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-white border border-stone-300 text-stone-700 hover:border-red-500 transition">
+                        🔥 Best Seller
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY TABS -->
+        <div class="relative mb-8">
+            <!-- Left scroll button -->
+            <button onclick="scrollCatTabs(-240)" id="cat-scroll-left" aria-label="Défiler à gauche" class="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 -translate-x-3 z-10 w-8 h-8 bg-white/95 backdrop-blur-sm shadow-md hover:shadow-lg border border-stone-200 rounded-full items-center justify-center text-stone-600 hover:text-red-600 transition">
+                <i class="fas fa-chevron-left text-xs"></i>
+            </button>
+
+            <!-- Scrollable container -->
+            <div class="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 px-1 no-scrollbar justify-start border-b border-stone-200 scroll-smooth" id="category-tabs-container">
+                <button onclick="selectCategory('all')" id="cat-tab-all" class="cat-tab shrink-0 whitespace-nowrap px-5 py-2.5 rounded-xl font-bold text-sm bg-red-600 text-white shadow-sm transition flex items-center">
+                    <span class="mr-1.5 font-mincho text-xs opacity-80">全部</span> Tous les plats
+                </button>
+                <!-- Dynamic categories injected here -->
+            </div>
+
+            <!-- Right scroll button -->
+            <button onclick="scrollCatTabs(240)" id="cat-scroll-right" aria-label="Défiler à droite" class="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 translate-x-3 z-10 w-8 h-8 bg-white/95 backdrop-blur-sm shadow-md hover:shadow-lg border border-stone-200 rounded-full items-center justify-center text-stone-600 hover:text-red-600 transition">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </button>
+        </div>
+
+        <!-- DISHES GRID -->
+        <div id="dishes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <!-- Dishes injected via JS -->
+            <div class="col-span-full py-16 text-center text-stone-400">
+                <i class="fas fa-spinner fa-spin text-3xl mb-3 text-red-500"></i>
+                <p>Chargement des délices TokyOh!...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURED BENTO GOURMAND HIGHLIGHT SECTION -->
+    <section id="bento-gourmand-sec" class="bg-stone-900 text-white py-16 sm:py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Sumo and Food Image -->
+                <div class="lg:col-span-6 relative">
+                    <div class="relative bg-stone-800 rounded-3xl p-4 sm:p-6 border border-stone-700 shadow-2xl">
+                        <img src="/static/images/dishes/bento_gourmand.jpg" alt="Formule Bento Gourmand TokyOh" class="w-full h-80 sm:h-96 object-cover rounded-2xl">
+                        
+                        <div class="absolute -top-4 -right-4 bg-red-600 text-white px-5 py-3 rounded-2xl shadow-xl text-center border-2 border-stone-900">
+                            <span class="text-[10px] font-extrabold uppercase tracking-widest block opacity-90">Formule</span>
+                            <span class="text-2xl sm:text-3xl font-black font-mincho">+6 €</span>
+                        </div>
+
+                        <!-- Sumo sticker badge -->
+                        <div class="absolute -bottom-4 -left-4 bg-stone-900 border border-stone-700 px-4 py-2 rounded-xl flex items-center gap-3 shadow-lg">
+                            <span class="text-2xl">🥋</span>
+                            <div>
+                                <span class="text-xs font-bold text-amber-400 block uppercase tracking-wider">Gourmandise Sumo</span>
+                                <span class="text-[11px] text-stone-300">Riz à volonté inclus</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content info -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold">
+                        <i class="fas fa-crown"></i>
+                        <span>EXPÉRIENCE ROYALE • グルマン弁当</span>
+                    </div>
+
+                    <h2 class="font-mincho text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                        Transformez votre Bento en Formule Gourmande !
+                    </h2>
+
+                    <p class="text-stone-300 text-sm sm:text-base leading-relaxed font-light">
+                        Pour seulement <strong>+6 €</strong>, complétez votre bento préféré (Katsu Curry, Lunch Katsu ou Tataki de Thon) avec une sélection généreuse d'accompagnements traditionnels tokyoïtes :
+                    </p>
+
+                    <!-- Inclusions List -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-stone-200">
+                        <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
+                            <i class="fas fa-check text-red-500"></i>
+                            <span><strong>Riz japonais</strong> à volonté</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
+                            <i class="fas fa-check text-red-500"></i>
+                            <span><strong>Soupe miso</strong> fumante</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
+                            <i class="fas fa-check text-red-500"></i>
+                            <span><strong>Salade mesclun</strong> croquante</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
+                            <i class="fas fa-check text-red-500"></i>
+                            <span><strong>Aubergine miso</strong> fondante 🌱</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
+                            <i class="fas fa-check text-red-500"></i>
+                            <span><strong>Sushi signature</strong> du Chef</span>
+                        </div>
+                        <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
+                            <i class="fas fa-check text-red-500"></i>
+                            <span><strong>Tamagoyaki</strong> ou œuf ajitama</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2">
+                        <a href="#menu" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3.5 rounded-full font-bold text-xs uppercase tracking-wider transition shadow-lg">
+                            <i class="fas fa-utensils"></i>
+                            <span>Choisir mon bento & formule</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PETIT LEXIQUE JAPONAIS (CULINARY DICTIONARY) -->
+    <section id="lexique" class="py-16 sm:py-24 bg-white border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <div class="inline-flex items-center gap-1.5 text-red-600 font-bold text-xs tracking-widest uppercase mb-2">
+                    <i class="fas fa-book"></i>
+                    <span data-i18n="lex_subtitle">DICTIONNAIRE CULINAIRE • 用語集</span>
+                </div>
+                <h2 class="font-mincho text-3xl sm:text-4xl font-bold text-stone-900 mb-4" data-i18n="lex_title">
+                    Petit Lexique Japonais
+                </h2>
+                <p class="text-stone-600 text-sm sm:text-base" data-i18n="lex_desc">
+                    Curieux d'en savoir plus sur les spécialités japonaises ? Découvrez les secrets et la signification de chaque mot de notre carte pour mieux composer votre repas.
+                </p>
+            </div>
+
+            <!-- Lexicon Grid -->
+            <div id="lexicon-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ALLERGEN GUIDE SECTION -->
+    <section id="allergenes" class="py-16 sm:py-20 bg-amber-50/40 border-b border-stone-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full text-xs font-bold">
+                        <i class="fas fa-check-shield"></i>
+                        <span id="allergen-badge-text">TRANSPARENCE ALIMENTAIRE</span>
+                    </div>
+                    <h2 id="allergen-main-title" class="font-mincho text-3xl sm:text-4xl font-bold text-stone-900">
+                        Guide des Allergènes & Recettes Saines
+                    </h2>
+                    <p id="allergen-main-desc" class="text-stone-600 text-sm leading-relaxed">
+                        Conformément à la réglementation française et européenne, nous affichons avec la plus grande transparence l'ensemble des allergènes majeurs présents dans nos préparations.
+                    </p>
+                    <p id="allergen-notice-text" class="text-xs text-stone-500 italic bg-white p-3.5 rounded-xl border border-stone-200">
+                        <i class="fas fa-info-circle text-amber-500 mr-1"></i>
+                        Merci de signaler toute allergie ou intolérance à notre équipe lors de votre commande afin que nous adaptions votre plat avec le plus grand soin.
+                    </p>
+                </div>
+
+                <!-- Allergen Icons Badge Matrix -->
+                <div class="lg:col-span-7">
+                    <div id="allergens-grid" class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
+                        <!-- Dynamically injected via JS -->
+                        <div class="col-span-full py-8 text-center text-stone-400 text-xs">
+                            <i class="fas fa-spinner fa-spin mr-1"></i> Chargement des allergènes...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FIDELITE & LIVRAISON (LOYALTY & DELIVERY) -->
+    <section id="fidelite" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <!-- Loyalty Card Box -->
+            <div class="bg-gradient-to-br from-red-50 to-rose-100/60 border border-red-200/80 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
+                <div>
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="stamp-badge px-3 py-1 text-xs uppercase tracking-wider">Programme Fidélité</span>
+                        <span class="text-xs font-bold text-red-600 font-mincho">10 TAMPONS = 1 BENTO OFFERT</span>
+                    </div>
+                    <h3 class="font-mincho text-2xl sm:text-3xl font-bold text-stone-900 mb-3">
+                        Votre Fidélité Récompensée !
+                    </h3>
+                    <p class="text-stone-600 text-sm leading-relaxed mb-6">
+                        Demandez votre carte de fidélité gratuite lors de votre passage chez TokyOh! Anglet. Pour chaque bento acheté, obtenez 1 tampon. Dès 10 tampons cumulés, votre <strong>11ᵉ bento classique vous est offert</strong> !
+                    </p>
+                    
+                    <!-- 10 stamp circles illustration -->
+                    <div class="grid grid-cols-5 gap-3 max-w-md mx-auto mb-6">
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">1</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">2</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">3</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">4</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">5</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">6</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">7</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">8</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">9</div>
+                        <div class="w-12 h-12 rounded-full border-2 border-red-600 bg-red-600 text-white flex items-center justify-center font-black text-xs shadow-md">🎁</div>
+                    </div>
+                </div>
+                <div class="text-xs text-stone-500 font-medium text-center">
+                    Disponible sur place & à emporter au 999 allée du Cadran, Anglet
+                </div>
+            </div>
+
+            <!-- Delivery Box (Uber Eats / Deliveroo) -->
+            <div class="bg-stone-900 text-white rounded-3xl p-8 shadow-xl flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-2xl"></div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center gap-2 bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold mb-4">
+                        <i class="fas fa-bolt"></i>
+                        <span>EN LIVRAISON EXPRESS</span>
+                    </div>
+                    <h3 class="font-mincho text-2xl sm:text-3xl font-bold mb-3">
+                        TokyOh! Arrive Chez Vous !
+                    </h3>
+                    <p class="text-stone-300 text-sm leading-relaxed mb-6 font-light">
+                        Envie d'un délicieux bento chaud sans sortir ? Retrouvez-nous directement sur les plateformes de livraison partenaires à Anglet, Biarritz et Bayonne.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 mb-6">
+                        <a id="card-ubereats-link" href="https://www.ubereats.com" target="_blank" class="flex-1 bg-white hover:bg-stone-100 text-stone-900 p-4 rounded-2xl flex items-center gap-3 font-bold transition shadow-md group">
+                            <span class="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center text-lg group-hover:scale-110 transition">
+                                <i class="fas fa-utensils"></i>
+                            </span>
+                            <div>
+                                <span class="text-xs text-stone-400 block font-medium">Commander sur</span>
+                                <span class="text-base text-stone-900">Uber Eats</span>
+                            </div>
+                        </a>
+
+                        <a id="card-deliveroo-link" href="https://deliveroo.fr" target="_blank" class="flex-1 bg-stone-800 hover:bg-stone-750 text-white border border-stone-700 p-4 rounded-2xl flex items-center gap-3 font-bold transition shadow-md group">
+                            <span class="w-10 h-10 rounded-xl bg-teal-500 text-white flex items-center justify-center text-lg group-hover:scale-110 transition">
+                                <i class="fas fa-bicycle"></i>
+                            </span>
+                            <div>
+                                <span class="text-xs text-stone-400 block font-medium">Commander sur</span>
+                                <span class="text-base text-white">Deliveroo</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="relative z-10 flex items-center justify-between text-xs text-stone-400 border-t border-stone-800 pt-4">
+                    <span><i class="fas fa-clock text-amber-400 mr-1"></i> Livraison midi & soir</span>
+                    <span><i class="fas fa-shield-alt text-emerald-400 mr-1"></i> Emballage soigné & chaud</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TABLE RESERVATION SECTION -->
+    <section id="reservation" class="py-16 sm:py-24 bg-gradient-to-b from-washi to-stone-100 border-t border-stone-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-xl border border-stone-200 p-8 sm:p-12 relative overflow-hidden">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="inline-block text-red-600 font-bold text-xs tracking-widest uppercase mb-2">
+                        <i class="fas fa-calendar-alt mr-1"></i> RÉSERVATION EN LIGNE
+                    </span>
+                    <h2 class="font-mincho text-3xl sm:text-4xl font-bold text-stone-900 mb-3" data-i18n="res_title">
+                        Réservez Votre Table chez TokyOh!
+                    </h2>
+                    <p class="text-stone-600 text-sm" data-i18n="res_desc">
+                        Pour déjeuner sur le pouce ou dîner convivial entre amis à Anglet, réservez votre table en quelques clics. Confirmation immédiate.
+                    </p>
+                </div>
+
+                <!-- Reservation Form -->
+                <form id="reservation-form" onsubmit="handleReservation(event)" class="space-y-5">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">
+                                Nom & Prénom *
+                            </label>
+                            <input type="text" id="res-name" required placeholder="Ex: Thomas Dupont" class="w-full px-4 py-3 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-red-500 focus:bg-white transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">
+                                Téléphone de contact *
+                            </label>
+                            <input type="tel" id="res-phone" required placeholder="Ex: 06 12 34 56 78" class="w-full px-4 py-3 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-red-500 focus:bg-white transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">
+                                Email (optionnel)
+                            </label>
+                            <input type="email" id="res-email" placeholder="Ex: thomas@email.com" class="w-full px-4 py-3 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-red-500 focus:bg-white transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">
+                                Nombre de convives *
+                            </label>
+                            <select id="res-guests" class="w-full px-4 py-3 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-red-500 focus:bg-white transition">
+                                <option value="1">1 personne (Comptoir)</option>
+                                <option value="2" selected>2 personnes</option>
+                                <option value="3">3 personnes</option>
+                                <option value="4">4 personnes</option>
+                                <option value="5">5 personnes</option>
+                                <option value="6">6 personnes</option>
+                                <option value="7">7 personnes ou plus</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">
+                                Date souhaitée *
+                            </label>
+                            <input type="date" id="res-date" required class="w-full px-4 py-3 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-red-500 focus:bg-white transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">
+                                Heure de service *
+                            </label>
+                            <select id="res-time" required class="w-full px-4 py-3 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-red-500 focus:bg-white transition">
+                                <optgroup label="Midi (Déjeuner)">
+                                    <option value="12:00">12h00</option>
+                                    <option value="12:30" selected>12h30</option>
+                                    <option value="13:00">13h00</option>
+                                    <option value="13:30">13h30</option>
+                                    <option value="14:00">14h00</option>
+                                </optgroup>
+                                <optgroup label="Soir (Dîner)">
+                                    <option value="19:00">19h00</option>
+                                    <option value="19:30">19h30</option>
+                                    <option value="20:00">20h00</option>
+                                    <option value="20:30">20h30</option>
+                                    <option value="21:00">21h00</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-2">
+                            Remarques ou intolérances particulières
+                        </label>
+                        <textarea id="res-notes" rows="2" placeholder="Ex: Option végétarienne souhaitée, anniversaire, poussette..." class="w-full px-4 py-3 bg-stone-50 border border-stone-300 rounded-xl text-sm focus:outline-none focus:border-red-500 focus:bg-white transition"></textarea>
+                    </div>
+
+                    <div class="text-center pt-2">
+                        <button type="submit" id="res-submit-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-10 py-4 rounded-full text-sm uppercase tracking-wider shadow-lg shadow-red-600/30 hover:shadow-red-600/50 transition duration-200 inline-flex items-center gap-2">
+                            <span>Confirmer la réservation</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+
+                    <div id="res-alert" class="hidden p-4 rounded-xl text-center text-sm font-semibold"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION & CONTACT SECTION -->
+    <section id="contact" class="py-16 sm:py-24 bg-stone-900 text-white relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Info details -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-red-600/20 text-red-400 px-3 py-1 rounded-full text-xs font-bold">
+                        <i class="fas fa-map-pin"></i>
+                        <span>OÙ NOUS TROUVER</span>
+                    </div>
+
+                    <h2 class="font-mincho text-3xl sm:text-4xl font-bold leading-tight">
+                        TokyOh! au Cœur d'Anglet
+                    </h2>
+
+                    <div class="space-y-4 text-stone-300 text-sm">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-full bg-stone-800 border border-stone-700 flex items-center justify-center text-red-500 shrink-0 mt-0.5">
+                                <i class="fas fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <span class="font-bold text-white block" id="contact-address-title">TokyOh! Anglet</span>
+                                <span id="contact-address">999 allée du Cadran, 64600 Anglet, France</span>
+                                <span class="text-amber-400 text-xs block mt-0.5 font-medium">À deux pas des Halles des 5 Cantons</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-full bg-stone-800 border border-stone-700 flex items-center justify-center text-amber-500 shrink-0 mt-0.5">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div>
+                                <span class="font-bold text-white block">Horaires de Service</span>
+                                <span id="contact-hours">Ouvert tous les jours : 11h30 - 14h30 & 18h30 - 22h00</span>
+                                <span class="text-stone-400 text-xs block">Service continu sur place et à emporter</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-full bg-stone-800 border border-stone-700 flex items-center justify-center text-emerald-500 shrink-0 mt-0.5">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <span class="font-bold text-white block">Téléphone & Commandes</span>
+                                <a id="contact-phone" href="tel:0559123456" class="text-red-400 font-bold hover:underline">05 59 12 34 56</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-full bg-stone-800 border border-stone-700 flex items-center justify-center text-blue-500 shrink-0 mt-0.5">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <span class="font-bold text-white block">Email</span>
+                                <span id="contact-email">contact@tokyoh-anglet.fr</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Icons -->
+                    <div class="pt-4 border-t border-stone-800">
+                        <span class="text-xs font-bold uppercase tracking-wider text-stone-400 block mb-3">Suivez nos actualités</span>
+                        <div class="flex items-center gap-3">
+                            <a id="contact-instagram" href="https://instagram.com/tokyoh.anglet" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 hover:bg-red-600 text-white flex items-center justify-center text-base transition shadow-sm">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a id="contact-facebook" href="https://facebook.com/tokyoh.anglet" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 hover:bg-red-600 text-white flex items-center justify-center text-base transition shadow-sm">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a id="contact-tiktok" href="https://tiktok.com/@tokyoh.anglet" target="_blank" class="w-10 h-10 rounded-full bg-stone-800 hover:bg-red-600 text-white flex items-center justify-center text-base transition shadow-sm">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Map visual container -->
+                <div class="lg:col-span-6">
+                    <div class="bg-stone-800 p-2 rounded-3xl border border-stone-700 shadow-2xl overflow-hidden">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2893.585721118671!2d-1.516805123432019!3d43.48805907106689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd51408892f3e827%3A0x6b86cf2dc15bf61b!2sAll%C3%A9e%20du%20Cadran%2C%2064600%20Anglet%2C%20France!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr" 
+                            width="100%" 
+                            height="380" 
+                            style="border:0; border-radius: 1.25rem;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-stone-950 text-stone-500 py-10 border-t border-stone-850 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-2">
+                <img src="/static/images/logo.png" alt="TokyOh!" class="h-8 w-auto">
+                <span class="font-mincho text-white font-bold text-base">TokyOh! Anglet</span>
+                <span>© 2026 — Tous droits réservés</span>
+            </div>
+
+            <div class="flex items-center gap-6">
+                <a href="#hero" class="hover:text-white transition">Haut de page</a>
+                <a href="#menu" class="hover:text-white transition">La Carte</a>
+                <a href="/admin/login" class="text-stone-400 hover:text-red-400 transition flex items-center gap-1">
+                    <i class="fas fa-lock text-[10px]"></i>
+                    <span>Espace Admin</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- DISH DETAIL MODAL -->
+    <div id="dish-modal" onclick="handleModalBackdropClick(event)" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 cursor-pointer overflow-y-auto">
+        <div onclick="event.stopPropagation()" class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] flex flex-col shadow-2xl transform transition-all relative animate-in fade-in zoom-in duration-200 cursor-default overflow-hidden my-auto border border-stone-100">
+            <!-- Close Button -->
+            <button onclick="closeDishModal()" aria-label="Fermer" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-black/60 hover:bg-black text-white flex items-center justify-center transition shadow-lg backdrop-blur-xs">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Scrollable Content Area -->
+            <div id="modal-scroll-area" class="overflow-y-auto custom-scrollbar flex-1 overscroll-contain">
+                <!-- Modal Image -->
+                <div class="relative h-56 sm:h-64 bg-stone-100 overflow-hidden shrink-0">
+                    <img id="modal-img" src="" alt="" class="w-full h-full object-cover">
+                    <div id="modal-badge-container" class="absolute bottom-3 left-3"></div>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="p-5 sm:p-7 space-y-4">
+                    <div class="flex justify-between items-start gap-4">
+                        <div>
+                            <span id="modal-kanji" class="text-xs font-mincho text-stone-400 tracking-wider block"></span>
+                            <h3 id="modal-title" class="font-mincho text-xl sm:text-2xl font-bold text-stone-900 leading-snug"></h3>
+                        </div>
+                        <span id="modal-price" class="text-xl sm:text-2xl font-bold font-mincho text-red-600 whitespace-nowrap bg-red-50 border border-red-100 px-3 py-1 rounded-xl"></span>
+                    </div>
+
+                    <p id="modal-desc" class="text-stone-600 text-xs sm:text-sm leading-relaxed font-light"></p>
+
+                    <!-- Protein options if applicable -->
+                    <div id="modal-protein-box" class="hidden bg-stone-50 p-3.5 rounded-xl border border-stone-200">
+                        <span class="text-xs font-bold text-stone-700 uppercase tracking-wider block mb-1">
+                            <i class="fas fa-check-circle text-red-500 mr-1"></i> Choix de la protéine :
+                        </span>
+                        <span id="modal-protein-text" class="text-xs text-stone-600"></span>
+                    </div>
+
+                    <!-- Allergens list -->
+                    <div id="modal-allergens-box" class="pt-2 border-t border-stone-100">
+                        <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block mb-2">
+                            Allergènes & Caractéristiques :
+                        </span>
+                        <div id="modal-allergens-tags" class="flex flex-wrap gap-1.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky Fixed Footer for Action Buttons -->
+            <div class="p-4 sm:p-5 bg-stone-50/95 backdrop-blur-md border-t border-stone-200 shrink-0 flex gap-3 rounded-b-3xl">
+                <a id="modal-order-btn" href="https://www.ubereats.com" target="_blank" class="flex-1 bg-red-600 hover:bg-red-700 text-white text-center py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition shadow-md shadow-red-600/20 hover:shadow-red-600/40 flex items-center justify-center gap-1.5">
+                    <i class="fas fa-motorcycle"></i>
+                    <span data-i18n="modal_order">Commander en livraison</span>
+                </a>
+                <a id="modal-reserve-btn" href="#reservation" onclick="closeDishModal()" class="flex-1 bg-stone-900 hover:bg-stone-800 text-white text-center py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition flex items-center justify-center gap-1.5">
+                    <i class="far fa-calendar-alt text-amber-400"></i>
+                    <span data-i18n="modal_reserve">Réserver sur place</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN JAVASCRIPT APPLICATION -->
+    <script>
+        // State variables
+        let currentLang = 'fr';
+        let menuData = null;
+        let activeCategory = 'all';
+        let activeDietary = 'all';
+        let currentSearchQuery = '';
+
+        // Translations Dictionary
+        const i18n = {
+            fr: {
+                nav_menu: "Le Menu",
+                nav_gourmand: "Formule Gourmande",
+                nav_lexicon: "Lexique Japonais",
+                nav_allergens: "Allergènes",
+                nav_fidelity: "Fidélité",
+                nav_contact: "Accès & Contact",
+                nav_reserve: "Réserver",
+                nav_order: "Commander",
+                hero_badge: "NOUVEAU À ANGLET • HALLES DES 5 CANTONS",
+                feat_dinein: "Sur Place",
+                feat_dinein_sub: "Ambiance Tokyo",
+                feat_takeaway: "À Emporter",
+                feat_takeaway_sub: "Prêt à déguster",
+                feat_delivery: "Livraison",
+                cta_menu: "Explorer la Carte",
+                cta_reserve: "Réserver une table",
+                feat_1_title: "100% Fait Maison",
+                feat_1_desc: "Cuisiné chaque matin",
+                feat_2_title: "Ingrédients Frais",
+                feat_2_desc: "Légumes & thon sélectionné",
+                feat_3_title: "Panure Panko",
+                feat_3_desc: "Croustillant incomparable",
+                feat_4_title: "Options Véganes",
+                feat_4_desc: "Tofu croustillant & edamame",
+                menu_subtitle: "LA CARTE DU RESTAURANT",
+                menu_title: "Nos Spécialités Japonaises",
+                menu_desc: "Découvrez nos bentos traditionnels, bouchées croustillantes et douceurs tokyoïtes. Prix clairs, ingrédients certifiés et options personnalisables.",
+                lex_subtitle: "DICTIONNAIRE CULINAIRE • 用語集",
+                lex_title: "Petit Lexique Japonais",
+                lex_desc: "Curieux d'en savoir plus sur les spécialités japonaises ? Découvrez les secrets et la signification de chaque mot de notre carte pour mieux composer votre repas.",
+                res_title: "Réservez Votre Table chez TokyOh!",
+                res_desc: "Pour déjeuner sur le pouce ou dîner convivial entre amis à Anglet, réservez votre table en quelques clics. Confirmation immédiate.",
+                modal_order: "Commander en livraison",
+                modal_reserve: "Réserver sur place"
+            },
+            es: {
+                nav_menu: "La Carta",
+                nav_gourmand: "Menú Gourmet",
+                nav_lexicon: "Glosario Japonés",
+                nav_allergens: "Alérgenos",
+                nav_fidelity: "Fidelidad",
+                nav_contact: "Ubicación & Contacto",
+                nav_reserve: "Reservar",
+                nav_order: "Pedir Online",
+                hero_badge: "NUEVO EN ANGLET • HALLES DES 5 CANTONS",
+                feat_dinein: "En Local",
+                feat_dinein_sub: "Ambiente Tokio",
+                feat_takeaway: "Para Llevar",
+                feat_takeaway_sub: "Listo para degustar",
+                feat_delivery: "A Domicilio",
+                cta_menu: "Explorar la Carta",
+                cta_reserve: "Reservar una mesa",
+                feat_1_title: "100% Casero",
+                feat_1_desc: "Cocinado cada mañana",
+                feat_2_title: "Ingredientes Frescos",
+                feat_2_desc: "Verduras & atún seleccionado",
+                feat_3_title: "Rebozado Panko",
+                feat_3_desc: "Crujiente incomparable",
+                feat_4_title: "Opciones Veganas",
+                feat_4_desc: "Tofu crujiente & edamame",
+                menu_subtitle: "LA CARTA DEL RESTAURANTE",
+                menu_title: "Especialidades Japonesas",
+                menu_desc: "Descubra nuestros bentos tradicionales, bocados crujientes y dulces de Tokio. Precios claros, ingredientes certificados y opciones personalizables.",
+                lex_subtitle: "DICCIONARIO CULINARIO • 用語集",
+                lex_title: "Glosario Culinario Japonés",
+                lex_desc: "¿Curioso por saber más sobre la gastronomía japonesa? Descubra los secretos y significados de cada palabra de nuestra carta para componer su comida perfecta.",
+                res_title: "Reserve su Mesa en TokyOh!",
+                res_desc: "Para un almuerzo rápido o una cena con amigos en Anglet, reserve su mesa en pocos clics. Confirmación inmediata.",
+                modal_order: "Pedir a domicilio",
+                modal_reserve: "Reservar en el local"
+            },
+            en: {
+                nav_menu: "Our Menu",
+                nav_gourmand: "Gourmet Set",
+                nav_lexicon: "Food Glossary",
+                nav_allergens: "Allergens",
+                nav_fidelity: "Loyalty",
+                nav_contact: "Location & Contact",
+                nav_reserve: "Book Table",
+                nav_order: "Order Online",
+                hero_badge: "NEW IN ANGLET • HALLES DES 5 CANTONS",
+                feat_dinein: "Dine In",
+                feat_dinein_sub: "Tokyo Vibe",
+                feat_takeaway: "Takeaway",
+                feat_takeaway_sub: "Ready to go",
+                feat_delivery: "Delivery",
+                cta_menu: "Explore Menu",
+                cta_reserve: "Book a Table",
+                feat_1_title: "100% Homemade",
+                feat_1_desc: "Freshly cooked daily",
+                feat_2_title: "Fresh Ingredients",
+                feat_2_desc: "Veggies & premium tuna",
+                feat_3_title: "Panko Crumbs",
+                feat_3_desc: "Ultra-crispy texture",
+                feat_4_title: "Vegan Options",
+                feat_4_desc: "Crispy tofu & edamame",
+                menu_subtitle: "RESTAURANT MENU",
+                menu_title: "Authentic Japanese Specialties",
+                menu_desc: "Explore authentic bentos, crunchy starters and sweet Tokyo desserts. Clear pricing, high-quality ingredients and customizable options.",
+                lex_subtitle: "CULINARY DICTIONARY • 用語集",
+                lex_title: "Japanese Food Glossary",
+                lex_desc: "Curious about Japanese culinary terms? Discover what Katsu, Karaage, Tataki, Mochi and Udon mean so you can order like a pro.",
+                res_title: "Reserve Your Table at TokyOh!",
+                res_desc: "Whether for a quick lunch or a cozy dinner in Anglet, book your table in just a few clicks. Instant confirmation.",
+                modal_order: "Order Delivery",
+                modal_reserve: "Reserve a Table"
+            }
+        };
+
+        // Initialize application on load
+        document.addEventListener('DOMContentLoaded', async () => {
+            initSakura();
+            await fetchRestaurantInfo();
+            await fetchMenu();
+            await fetchLexicon();
+            await fetchAllergens();
+            
+            // Set default date picker to today
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('res-date');
+            if (dateInput) dateInput.value = today;
+        });
+
+        // Language switch
+        function setLanguage(lang) {
+            currentLang = lang;
+            ['fr', 'es', 'en'].forEach(l => {
+                const btn = document.getElementById(`lang-btn-${l}`);
+                if (btn) {
+                    if (l === lang) {
+                        btn.className = 'px-1.5 py-0.5 text-[11px] font-bold rounded bg-red-600 text-white transition';
+                    } else {
+                        btn.className = 'px-1.5 py-0.5 text-[11px] font-bold rounded text-stone-400 hover:text-white transition';
+                    }
+                }
+            });
+
+            // Update data-i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18n[lang] && i18n[lang][key]) {
+                    el.textContent = i18n[lang][key];
+                }
+            });
+
+            // Re-render menu, lexicon & allergens in chosen language
+            if (menuData) renderMenu();
+            renderLexicon();
+            renderAllergens();
+            updateHeroStory(lang);
+            updateAllergenTexts(lang);
+
+            if (restaurantInfoData && restaurantInfoData.hero_badge && restaurantInfoData.hero_badge !== 'NOUVEAU À ANGLET • HALLES DES 5 CANTONS') {
+                const badgeEl = document.getElementById('hero-badge-text');
+                if (badgeEl) badgeEl.textContent = restaurantInfoData.hero_badge;
+            }
+        }
+
+        let restaurantInfoData = null;
+
+        // Fetch Restaurant Information
+        async function fetchRestaurantInfo() {
+            try {
+                const res = await fetch('/api/info');
+                if (!res.ok) return;
+                const info = await res.json();
+                restaurantInfoData = info;
+                
+                // Update Hero Section
+                if (info.hero_badge) {
+                    const badgeEl = document.getElementById('hero-badge-text');
+                    if (badgeEl) badgeEl.textContent = info.hero_badge;
+                }
+                if (info.name) {
+                    const titleEl = document.getElementById('hero-main-title');
+                    if (titleEl) titleEl.innerHTML = info.name.replace('TokyOh!', 'Toky<span class="text-red-500">Oh!</span>');
+                }
+                if (info.slogan) {
+                    const sloganEl = document.getElementById('hero-slogan');
+                    if (sloganEl) sloganEl.textContent = info.slogan;
+                }
+                updateHeroStory(currentLang);
+                updateAllergenTexts(currentLang);
+
+                if (info.hero_image_url) {
+                    const heroImg = document.getElementById('hero-img');
+                    if (heroImg) heroImg.src = info.hero_image_url;
+                }
+                if (info.hero_dish_badge) {
+                    const overlayBadge = document.getElementById('hero-badge-overlay');
+                    if (overlayBadge) overlayBadge.textContent = info.hero_dish_badge;
+                }
+                if (info.hero_dish_name) {
+                    const dishName = document.getElementById('hero-dish-name');
+                    if (dishName) dishName.textContent = info.hero_dish_name;
+                }
+                if (info.hero_dish_price) {
+                    const dishPrice = document.getElementById('hero-dish-price');
+                    if (dishPrice) dishPrice.textContent = info.hero_dish_price;
+                }
+                if (info.hero_mascot_url) {
+                    const mascotImg = document.getElementById('hero-mascot-img');
+                    if (mascotImg) mascotImg.src = info.hero_mascot_url;
+                }
+
+                const contactAddress = document.getElementById('contact-address');
+                if (contactAddress && info.address) contactAddress.textContent = info.address;
+
+                const contactHours = document.getElementById('contact-hours');
+                if (contactHours && info.opening_hours) contactHours.textContent = info.opening_hours;
+
+                const contactPhone = document.getElementById('contact-phone');
+                if (contactPhone && info.phone) {
+                    contactPhone.textContent = info.phone;
+                    contactPhone.href = `tel:${info.phone.replace(/\s+/g, '')}`;
+                }
+
+                const contactEmail = document.getElementById('contact-email');
+                if (contactEmail && info.email) contactEmail.textContent = info.email;
+
+                // Delivery and Social links
+                if (info.ubereats_url) {
+                    ['nav-ubereats-btn', 'card-ubereats-link'].forEach(id => {
+                        const el = document.getElementById(id);
+                        if (el) el.href = info.ubereats_url;
+                    });
+                }
+                if (info.deliveroo_url) {
+                    const el = document.getElementById('card-deliveroo-link');
+                    if (el) el.href = info.deliveroo_url;
+                }
+                if (info.instagram_url) {
+                    const el = document.getElementById('contact-instagram');
+                    if (el) el.href = info.instagram_url;
+                }
+                if (info.facebook_url) {
+                    const el = document.getElementById('contact-facebook');
+                    if (el) el.href = info.facebook_url;
+                }
+                if (info.tiktok_url) {
+                    const el = document.getElementById('contact-tiktok');
+                    if (el) el.href = info.tiktok_url;
+                }
+
+                // Update reservation section state (Active / Inactive)
+                updateReservationStatusUI(info.is_reservation_enabled);
+            } catch (err) {
+                console.error('Error fetching restaurant info:', err);
+            }
+        }
+
+        function updateReservationStatusUI(isEnabled) {
+            const isEn = isEnabled === undefined || isEnabled === null ? 1 : Number(isEnabled);
+            const resSection = document.getElementById('reservation');
+            const navBtn = document.getElementById('nav-reserve-btn');
+            const mobileLink = document.getElementById('mobile-nav-reserve-link');
+            const heroBtn = document.getElementById('hero-reserve-btn');
+            const modalBtn = document.getElementById('modal-reserve-btn');
+
+            if (isEn === 0) {
+                if (resSection) resSection.style.setProperty('display', 'none', 'important');
+                if (navBtn) navBtn.style.setProperty('display', 'none', 'important');
+                if (mobileLink) mobileLink.style.setProperty('display', 'none', 'important');
+                if (heroBtn) heroBtn.style.setProperty('display', 'none', 'important');
+                if (modalBtn) modalBtn.style.setProperty('display', 'none', 'important');
+            } else {
+                if (resSection) resSection.style.removeProperty('display');
+                if (navBtn) navBtn.style.removeProperty('display');
+                if (mobileLink) mobileLink.style.removeProperty('display');
+                if (heroBtn) heroBtn.style.removeProperty('display');
+                if (modalBtn) modalBtn.style.removeProperty('display');
+            }
+        }
+
+        function updateHeroStory(lang) {
+            if (!restaurantInfoData) return;
+            const storyEl = document.getElementById('hero-story');
+            if (!storyEl) return;
+            if (lang === 'es' && restaurantInfoData.story_es) {
+                storyEl.textContent = restaurantInfoData.story_es;
+            } else if (lang === 'en' && restaurantInfoData.story_en) {
+                storyEl.textContent = restaurantInfoData.story_en;
+            } else if (restaurantInfoData.story_fr) {
+                storyEl.textContent = restaurantInfoData.story_fr;
+            }
+        }
+
+        // Fetch Menu Data
+        async function fetchMenu() {
+            try {
+                const res = await fetch('/api/menu');
+                if (!res.ok) throw new Error('Cannot load menu');
+                menuData = await res.json();
+                renderCategoryTabs();
+                renderMenu();
+            } catch (err) {
+                console.error('Error fetching menu:', err);
+                document.getElementById('dishes-grid').innerHTML = `
+                    <div class="col-span-full text-center py-12 text-red-500">
+                        <i class="fas fa-exclamation-triangle text-3xl mb-2"></i>
+                        <p>Impossible de charger le menu pour le moment.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Scroll Category Tabs smoothly
+        function scrollCatTabs(offset) {
+            const container = document.getElementById('category-tabs-container');
+            if (container) {
+                container.scrollBy({ left: offset, behavior: 'smooth' });
+            }
+        }
+
+        // Render Category Tabs
+        function renderCategoryTabs() {
+            const container = document.getElementById('category-tabs-container');
+            if (!container || !menuData) return;
+
+            const allLabel = currentLang === 'es' ? 'Todos los platos' : (currentLang === 'en' ? 'All Dishes' : 'Tous les plats');
+            let html = `
+                <button onclick="selectCategory('all')" id="cat-tab-all" class="cat-tab shrink-0 whitespace-nowrap px-5 py-2.5 rounded-xl font-bold text-sm ${activeCategory === 'all' ? 'bg-red-600 text-white shadow-sm' : 'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50'} transition flex items-center gap-1.5">
+                    <span class="font-mincho text-xs opacity-80">全部</span>
+                    <span>${allLabel}</span>
+                </button>
+            `;
+
+            menuData.categories.forEach(cat => {
+                const catName = currentLang === 'es' ? (cat.name_es || cat.name_fr) : (currentLang === 'en' ? cat.name_en : cat.name_fr);
+                const isActive = activeCategory === cat.slug;
+                html += `
+                    <button onclick="selectCategory('${cat.slug}')" id="cat-tab-${cat.slug}" class="cat-tab shrink-0 whitespace-nowrap px-5 py-2.5 rounded-xl font-bold text-sm ${isActive ? 'bg-red-600 text-white shadow-sm' : 'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50'} transition flex items-center gap-1.5">
+                        ${cat.kanji ? `<span class="font-mincho text-xs opacity-80">${cat.kanji}</span>` : ''}
+                        <span>${catName}</span>
+                    </button>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        function selectCategory(slug) {
+            activeCategory = slug;
+            renderCategoryTabs();
+            renderMenu();
+
+            // Auto-scroll active tab into view
+            const targetBtn = document.getElementById(slug === 'all' ? 'cat-tab-all' : `cat-tab-${slug}`);
+            if (targetBtn) {
+                targetBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }
+
+        function setDietaryFilter(diet) {
+            activeDietary = diet;
+            ['all', 'vegan', 'healthy', 'bestseller'].forEach(d => {
+                const btn = document.getElementById(`filter-diet-${d}`);
+                if (btn) {
+                    if (d === diet) {
+                        btn.className = 'diet-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-stone-900 text-white transition';
+                    } else {
+                        btn.className = 'diet-btn px-3 py-1.5 rounded-full text-xs font-semibold bg-white border border-stone-300 text-stone-700 hover:border-stone-500 transition';
+                    }
+                }
+            });
+            renderMenu();
+        }
+
+        function handleMenuSearch(query) {
+            currentSearchQuery = query.trim().toLowerCase();
+            renderMenu();
+        }
+
+        // Render Menu Cards
+        function renderMenu() {
+            const grid = document.getElementById('dishes-grid');
+            if (!grid || !menuData) return;
+
+            let filtered = menuData.all_dishes.filter(dish => {
+                // Category filter
+                if (activeCategory !== 'all') {
+                    const cat = menuData.categories.find(c => c.id === dish.category_id);
+                    if (!cat || cat.slug !== activeCategory) return false;
+                }
+                // Dietary filter
+                if (activeDietary === 'vegan') {
+                    if (!dish.dietary_tags || !dish.dietary_tags.includes('vegan')) return false;
+                } else if (activeDietary === 'healthy') {
+                    if (!dish.dietary_tags || !dish.dietary_tags.includes('healthy')) return false;
+                } else if (activeDietary === 'bestseller') {
+                    if (!dish.badge || !dish.badge.toLowerCase().includes('best')) return false;
+                }
+                // Search query
+                if (currentSearchQuery) {
+                    const textFr = (dish.name_fr + ' ' + (dish.description_fr || '')).toLowerCase();
+                    const textEs = ((dish.name_es || '') + ' ' + (dish.description_es || '')).toLowerCase();
+                    const textEn = ((dish.name_en || '') + ' ' + (dish.description_en || '')).toLowerCase();
+                    const kanji = (dish.kanji || '').toLowerCase();
+                    if (!textFr.includes(currentSearchQuery) && !textEs.includes(currentSearchQuery) && !textEn.includes(currentSearchQuery) && !kanji.includes(currentSearchQuery)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-16 text-stone-500 bg-white rounded-3xl border border-stone-200">
+                        <i class="fas fa-search text-3xl text-stone-300 mb-3"></i>
+                        <p class="font-semibold">Aucun plat ne correspond à vos critères de recherche.</p>
+                        <button onclick="resetFilters()" class="mt-3 text-xs text-red-600 font-bold hover:underline">Réinitialiser les filtres</button>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(dish => {
+                const title = currentLang === 'es' ? (dish.name_es || dish.name_fr) : (currentLang === 'en' ? (dish.name_en || dish.name_fr) : dish.name_fr);
+                const desc = currentLang === 'es' ? (dish.description_es || dish.description_fr) : (currentLang === 'en' ? (dish.description_en || dish.description_fr) : dish.description_fr);
+                const priceFormatted = dish.price.toFixed(2).replace('.', ',') + ' €';
+
+                // Badge badge styling
+                let badgeHtml = '';
+                if (dish.badge) {
+                    badgeHtml = `<span class="bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">${dish.badge}</span>`;
+                }
+
+                // Dietary tags icons
+                let tagBadges = '';
+                if (dish.dietary_tags && dish.dietary_tags.includes('vegan')) {
+                    tagBadges += `<span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-semibold" title="Végane">🌱 Végan</span>`;
+                }
+                if (dish.dietary_tags && dish.dietary_tags.includes('healthy')) {
+                    tagBadges += `<span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold" title="Healthy">🥗 Healthy</span>`;
+                }
+
+                // Image placeholder fallback
+                const imgSrc = dish.image_url || '/static/images/dishes/hero_bento.jpg';
+
+                html += `
+                    <div class="bg-white rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between group">
+                        <div>
+                            <!-- Card Image -->
+                            <div class="relative h-52 sm:h-56 bg-stone-100 overflow-hidden cursor-pointer" onclick="openDishModal(${dish.id})">
+                                <img src="${imgSrc}" alt="${dish.name_fr}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                                
+                                <div class="absolute top-3 left-3 flex flex-col gap-1 items-start">
+                                    ${badgeHtml}
+                                </div>
+
+                                ${!dish.is_available ? `
+                                    <div class="absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center">
+                                        <span class="bg-stone-900 text-white font-bold text-xs uppercase tracking-widest px-3 py-1.5 rounded-full border border-stone-700">Épuisé aujourd'hui</span>
+                                    </div>
+                                ` : ''}
+
+                                <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-stone-800 text-xs font-bold shadow">
+                                    <i class="fas fa-eye text-stone-400 mr-1"></i> Détails
+                                </div>
+                            </div>
+
+                            <!-- Card Content -->
+                            <div class="p-5 sm:p-6">
+                                <div class="flex justify-between items-start gap-2 mb-1.5">
+                                    <div>
+                                        ${dish.kanji ? `<span class="font-mincho text-xs text-stone-400 tracking-wider block">${dish.kanji}</span>` : ''}
+                                        <h3 class="font-mincho text-lg sm:text-xl font-bold text-stone-900 group-hover:text-red-600 transition cursor-pointer" onclick="openDishModal(${dish.id})">
+                                            ${title}
+                                        </h3>
+                                    </div>
+                                    <span class="text-lg sm:text-xl font-bold font-mincho text-stone-900 whitespace-nowrap bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60">
+                                        ${priceFormatted}
+                                    </span>
+                                </div>
+
+                                <p class="text-stone-500 text-xs sm:text-sm leading-relaxed line-clamp-2 mt-2 font-light">
+                                    ${desc || ''}
+                                </p>
+
+                                ${tagBadges ? `<div class="flex flex-wrap gap-1.5 mt-3">${tagBadges}</div>` : ''}
+                            </div>
+                        </div>
+
+                        <!-- Card Footer -->
+                        <div class="px-5 sm:px-6 pb-5 pt-0 flex items-center justify-between border-t border-stone-100 pt-3 text-xs text-stone-400">
+                            <span class="hover:text-stone-700 cursor-pointer" onclick="openDishModal(${dish.id})">
+                                <i class="fas fa-info-circle text-stone-400 mr-1"></i> Allergènes & Ingrédients
+                            </span>
+                            <button onclick="openDishModal(${dish.id})" class="text-red-600 font-bold hover:underline">
+                                Voir <i class="fas fa-chevron-right text-[10px] ml-0.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            grid.innerHTML = html;
+        }
+
+        function resetFilters() {
+            activeCategory = 'all';
+            activeDietary = 'all';
+            currentSearchQuery = '';
+            const searchInput = document.getElementById('menu-search-input');
+            if (searchInput) searchInput.value = '';
+            setDietaryFilter('all');
+            renderCategoryTabs();
+            renderMenu();
+        }
+
+        // Dish Details Modal
+        function openDishModal(dishId) {
+            if (!menuData) return;
+            const dish = menuData.all_dishes.find(d => d.id === dishId);
+            if (!dish) return;
+
+            const modal = document.getElementById('dish-modal');
+            const title = currentLang === 'es' ? (dish.name_es || dish.name_fr) : (currentLang === 'en' ? (dish.name_en || dish.name_fr) : dish.name_fr);
+            const desc = currentLang === 'es' ? (dish.description_es || dish.description_fr) : (currentLang === 'en' ? (dish.description_en || dish.description_fr) : dish.description_fr);
+
+            document.getElementById('modal-img').src = dish.image_url || '/static/images/dishes/hero_bento.jpg';
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-kanji').textContent = dish.kanji || '';
+            document.getElementById('modal-price').textContent = dish.price.toFixed(2).replace('.', ',') + ' €';
+            document.getElementById('modal-desc').textContent = desc || '';
+
+            // Badge
+            const badgeContainer = document.getElementById('modal-badge-container');
+            if (dish.badge) {
+                badgeContainer.innerHTML = `<span class="bg-red-600 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow">${dish.badge}</span>`;
+            } else {
+                badgeContainer.innerHTML = '';
+            }
+
+            // Protein options
+            const proteinBox = document.getElementById('modal-protein-box');
+            const proteinText = document.getElementById('modal-protein-text');
+            if (dish.protein_options) {
+                proteinBox.classList.remove('hidden');
+                proteinText.textContent = dish.protein_options;
+            } else {
+                proteinBox.classList.add('hidden');
+            }
+
+            // Allergens tags
+            const allergensContainer = document.getElementById('modal-allergens-tags');
+            let tagsHtml = '';
+            if (dish.allergens) {
+                const list = dish.allergens.split(',');
+                list.forEach(a => {
+                    tagsHtml += `<span class="bg-stone-100 text-stone-700 text-xs px-2.5 py-1 rounded-md font-medium capitalize border border-stone-200"><i class="fas fa-shield-alt text-amber-500 mr-1"></i> ${a.trim()}</span>`;
+                });
+            }
+            if (dish.dietary_tags && dish.dietary_tags.includes('vegan')) {
+                tagsHtml += `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-md font-bold"><i class="fas fa-leaf mr-1"></i> 100% Végane</span>`;
+            }
+            if (dish.dietary_tags && dish.dietary_tags.includes('healthy')) {
+                tagsHtml += `<span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-md font-bold"><i class="fas fa-heart mr-1"></i> Healthy & Léger</span>`;
+            }
+            if (!tagsHtml) {
+                tagsHtml = `<span class="text-xs text-stone-400 italic">Aucun allergène majeur signalé</span>`;
+            }
+            allergensContainer.innerHTML = tagsHtml;
+
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+
+            const scrollArea = document.getElementById('modal-scroll-area');
+            if (scrollArea) scrollArea.scrollTop = 0;
+        }
+
+        function closeDishModal() {
+            const modal = document.getElementById('dish-modal');
+            if (modal) modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking or tapping outside on the screen backdrop
+        function handleModalBackdropClick(e) {
+            if (e.target.id === 'dish-modal') {
+                closeDishModal();
+            }
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeDishModal();
+        });
+
+        // Lexicon Fetch & Render
+        let lexiconData = [];
+        async function fetchLexicon() {
+            try {
+                const res = await fetch('/api/lexicon');
+                if (!res.ok) return;
+                lexiconData = await res.json();
+                renderLexicon();
+            } catch (err) {
+                console.error('Error fetching lexicon:', err);
+            }
+        }
+
+        function renderLexicon() {
+            const grid = document.getElementById('lexicon-grid');
+            if (!grid || !lexiconData.length) return;
+
+            let html = '';
+            lexiconData.forEach(item => {
+                const def = currentLang === 'es' ? (item.definition_es || item.definition_fr) : (currentLang === 'en' ? (item.definition_en || item.definition_fr) : item.definition_fr);
+                html += `
+                    <div class="bg-stone-50 hover:bg-white p-5 rounded-2xl border border-stone-200/80 hover:border-red-300 hover:shadow-md transition duration-200">
+                        <div class="flex items-baseline justify-between mb-2">
+                            <h4 class="font-mincho text-lg font-bold text-stone-900">${item.term}</h4>
+                            <span class="font-mincho text-xs text-red-600 font-semibold">${item.kanji || ''}</span>
+                        </div>
+                        <p class="text-xs text-stone-600 leading-relaxed font-light">
+                            ${def}
+                        </p>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        // Allergens Fetch & Render
+        let allergensData = [];
+        async function fetchAllergens() {
+            try {
+                const res = await fetch('/api/allergens');
+                if (!res.ok) return;
+                allergensData = await res.json();
+                renderAllergens();
+            } catch (err) {
+                console.error('Error fetching allergens:', err);
+            }
+        }
+
+        function renderAllergens() {
+            const grid = document.getElementById('allergens-grid');
+            if (!grid || !allergensData.length) return;
+
+            let html = '';
+            allergensData.forEach(item => {
+                const name = currentLang === 'es' ? (item.name_es || item.name_fr) : (currentLang === 'en' ? (item.name_en || item.name_fr) : item.name_fr);
+                const example = currentLang === 'es' ? (item.example_dish_es || item.example_dish_fr) : (currentLang === 'en' ? (item.example_dish_en || item.example_dish_fr) : item.example_dish_fr);
+
+                html += `
+                    <div class="p-3 rounded-xl bg-stone-50 border border-stone-100 hover:bg-white hover:border-amber-200 hover:shadow-sm transition duration-200 text-center flex flex-col items-center justify-center">
+                        <span class="text-2xl mb-1 block">${item.icon || '⚠️'}</span>
+                        <span class="text-xs font-bold text-stone-800 block">${name}</span>
+                        ${example ? `<span class="text-[10px] text-stone-500 line-clamp-1" title="${example}">${example}</span>` : ''}
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        function updateAllergenTexts(lang) {
+            if (!restaurantInfoData) return;
+            const badgeEl = document.getElementById('allergen-badge-text');
+            if (badgeEl && restaurantInfoData.allergen_badge) {
+                badgeEl.textContent = restaurantInfoData.allergen_badge;
+            }
+            const titleEl = document.getElementById('allergen-main-title');
+            if (titleEl) {
+                if (lang === 'es' && restaurantInfoData.allergen_title_es) titleEl.textContent = restaurantInfoData.allergen_title_es;
+                else if (lang === 'en' && restaurantInfoData.allergen_title_en) titleEl.textContent = restaurantInfoData.allergen_title_en;
+                else if (restaurantInfoData.allergen_title_fr) titleEl.textContent = restaurantInfoData.allergen_title_fr;
+            }
+            const descEl = document.getElementById('allergen-main-desc');
+            if (descEl) {
+                if (lang === 'es' && restaurantInfoData.allergen_desc_es) descEl.textContent = restaurantInfoData.allergen_desc_es;
+                else if (lang === 'en' && restaurantInfoData.allergen_desc_en) descEl.textContent = restaurantInfoData.allergen_desc_en;
+                else if (restaurantInfoData.allergen_desc_fr) descEl.textContent = restaurantInfoData.allergen_desc_fr;
+            }
+            const noteEl = document.getElementById('allergen-notice-text');
+            if (noteEl) {
+                let noteText = restaurantInfoData.allergen_note_fr || '';
+                if (lang === 'es' && restaurantInfoData.allergen_note_es) noteText = restaurantInfoData.allergen_note_es;
+                else if (lang === 'en' && restaurantInfoData.allergen_note_en) noteText = restaurantInfoData.allergen_note_en;
+                if (noteText) {
+                    noteEl.innerHTML = `<i class="fas fa-info-circle text-amber-500 mr-1"></i> ${noteText}`;
+                }
+            }
+        }
+
+        // Reservation Form Submission
+        async function handleReservation(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('res-submit-btn');
+            const alertBox = document.getElementById('res-alert');
+
+            if (restaurantInfoData && Number(restaurantInfoData.is_reservation_enabled) === 0) {
+                alertBox.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-amber-50 text-amber-800 border border-amber-200';
+                alertBox.textContent = 'Les réservations en ligne sont temporairement fermées. Veuillez nous contacter par téléphone.';
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            const payload = {
+                name: document.getElementById('res-name').value,
+                phone: document.getElementById('res-phone').value,
+                email: document.getElementById('res-email').value,
+                guests: parseInt(document.getElementById('res-guests').value),
+                date: document.getElementById('res-date').value,
+                time: document.getElementById('res-time').value,
+                notes: document.getElementById('res-notes').value
+            };
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Envoi en cours...`;
+
+            try {
+                const res = await fetch('/api/reserve', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const result = await res.json();
+
+                if (res.ok) {
+                    alertBox.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200';
+                    alertBox.innerHTML = `
+                        <i class="fas fa-check-circle text-lg text-emerald-600 block mb-1"></i>
+                        Merci ${payload.name} ! Votre demande de réservation pour le <strong>${payload.date} à ${payload.time}</strong> (${payload.guests} convives) a bien été reçue. Nous vous contacterons rapidement par SMS ou appel.
+                    `;
+                    alertBox.classList.remove('hidden');
+                    document.getElementById('reservation-form').reset();
+                } else {
+                    alertBox.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-red-50 text-red-800 border border-red-200';
+                    alertBox.textContent = result.error || 'Erreur lors de la réservation.';
+                    alertBox.classList.remove('hidden');
+                }
+            } catch (err) {
+                alertBox.className = 'p-4 rounded-xl text-center text-sm font-semibold bg-red-50 text-red-800 border border-red-200';
+                alertBox.textContent = 'Une erreur réseau est survenue. Veuillez réessayer.';
+                alertBox.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>Confirmer la réservation</span> <i class="fas fa-paper-plane"></i>`;
+            }
+        }
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) menu.classList.toggle('hidden');
+        }
+
+        // Sakura Falling Animation
+        function initSakura() {
+            const container = document.getElementById('sakura-container');
+            if (!container) return;
+            const petalCount = 18;
+
+            for (let i = 0; i < petalCount; i++) {
+                const petal = document.createElement('div');
+                petal.className = 'petal';
+                const size = Math.random() * 10 + 8;
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size * 1.3}px`;
+                petal.style.left = `${Math.random() * 100}vw`;
+                petal.style.animationDuration = `${Math.random() * 7 + 6}s`;
+                petal.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(petal);
+            }
+        }
+    </script>
+</body>
+</html>
