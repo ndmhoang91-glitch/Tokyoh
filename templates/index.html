@@ -221,8 +221,9 @@
                         <span class="hidden sm:block absolute -left-10 -top-4 text-stone-700/40 text-4xl font-mincho select-none text-vertical">
                             東京弁当美味
                         </span>
-                        <h1 id="hero-main-title" class="font-mincho text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight">
-                            Toky<span class="text-red-500">Oh!</span> Anglet
+                        <h1 id="hero-main-title" class="font-mincho text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight flex flex-wrap items-center gap-2 sm:gap-3.5">
+                            <img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-10 sm:h-12 lg:h-14 w-auto object-contain drop-shadow-lg">
+                            <span>Anglet</span>
                         </h1>
                         <p id="hero-slogan" class="text-xl sm:text-2xl lg:text-3xl text-amber-300 font-mincho font-medium mt-2">
                             L'énergie de Tokyo dans votre assiette !
@@ -1098,7 +1099,10 @@
                 }
                 if (info.name) {
                     const titleEl = document.getElementById('hero-main-title');
-                    if (titleEl) titleEl.innerHTML = info.name.replace('TokyOh!', 'Toky<span class="text-red-500">Oh!</span>');
+                    if (titleEl) {
+                        const remainingText = info.name.replace('TokyOh!', '').trim();
+                        titleEl.innerHTML = `<img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-10 sm:h-12 lg:h-14 w-auto object-contain drop-shadow-lg">${remainingText ? `<span>${remainingText}</span>` : ''}`;
+                    }
                 }
                 if (info.slogan) {
                     const sloganEl = document.getElementById('hero-slogan');
