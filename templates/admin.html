@@ -128,6 +128,10 @@
                 <i class="fas fa-crown text-amber-500"></i>
                 <span>Formule Gourmande</span>
             </button>
+            <button onclick="switchTab('loyalty')" id="tab-btn-loyalty" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-stamp text-red-500"></i>
+                <span>Programme Fidélité</span>
+            </button>
             <button onclick="switchTab('categories')" id="tab-btn-categories" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fas fa-folder-tree"></i>
                 <span>Catégories</span>
@@ -539,6 +543,110 @@
                         <button type="submit" id="save-gourmand-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-red-600/30 hover:shadow-red-600/50 flex items-center gap-2">
                             <i class="fas fa-check-circle"></i>
                             <span>Enregistrer la Formule Gourmande</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- ================= TAB: PROGRAMME FIDÉLITÉ ================= -->
+        <section id="tab-content-loyalty" class="tab-pane hidden space-y-6">
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 sm:p-8 space-y-6">
+                <div class="border-b border-stone-100 pb-4 flex flex-col sm:flex-row justify-between sm:items-center gap-2">
+                    <div>
+                        <h3 class="font-mincho text-2xl font-bold text-stone-900 flex items-center gap-2">
+                            <i class="fas fa-stamp text-red-500"></i>
+                            <span>Gestion du Programme Fidélité (Carte de Fidélité)</span>
+                        </h3>
+                        <p class="text-xs text-stone-500 mt-1">
+                            Modifiez l'image ou personnalisez les informations de votre carte de fidélité affichée sur la page d'accueil.
+                        </p>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-red-50 text-red-700 text-xs font-bold rounded-full border border-red-200 w-fit">
+                        <i class="fas fa-magic"></i> Affichage Accueil
+                    </span>
+                </div>
+
+                <form onsubmit="handleSaveLoyalty(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                        <!-- Left: Image Upload & Preview -->
+                        <div class="lg:col-span-6 space-y-4">
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                                <i class="fas fa-image text-red-500 mr-1"></i> Image de la Carte de Fidélité
+                            </label>
+                            
+                            <div class="bg-stone-50 p-4 rounded-3xl border border-stone-200 text-center space-y-4">
+                                <div class="relative w-full aspect-[4/3] max-h-80 bg-white rounded-2xl overflow-hidden border border-stone-200 flex items-center justify-center p-2 group shadow-inner">
+                                    <img id="admin-loyalty-img-preview" src="/static/images/loyalty_card.png" alt="Aperçu Carte Fidélité" class="w-full h-full object-contain rounded-xl group-hover:scale-105 transition duration-300">
+                                </div>
+
+                                <div class="space-y-3 text-left">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-stone-600 mb-1">
+                                            <i class="fas fa-upload text-red-500 mr-1"></i> Télécharger une nouvelle image depuis votre appareil :
+                                        </label>
+                                        <input type="file" accept="image/*" onchange="handleLoyaltyImageUpload(this)" class="w-full text-xs text-stone-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-red-50 file:text-red-700 hover:file:bg-red-100 cursor-pointer">
+                                    </div>
+
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-stone-600 mb-1">
+                                            <i class="fas fa-link text-stone-400 mr-1"></i> Ou URL directe de l'image :
+                                        </label>
+                                        <input type="text" id="loyalty-img-url-input" oninput="updateLoyaltyImgPreview(this.value)" placeholder="/static/images/loyalty_card.png" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                    </div>
+
+                                    <div class="pt-1 flex flex-wrap gap-2">
+                                        <button type="button" onclick="setLoyaltyCardDefaultImage()" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs rounded-xl font-medium transition">
+                                            <i class="fas fa-undo mr-1"></i> Réinitialiser image par défaut
+                                        </button>
+                                        <button type="button" onclick="clearLoyaltyCustomImage()" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs rounded-xl font-medium transition">
+                                            <i class="fas fa-code mr-1"></i> Utiliser le bloc dynamique HTML (Sans image)
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Text Information Configuration -->
+                        <div class="lg:col-span-6 space-y-4">
+                            <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                                <i class="fas fa-pen-to-square text-amber-500 mr-1"></i> Textes & Avantages du Programme
+                            </label>
+
+                            <div class="space-y-4 bg-stone-50 p-4 rounded-3xl border border-stone-200">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-stone-600 mb-1">Badge (En-tête)</label>
+                                        <input type="text" id="loyalty-badge-input" placeholder="Programme Fidélité" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold text-stone-600 mb-1">Offre / Récompense</label>
+                                        <input type="text" id="loyalty-reward-input" placeholder="10 TAMPONS = 1 BENTO OFFERT" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-stone-600 mb-1">Titre principal</label>
+                                    <input type="text" id="loyalty-title-input" placeholder="Votre Fidélité Récompensée !" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-stone-600 mb-1">Description détaillée</label>
+                                    <textarea id="loyalty-desc-input" rows="3" placeholder="Demandez votre carte de fidélité gratuite..." class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500"></textarea>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-bold text-stone-600 mb-1">Note de bas de carte</label>
+                                    <input type="text" id="loyalty-footnote-input" placeholder="Disponible sur place & à emporter au 999 allée du Cadran, Anglet" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-3">
+                        <button type="submit" id="save-loyalty-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-red-600/30 hover:shadow-red-600/50 flex items-center gap-2">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Enregistrer le Programme Fidélité</span>
                         </button>
                     </div>
                 </form>
@@ -1814,6 +1922,16 @@
                 const gPreview = document.getElementById('admin-gourmand-img-preview');
                 if (gPreview) gPreview.src = restaurantInfo.gourmand_image_url || '/static/images/dishes/bento_gourmand.jpg';
 
+                // Programme Fidélité tab
+                setVal('loyalty-img-url-input', restaurantInfo.loyalty_image_url);
+                setVal('loyalty-badge-input', restaurantInfo.loyalty_badge || 'Programme Fidélité');
+                setVal('loyalty-reward-input', restaurantInfo.loyalty_reward || '10 TAMPONS = 1 BENTO OFFERT');
+                setVal('loyalty-title-input', restaurantInfo.loyalty_title || 'Votre Fidélité Récompensée !');
+                setVal('loyalty-desc-input', restaurantInfo.loyalty_desc || 'Demandez votre carte de fidélité gratuite lors de votre passage chez TokyOh! Anglet. Pour chaque bento acheté, obtenez 1 tampon. Dès 10 tampons cumulés, votre 11ᵉ bento classique vous est offert !');
+                setVal('loyalty-footnote-input', restaurantInfo.loyalty_footnote || 'Disponible sur place & à emporter au 999 allée du Cadran, Anglet');
+                const lPreview = document.getElementById('admin-loyalty-img-preview');
+                if (lPreview) lPreview.src = restaurantInfo.loyalty_image_url || '/static/images/loyalty_card.png';
+
                 // Hero banner tab
                 setVal('hero-badge-input', restaurantInfo.hero_badge);
                 setVal('hero-title-input', restaurantInfo.name);
@@ -2628,6 +2746,88 @@
         function updateGourmandImgPreview(url) {
             const preview = document.getElementById('admin-gourmand-img-preview');
             if (preview) preview.src = url || '/static/images/dishes/bento_gourmand.jpg';
+        }
+
+
+        // Loyalty Card Handlers
+        async function handleSaveLoyalty(e) {
+            e.preventDefault();
+            const btn = document.getElementById('save-loyalty-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> <span>Enregistrement...</span>`;
+
+            const payload = {
+                loyalty_image_url: document.getElementById('loyalty-img-url-input').value.trim(),
+                loyalty_badge: document.getElementById('loyalty-badge-input').value.trim(),
+                loyalty_reward: document.getElementById('loyalty-reward-input').value.trim(),
+                loyalty_title: document.getElementById('loyalty-title-input').value.trim(),
+                loyalty_desc: document.getElementById('loyalty-desc-input').value.trim(),
+                loyalty_footnote: document.getElementById('loyalty-footnote-input').value.trim()
+            };
+
+            try {
+                const res = await fetch('/api/info', {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    restaurantInfo = data.data || payload;
+                    showToast('Programme Fidélité mis à jour avec succès !');
+                } else {
+                    alert(data.error || 'Erreur lors de la mise à jour.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de la sauvegarde.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-check-circle mr-2"></i> <span>Enregistrer le Programme Fidélité</span>`;
+            }
+        }
+
+        async function handleLoyaltyImageUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                showToast('Téléchargement de la photo de fidélité...', 'info');
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    document.getElementById('loyalty-img-url-input').value = data.url;
+                    document.getElementById('admin-loyalty-img-preview').src = data.url;
+                    showToast('Photo de la carte de fidélité téléchargée avec succès !');
+                } else {
+                    alert(data.error || 'Échec du téléchargement.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors du téléversement.');
+            }
+        }
+
+        function updateLoyaltyImgPreview(url) {
+            const preview = document.getElementById('admin-loyalty-img-preview');
+            if (preview) preview.src = url || '/static/images/loyalty_card.png';
+        }
+
+        function setLoyaltyCardDefaultImage() {
+            document.getElementById('loyalty-img-url-input').value = '/static/images/loyalty_card.png';
+            updateLoyaltyImgPreview('/static/images/loyalty_card.png');
+            showToast('Image par défaut restaurée. Cliquez sur Enregistrer pour valider.');
+        }
+
+        function clearLoyaltyCustomImage() {
+            document.getElementById('loyalty-img-url-input').value = '';
+            updateLoyaltyImgPreview('');
+            showToast('Image désactivée. Le bloc interactif par défaut sera affiché. Cliquez sur Enregistrer.');
         }
 
     </script>

@@ -555,35 +555,43 @@
     <section id="fidelite" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <!-- Loyalty Card Box -->
-            <div class="bg-gradient-to-br from-red-50 to-rose-100/60 border border-red-200/80 rounded-3xl p-8 shadow-sm flex flex-col justify-between">
-                <div>
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="stamp-badge px-3 py-1 text-xs uppercase tracking-wider">Programme Fidélité</span>
-                        <span class="text-xs font-bold text-red-600 font-mincho">10 TAMPONS = 1 BENTO OFFERT</span>
-                    </div>
-                    <h3 class="font-mincho text-2xl sm:text-3xl font-bold text-stone-900 mb-3">
-                        Votre Fidélité Récompensée !
-                    </h3>
-                    <p class="text-stone-600 text-sm leading-relaxed mb-6">
-                        Demandez votre carte de fidélité gratuite lors de votre passage chez TokyOh! Anglet. Pour chaque bento acheté, obtenez 1 tampon. Dès 10 tampons cumulés, votre <strong>11ᵉ bento classique vous est offert</strong> !
-                    </p>
-                    
-                    <!-- 10 stamp circles illustration -->
-                    <div class="grid grid-cols-5 gap-2 sm:gap-3 max-w-xs sm:max-w-md mx-auto mb-6">
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">1</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">2</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">3</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">4</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">5</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">6</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">7</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">8</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">9</div>
-                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-red-600 bg-red-600 text-white flex items-center justify-center font-black text-xs shadow-md">🎁</div>
-                    </div>
+            <div id="loyalty-card-box" class="bg-gradient-to-br from-red-50 to-rose-100/60 border border-red-200/80 rounded-3xl shadow-sm flex flex-col justify-between relative overflow-hidden group">
+                <!-- Custom Uploaded Loyalty Image Container -->
+                <div id="loyalty-img-container" class="hidden w-full h-full flex items-center justify-center">
+                    <img id="loyalty-custom-img" src="/static/images/loyalty_card.png" alt="Programme Fidélité TokyOh!" class="w-full h-full object-contain rounded-3xl">
                 </div>
-                <div class="text-xs text-stone-500 font-medium text-center">
-                    Disponible sur place & à emporter au 999 allée du Cadran, Anglet
+
+                <!-- Default Interactive Card UI -->
+                <div id="loyalty-default-ui" class="p-6 sm:p-8 flex flex-col justify-between h-full">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span id="loyalty-badge" class="stamp-badge px-3 py-1 text-xs uppercase tracking-wider">Programme Fidélité</span>
+                            <span id="loyalty-reward" class="text-xs font-bold text-red-600 font-mincho">10 TAMPONS = 1 BENTO OFFERT</span>
+                        </div>
+                        <h3 id="loyalty-title" class="font-mincho text-2xl sm:text-3xl font-bold text-stone-900 mb-3">
+                            Votre Fidélité Récompensée !
+                        </h3>
+                        <p id="loyalty-desc" class="text-stone-600 text-sm leading-relaxed mb-6 font-light">
+                            Demandez votre carte de fidélité gratuite lors de votre passage chez TokyOh! Anglet. Pour chaque bento acheté, obtenez 1 tampon. Dès 10 tampons cumulés, votre <strong>11ᵉ bento classique vous est offert</strong> !
+                        </p>
+                        
+                        <!-- 10 stamp circles illustration -->
+                        <div class="grid grid-cols-5 gap-2 sm:gap-3 max-w-xs sm:max-w-md mx-auto mb-6">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">1</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">2</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">3</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">4</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">5</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">6</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">7</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">8</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">9</div>
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-red-600 bg-red-600 text-white flex items-center justify-center font-black text-xs shadow-md">🎁</div>
+                        </div>
+                    </div>
+                    <div id="loyalty-footnote" class="text-xs text-stone-500 font-medium text-center">
+                        Disponible sur place & à emporter au 999 allée du Cadran, Anglet
+                    </div>
                 </div>
             </div>
 
@@ -1271,6 +1279,45 @@
                 if (info.gourmand_btn_url) {
                     const el = document.getElementById('gourmand-btn');
                     if (el) el.href = info.gourmand_btn_url;
+                }
+
+                // Update Loyalty Section
+                if (info.loyalty_image_url) {
+                    const imgContainer = document.getElementById('loyalty-img-container');
+                    const customImg = document.getElementById('loyalty-custom-img');
+                    const defaultUi = document.getElementById('loyalty-default-ui');
+                    if (imgContainer && customImg && defaultUi) {
+                        customImg.src = info.loyalty_image_url;
+                        imgContainer.classList.remove('hidden');
+                        defaultUi.classList.add('hidden');
+                    }
+                } else {
+                    const imgContainer = document.getElementById('loyalty-img-container');
+                    const defaultUi = document.getElementById('loyalty-default-ui');
+                    if (imgContainer && defaultUi) {
+                        imgContainer.classList.add('hidden');
+                        defaultUi.classList.remove('hidden');
+                    }
+                }
+                if (info.loyalty_badge) {
+                    const el = document.getElementById('loyalty-badge');
+                    if (el) el.textContent = info.loyalty_badge;
+                }
+                if (info.loyalty_reward) {
+                    const el = document.getElementById('loyalty-reward');
+                    if (el) el.textContent = info.loyalty_reward;
+                }
+                if (info.loyalty_title) {
+                    const el = document.getElementById('loyalty-title');
+                    if (el) el.textContent = info.loyalty_title;
+                }
+                if (info.loyalty_desc) {
+                    const el = document.getElementById('loyalty-desc');
+                    if (el) el.innerHTML = info.loyalty_desc;
+                }
+                if (info.loyalty_footnote) {
+                    const el = document.getElementById('loyalty-footnote');
+                    if (el) el.textContent = info.loyalty_footnote;
                 }
 
                 const contactAddress = document.getElementById('contact-address');

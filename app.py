@@ -679,7 +679,13 @@ def update_info():
         gourmand_item5 = ?,
         gourmand_item6 = ?,
         gourmand_btn_text = ?,
-        gourmand_btn_url = ?
+        gourmand_btn_url = ?,
+        loyalty_image_url = ?,
+        loyalty_badge = ?,
+        loyalty_reward = ?,
+        loyalty_title = ?,
+        loyalty_desc = ?,
+        loyalty_footnote = ?
     WHERE id = 1
     ''', (
         val('name', 'TokyOh! Anglet'),
@@ -734,7 +740,13 @@ def update_info():
         val('gourmand_item5', 'Sushi signature du Chef'),
         val('gourmand_item6', 'Tamagoyaki ou œuf ajitama'),
         val('gourmand_btn_text', 'Choisir mon bento & formule'),
-        val('gourmand_btn_url', '#menu')
+        val('gourmand_btn_url', '#menu'),
+        val('loyalty_image_url', '/static/images/loyalty_card.png'),
+        val('loyalty_badge', 'Programme Fidélité'),
+        val('loyalty_reward', '10 TAMPONS = 1 BENTO OFFERT'),
+        val('loyalty_title', 'Votre Fidélité Récompensée !'),
+        val('loyalty_desc', 'Demandez votre carte de fidélité gratuite lors de votre passage chez TokyOh! Anglet. Pour chaque bento acheté, obtenez 1 tampon. Dès 10 tampons cumulés, votre 11ᵉ bento classique vous est offert !'),
+        val('loyalty_footnote', 'Disponible sur place & à emporter au 999 allée du Cadran, Anglet')
     ))
     conn.commit()
     updated_row = c.execute('SELECT * FROM restaurant_info WHERE id = 1').fetchone()

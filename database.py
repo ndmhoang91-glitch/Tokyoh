@@ -119,7 +119,13 @@ def init_db():
         gourmand_item5 TEXT DEFAULT 'Sushi signature du Chef',
         gourmand_item6 TEXT DEFAULT 'Tamagoyaki ou œuf ajitama',
         gourmand_btn_text TEXT DEFAULT 'Choisir mon bento & formule',
-        gourmand_btn_url TEXT DEFAULT '#menu'
+        gourmand_btn_url TEXT DEFAULT '#menu',
+        loyalty_image_url TEXT DEFAULT '/static/images/loyalty_card.png',
+        loyalty_badge TEXT DEFAULT 'Programme Fidélité',
+        loyalty_reward TEXT DEFAULT '10 TAMPONS = 1 BENTO OFFERT',
+        loyalty_title TEXT DEFAULT 'Votre Fidélité Récompensée !',
+        loyalty_desc TEXT DEFAULT 'Demandez votre carte de fidélité gratuite lors de votre passage chez TokyOh! Anglet. Pour chaque bento acheté, obtenez 1 tampon. Dès 10 tampons cumulés, votre 11ᵉ bento classique vous est offert !',
+        loyalty_footnote TEXT DEFAULT 'Disponible sur place & à emporter au 999 allée du Cadran, Anglet'
     )
     ''')
 
@@ -207,7 +213,13 @@ def init_db():
             ('gourmand_item5', "TEXT DEFAULT 'Sushi signature du Chef'"),
             ('gourmand_item6', "TEXT DEFAULT 'Tamagoyaki ou œuf ajitama'"),
             ('gourmand_btn_text', "TEXT DEFAULT 'Choisir mon bento & formule'"),
-            ('gourmand_btn_url', "TEXT DEFAULT '#menu'")
+            ('gourmand_btn_url', "TEXT DEFAULT '#menu'"),
+            ('loyalty_image_url', "TEXT DEFAULT '/static/images/loyalty_card.png'"),
+            ('loyalty_badge', "TEXT DEFAULT 'Programme Fidélité'"),
+            ('loyalty_reward', "TEXT DEFAULT '10 TAMPONS = 1 BENTO OFFERT'"),
+            ('loyalty_title', "TEXT DEFAULT 'Votre Fidélité Récompensée !'"),
+            ('loyalty_desc', "TEXT DEFAULT 'Demandez votre carte de fidélité gratuite lors de votre passage chez TokyOh! Anglet. Pour chaque bento acheté, obtenez 1 tampon. Dès 10 tampons cumulés, votre 11ᵉ bento classique vous est offert !'"),
+            ('loyalty_footnote', "TEXT DEFAULT 'Disponible sur place & à emporter au 999 allée du Cadran, Anglet'")
         ]),
         ('lexicon', [('definition_es', 'TEXT')]),
         ('allergens', [('name_es', 'TEXT'), ('example_dish_es', 'TEXT')])
