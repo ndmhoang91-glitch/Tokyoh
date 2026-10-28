@@ -124,6 +124,10 @@
                 <i class="fas fa-image text-red-500"></i>
                 <span>Bannière Hero & Accueil</span>
             </button>
+            <button onclick="switchTab('gourmand')" id="tab-btn-gourmand" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
+                <i class="fas fa-crown text-amber-500"></i>
+                <span>Formule Gourmande</span>
+            </button>
             <button onclick="switchTab('categories')" id="tab-btn-categories" class="admin-tab px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center gap-2 whitespace-nowrap">
                 <i class="fas fa-folder-tree"></i>
                 <span>Catégories</span>
@@ -350,6 +354,191 @@
                         <button type="submit" id="save-hero-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-red-600/30 hover:shadow-red-600/50 flex items-center gap-2">
                             <i class="fas fa-check-circle"></i>
                             <span>Enregistrer la Bannière Hero</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        
+        <!-- ================= TAB: FORMULE GOURMANDE ================= -->
+        <section id="tab-content-gourmand" class="tab-pane hidden space-y-6">
+            <div class="bg-white rounded-3xl border border-stone-200 shadow-sm p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-6 border-b border-stone-100">
+                    <div>
+                        <div class="inline-flex items-center gap-2 text-amber-600 font-bold text-xs uppercase tracking-wider mb-1">
+                            <i class="fas fa-crown"></i>
+                            <span>Expérience Bento Gourmand (+6 €)</span>
+                        </div>
+                        <h3 class="font-mincho text-2xl font-bold text-stone-900">Gestion de la Formule Bento Gourmande</h3>
+                        <p class="text-xs text-stone-500 mt-1">Personnalisez la photo principale, les badges, le titre, la description, les 6 accompagnements et le bouton d'action.</p>
+                    </div>
+                    <a href="/#bento-gourmand-sec" target="_blank" class="text-xs bg-stone-100 hover:bg-stone-200 text-stone-700 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-1.5 transition">
+                        <i class="fas fa-eye text-stone-400"></i>
+                        <span>Aperçu sur le site</span>
+                    </a>
+                </div>
+
+                <form onsubmit="handleSaveGourmand(event)" class="space-y-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        <!-- Left column: Textes & Inclusions -->
+                        <div class="lg:col-span-7 space-y-5">
+                            <div class="border-b border-stone-100 pb-2">
+                                <h4 class="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fas fa-pen text-amber-500"></i>
+                                    <span>Titres & Présentation</span>
+                                </h4>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Badge supérieur (Couronne)
+                                </label>
+                                <input type="text" id="gourmand-badge-top-input" placeholder="ex: EXPÉRIENCE ROYALE • グルマン弁当" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Titre principal de la section *
+                                </label>
+                                <input type="text" id="gourmand-title-input" required placeholder="ex: Transformez votre Bento en Formule Gourmande !" class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition font-bold">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1">
+                                    Texte descriptif de présentation
+                                </label>
+                                <textarea id="gourmand-desc-input" rows="3" placeholder="Description de la formule et des accompagnements..." class="w-full px-4 py-2.5 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 transition"></textarea>
+                            </div>
+
+                            <div class="border-b border-stone-100 pb-2 pt-2">
+                                <h4 class="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fas fa-list-check text-red-500"></i>
+                                    <span>Les 6 Accompagnements Inclus</span>
+                                </h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Accompagnement 1</label>
+                                    <input type="text" id="gourmand-item1-input" placeholder="ex: <strong>Riz japonais</strong> à volonté" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Accompagnement 2</label>
+                                    <input type="text" id="gourmand-item2-input" placeholder="ex: <strong>Soupe miso</strong> fumante" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Accompagnement 3</label>
+                                    <input type="text" id="gourmand-item3-input" placeholder="ex: <strong>Salade mesclun</strong> croquante" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Accompagnement 4</label>
+                                    <input type="text" id="gourmand-item4-input" placeholder="ex: <strong>Aubergine miso</strong> fondante 🌱" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Accompagnement 5</label>
+                                    <input type="text" id="gourmand-item5-input" placeholder="ex: <strong>Sushi signature</strong> du Chef" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Accompagnement 6</label>
+                                    <input type="text" id="gourmand-item6-input" placeholder="ex: <strong>Tamagoyaki</strong> ou œuf ajitama" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                            </div>
+
+                            <div class="border-b border-stone-100 pb-2 pt-2">
+                                <h4 class="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fas fa-hand-pointer text-emerald-500"></i>
+                                    <span>Bouton d'Action (CTA)</span>
+                                </h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Texte du bouton</label>
+                                    <input type="text" id="gourmand-btn-text-input" placeholder="ex: Choisir mon bento & formule" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">Lien de redirection</label>
+                                    <input type="text" id="gourmand-btn-url-input" placeholder="ex: #menu ou URL" class="w-full px-3 py-2 bg-stone-50 border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right column: Photo & Badges Incrustés -->
+                        <div class="lg:col-span-5 space-y-5">
+                            <div class="border-b border-stone-100 pb-2">
+                                <h4 class="text-xs font-bold text-stone-800 uppercase tracking-wider flex items-center gap-2">
+                                    <i class="fas fa-image text-amber-500"></i>
+                                    <span>Photo & Badges Graphiques</span>
+                                </h4>
+                            </div>
+
+                            <!-- Gourmand Image Upload Box -->
+                            <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-3">
+                                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider">
+                                    Photo du Bento Gourmand
+                                </label>
+                                
+                                <div class="relative w-full h-48 rounded-xl overflow-hidden bg-stone-900 border border-stone-300 shadow-inner group">
+                                    <img id="admin-gourmand-img-preview" src="/static/images/dishes/bento_gourmand.jpg" alt="Aperçu Bento Gourmand" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">
+                                        <i class="fas fa-camera mr-1.5"></i> Aperçu actuel
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] font-semibold text-stone-600 mb-1">
+                                        <i class="fas fa-upload text-red-500 mr-1"></i> Télécharger une nouvelle photo :
+                                    </label>
+                                    <input type="file" accept="image/*" onchange="handleGourmandImageUpload(this)" class="block w-full text-xs text-stone-500 file:mr-2 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-stone-900 file:text-white hover:file:bg-stone-800 cursor-pointer">
+                                </div>
+
+                                <div>
+                                    <label class="block text-[11px] text-stone-500 mb-1">Ou chemin / URL de l'image :</label>
+                                    <input type="text" id="gourmand-img-url-input" oninput="updateGourmandImgPreview(this.value)" class="w-full px-3 py-1.5 bg-white border border-stone-300 rounded-lg text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                            </div>
+
+                            <!-- Badges Box -->
+                            <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-3">
+                                <span class="text-xs font-bold text-stone-700 uppercase tracking-wider block">
+                                    Badge Prix (Haut-Droit de l'image)
+                                </span>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] text-stone-500 mb-1">Libellé</label>
+                                        <input type="text" id="gourmand-price-badge-input" placeholder="ex: FORMULE" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 font-bold uppercase">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] text-stone-500 mb-1">Prix Formule</label>
+                                        <input type="text" id="gourmand-price-input" placeholder="ex: +6 €" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 font-black text-red-600">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sumo Sticker Box -->
+                            <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 space-y-3">
+                                <span class="text-xs font-bold text-stone-700 uppercase tracking-wider block">
+                                    Sticker Sumo 🥋 (Bas-Gauche de l'image)
+                                </span>
+
+                                <div>
+                                    <label class="block text-[11px] text-stone-500 mb-1">Titre du badge</label>
+                                    <input type="text" id="gourmand-sumo-title-input" placeholder="ex: Gourmandise Sumo" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500 font-bold text-amber-600">
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] text-stone-500 mb-1">Sous-titre / Avantage</label>
+                                    <input type="text" id="gourmand-sumo-desc-input" placeholder="ex: Riz à volonté inclus" class="w-full px-3 py-2 bg-white border border-stone-300 rounded-xl text-xs focus:outline-none focus:border-red-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-stone-100 flex items-center justify-end gap-3">
+                        <button type="submit" id="save-gourmand-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-red-600/30 hover:shadow-red-600/50 flex items-center gap-2">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Enregistrer la Formule Gourmande</span>
                         </button>
                     </div>
                 </form>
@@ -1605,6 +1794,26 @@
                 setVal('info-story-fr', restaurantInfo.story_fr);
                 setVal('info-story-es', restaurantInfo.story_es);
 
+                // Formule Gourmande tab
+                setVal('gourmand-badge-top-input', restaurantInfo.gourmand_badge_top);
+                setVal('gourmand-title-input', restaurantInfo.gourmand_title);
+                setVal('gourmand-desc-input', restaurantInfo.gourmand_desc);
+                setVal('gourmand-img-url-input', restaurantInfo.gourmand_image_url);
+                setVal('gourmand-price-badge-input', restaurantInfo.gourmand_price_badge);
+                setVal('gourmand-price-input', restaurantInfo.gourmand_price);
+                setVal('gourmand-sumo-title-input', restaurantInfo.gourmand_sumo_title);
+                setVal('gourmand-sumo-desc-input', restaurantInfo.gourmand_sumo_desc);
+                setVal('gourmand-item1-input', restaurantInfo.gourmand_item1);
+                setVal('gourmand-item2-input', restaurantInfo.gourmand_item2);
+                setVal('gourmand-item3-input', restaurantInfo.gourmand_item3);
+                setVal('gourmand-item4-input', restaurantInfo.gourmand_item4);
+                setVal('gourmand-item5-input', restaurantInfo.gourmand_item5);
+                setVal('gourmand-item6-input', restaurantInfo.gourmand_item6);
+                setVal('gourmand-btn-text-input', restaurantInfo.gourmand_btn_text);
+                setVal('gourmand-btn-url-input', restaurantInfo.gourmand_btn_url);
+                const gPreview = document.getElementById('admin-gourmand-img-preview');
+                if (gPreview) gPreview.src = restaurantInfo.gourmand_image_url || '/static/images/dishes/bento_gourmand.jpg';
+
                 // Hero banner tab
                 setVal('hero-badge-input', restaurantInfo.hero_badge);
                 setVal('hero-title-input', restaurantInfo.name);
@@ -2340,6 +2549,87 @@
                 toast.classList.add('hidden');
             }, 3000);
         }
+
+        // ================= FORMULE GOURMANDE MANAGEMENT =================
+        async function handleSaveGourmand(e) {
+            e.preventDefault();
+            const btn = document.getElementById('save-gourmand-btn');
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> <span>Enregistrement...</span>`;
+
+            const payload = {
+                ...restaurantInfo,
+                gourmand_badge_top: document.getElementById('gourmand-badge-top-input').value.trim(),
+                gourmand_title: document.getElementById('gourmand-title-input').value.trim(),
+                gourmand_desc: document.getElementById('gourmand-desc-input').value.trim(),
+                gourmand_image_url: document.getElementById('gourmand-img-url-input').value.trim(),
+                gourmand_price_badge: document.getElementById('gourmand-price-badge-input').value.trim(),
+                gourmand_price: document.getElementById('gourmand-price-input').value.trim(),
+                gourmand_sumo_title: document.getElementById('gourmand-sumo-title-input').value.trim(),
+                gourmand_sumo_desc: document.getElementById('gourmand-sumo-desc-input').value.trim(),
+                gourmand_item1: document.getElementById('gourmand-item1-input').value.trim(),
+                gourmand_item2: document.getElementById('gourmand-item2-input').value.trim(),
+                gourmand_item3: document.getElementById('gourmand-item3-input').value.trim(),
+                gourmand_item4: document.getElementById('gourmand-item4-input').value.trim(),
+                gourmand_item5: document.getElementById('gourmand-item5-input').value.trim(),
+                gourmand_item6: document.getElementById('gourmand-item6-input').value.trim(),
+                gourmand_btn_text: document.getElementById('gourmand-btn-text-input').value.trim(),
+                gourmand_btn_url: document.getElementById('gourmand-btn-url-input').value.trim()
+            };
+
+            try {
+                const res = await fetch('/api/info', {
+                    method: 'PUT',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (res.ok) {
+                    restaurantInfo = data.data || payload;
+                    showToast('Formule Bento Gourmande mise à jour avec succès !');
+                } else {
+                    alert(data.error || 'Erreur lors de la mise à jour.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors de la sauvegarde.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fas fa-check-circle mr-2"></i> <span>Enregistrer la Formule Gourmande</span>`;
+            }
+        }
+
+        async function handleGourmandImageUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+
+            try {
+                showToast('Téléchargement de la photo Bento Gourmand...', 'info');
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await res.json();
+                if (res.ok && data.url) {
+                    document.getElementById('gourmand-img-url-input').value = data.url;
+                    document.getElementById('admin-gourmand-img-preview').src = data.url;
+                    showToast('Photo Bento Gourmand téléchargée avec succès !');
+                } else {
+                    alert(data.error || 'Échec du téléchargement.');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('Erreur réseau lors du téléversement.');
+            }
+        }
+
+        function updateGourmandImgPreview(url) {
+            const preview = document.getElementById('admin-gourmand-img-preview');
+            if (preview) preview.src = url || '/static/images/dishes/bento_gourmand.jpg';
+        }
+
     </script>
 </body>
 </html>

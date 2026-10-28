@@ -422,19 +422,19 @@
                 <!-- Sumo and Food Image -->
                 <div class="lg:col-span-6 relative">
                     <div class="relative bg-stone-800 rounded-3xl p-4 sm:p-6 border border-stone-700 shadow-2xl">
-                        <img src="/static/images/dishes/bento_gourmand.jpg" alt="Formule Bento Gourmand TokyOh" class="w-full h-80 sm:h-96 object-cover rounded-2xl">
+                        <img id="gourmand-img" src="/static/images/dishes/bento_gourmand.jpg" alt="Formule Bento Gourmand TokyOh" class="w-full h-80 sm:h-96 object-cover rounded-2xl">
                         
                         <div class="absolute -top-4 -right-4 bg-red-600 text-white px-5 py-3 rounded-2xl shadow-xl text-center border-2 border-stone-900">
-                            <span class="text-[10px] font-extrabold uppercase tracking-widest block opacity-90">Formule</span>
-                            <span class="text-2xl sm:text-3xl font-black font-mincho">+6 €</span>
+                            <span id="gourmand-price-badge" class="text-[10px] font-extrabold uppercase tracking-widest block opacity-90">Formule</span>
+                            <span id="gourmand-price" class="text-2xl sm:text-3xl font-black font-mincho">+6 €</span>
                         </div>
 
                         <!-- Sumo sticker badge -->
                         <div class="absolute -bottom-4 -left-4 bg-stone-900 border border-stone-700 px-4 py-2 rounded-xl flex items-center gap-3 shadow-lg">
                             <span class="text-2xl">🥋</span>
                             <div>
-                                <span class="text-xs font-bold text-amber-400 block uppercase tracking-wider">Gourmandise Sumo</span>
-                                <span class="text-[11px] text-stone-300">Riz à volonté inclus</span>
+                                <span id="gourmand-sumo-title" class="text-xs font-bold text-amber-400 block uppercase tracking-wider">Gourmandise Sumo</span>
+                                <span id="gourmand-sumo-desc" class="text-[11px] text-stone-300">Riz à volonté inclus</span>
                             </div>
                         </div>
                     </div>
@@ -444,14 +444,14 @@
                 <div class="lg:col-span-6 space-y-6">
                     <div class="inline-flex items-center gap-2 bg-amber-500/20 text-amber-300 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold">
                         <i class="fas fa-crown"></i>
-                        <span>EXPÉRIENCE ROYALE • グルマン弁当</span>
+                        <span id="gourmand-badge-top">EXPÉRIENCE ROYALE • グルマン弁当</span>
                     </div>
 
-                    <h2 class="font-mincho text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
+                    <h2 id="gourmand-title" class="font-mincho text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
                         Transformez votre Bento en Formule Gourmande !
                     </h2>
 
-                    <p class="text-stone-300 text-sm sm:text-base leading-relaxed font-light">
+                    <p id="gourmand-desc" class="text-stone-300 text-sm sm:text-base leading-relaxed font-light">
                         Pour seulement <strong>+6 €</strong>, complétez votre bento préféré (Katsu Curry, Lunch Katsu ou Tataki de Thon) avec une sélection généreuse d'accompagnements traditionnels tokyoïtes :
                     </p>
 
@@ -459,34 +459,34 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-stone-200">
                         <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
                             <i class="fas fa-check text-red-500"></i>
-                            <span><strong>Riz japonais</strong> à volonté</span>
+                            <span id="gourmand-item-1"><strong>Riz japonais</strong> à volonté</span>
                         </div>
                         <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
                             <i class="fas fa-check text-red-500"></i>
-                            <span><strong>Soupe miso</strong> fumante</span>
+                            <span id="gourmand-item-2"><strong>Soupe miso</strong> fumante</span>
                         </div>
                         <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
                             <i class="fas fa-check text-red-500"></i>
-                            <span><strong>Salade mesclun</strong> croquante</span>
+                            <span id="gourmand-item-3"><strong>Salade mesclun</strong> croquante</span>
                         </div>
                         <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
                             <i class="fas fa-check text-red-500"></i>
-                            <span><strong>Aubergine miso</strong> fondante 🌱</span>
+                            <span id="gourmand-item-4"><strong>Aubergine miso</strong> fondante 🌱</span>
                         </div>
                         <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
                             <i class="fas fa-check text-red-500"></i>
-                            <span><strong>Sushi signature</strong> du Chef</span>
+                            <span id="gourmand-item-5"><strong>Sushi signature</strong> du Chef</span>
                         </div>
                         <div class="flex items-center gap-3 bg-stone-800/80 border border-stone-700/60 p-3 rounded-xl">
                             <i class="fas fa-check text-red-500"></i>
-                            <span><strong>Tamagoyaki</strong> ou œuf ajitama</span>
+                            <span id="gourmand-item-6"><strong>Tamagoyaki</strong> ou œuf ajitama</span>
                         </div>
                     </div>
 
                     <div class="pt-2">
-                        <a href="#menu" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3.5 rounded-full font-bold text-xs uppercase tracking-wider transition shadow-lg">
+                        <a id="gourmand-btn" href="#menu" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3.5 rounded-full font-bold text-xs uppercase tracking-wider transition shadow-lg">
                             <i class="fas fa-utensils"></i>
-                            <span>Choisir mon bento & formule</span>
+                            <span id="gourmand-btn-text">Choisir mon bento & formule</span>
                         </a>
                     </div>
                 </div>
@@ -1130,6 +1130,55 @@
                 if (info.hero_mascot_url) {
                     const mascotImg = document.getElementById('hero-mascot-img');
                     if (mascotImg) mascotImg.src = info.hero_mascot_url;
+                }
+
+                // Update Formule Gourmande Section
+                if (info.gourmand_image_url) {
+                    const el = document.getElementById('gourmand-img');
+                    if (el) el.src = info.gourmand_image_url;
+                }
+                if (info.gourmand_price_badge) {
+                    const el = document.getElementById('gourmand-price-badge');
+                    if (el) el.textContent = info.gourmand_price_badge;
+                }
+                if (info.gourmand_price) {
+                    const el = document.getElementById('gourmand-price');
+                    if (el) el.textContent = info.gourmand_price;
+                }
+                if (info.gourmand_sumo_title) {
+                    const el = document.getElementById('gourmand-sumo-title');
+                    if (el) el.textContent = info.gourmand_sumo_title;
+                }
+                if (info.gourmand_sumo_desc) {
+                    const el = document.getElementById('gourmand-sumo-desc');
+                    if (el) el.textContent = info.gourmand_sumo_desc;
+                }
+                if (info.gourmand_badge_top) {
+                    const el = document.getElementById('gourmand-badge-top');
+                    if (el) el.textContent = info.gourmand_badge_top;
+                }
+                if (info.gourmand_title) {
+                    const el = document.getElementById('gourmand-title');
+                    if (el) el.textContent = info.gourmand_title;
+                }
+                if (info.gourmand_desc) {
+                    const el = document.getElementById('gourmand-desc');
+                    if (el) el.innerHTML = info.gourmand_desc;
+                }
+                for (let i = 1; i <= 6; i++) {
+                    const itemVal = info['gourmand_item' + i];
+                    if (itemVal) {
+                        const el = document.getElementById('gourmand-item-' + i);
+                        if (el) el.innerHTML = itemVal;
+                    }
+                }
+                if (info.gourmand_btn_text) {
+                    const el = document.getElementById('gourmand-btn-text');
+                    if (el) el.textContent = info.gourmand_btn_text;
+                }
+                if (info.gourmand_btn_url) {
+                    const el = document.getElementById('gourmand-btn');
+                    if (el) el.href = info.gourmand_btn_url;
                 }
 
                 const contactAddress = document.getElementById('contact-address');

@@ -663,7 +663,23 @@ def update_info():
         allergen_note_vi = ?,
         allergen_note_en = ?,
         allergen_note_es = ?,
-        is_reservation_enabled = ?
+        is_reservation_enabled = ?,
+        gourmand_image_url = ?,
+        gourmand_badge_top = ?,
+        gourmand_price_badge = ?,
+        gourmand_price = ?,
+        gourmand_sumo_title = ?,
+        gourmand_sumo_desc = ?,
+        gourmand_title = ?,
+        gourmand_desc = ?,
+        gourmand_item1 = ?,
+        gourmand_item2 = ?,
+        gourmand_item3 = ?,
+        gourmand_item4 = ?,
+        gourmand_item5 = ?,
+        gourmand_item6 = ?,
+        gourmand_btn_text = ?,
+        gourmand_btn_url = ?
     WHERE id = 1
     ''', (
         val('name', 'TokyOh! Anglet'),
@@ -702,7 +718,23 @@ def update_info():
         val('allergen_note_vi', 'Vui lòng thông báo cho nhân viên nếu bạn có bất kỳ dị ứng nào khi gọi món để đầu bếp chế biến phù hợp nhất.'),
         val('allergen_note_en', 'Please inform our team of any food allergies or intolerances when ordering so we can prepare your dish with extra care.'),
         val('allergen_note_es', 'Por favor, informe a nuestro equipo de cualquier alergia o intolerancia al realizar su pedido para que podamos adaptar su plato con el mayor cuidado.'),
-        int(val('is_reservation_enabled', 1))
+        int(val('is_reservation_enabled', 1)),
+        val('gourmand_image_url', '/static/images/dishes/bento_gourmand.jpg'),
+        val('gourmand_badge_top', 'EXPÉRIENCE ROYALE • グルマン弁当'),
+        val('gourmand_price_badge', 'FORMULE'),
+        val('gourmand_price', '+6 €'),
+        val('gourmand_sumo_title', 'Gourmandise Sumo'),
+        val('gourmand_sumo_desc', 'Riz à volonté inclus'),
+        val('gourmand_title', 'Transformez votre Bento en Formule Gourmande !'),
+        val('gourmand_desc', 'Pour seulement +6 €, complétez votre bento préféré (Katsu Curry, Lunch Katsu ou Tataki de Thon) avec une sélection généreuse d\'accompagnements traditionnels tokyoïtes :'),
+        val('gourmand_item1', 'Riz japonais à volonté'),
+        val('gourmand_item2', 'Soupe miso fumante'),
+        val('gourmand_item3', 'Salade mesclun croquante'),
+        val('gourmand_item4', 'Aubergine miso fondante 🌱'),
+        val('gourmand_item5', 'Sushi signature du Chef'),
+        val('gourmand_item6', 'Tamagoyaki ou œuf ajitama'),
+        val('gourmand_btn_text', 'Choisir mon bento & formule'),
+        val('gourmand_btn_url', '#menu')
     ))
     conn.commit()
     updated_row = c.execute('SELECT * FROM restaurant_info WHERE id = 1').fetchone()

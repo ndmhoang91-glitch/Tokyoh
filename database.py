@@ -103,7 +103,23 @@ def init_db():
         allergen_note_vi TEXT DEFAULT 'Vui lòng thông báo cho nhân viên nếu bạn có bất kỳ dị ứng nào khi gọi món để đầu bếp chế biến phù hợp nhất.',
         allergen_note_en TEXT DEFAULT 'Please inform our team of any food allergies or intolerances when ordering so we can prepare your dish with extra care.',
         allergen_note_es TEXT DEFAULT 'Por favor, informe a nuestro equipo de cualquier alergia o intolerancia al realizar su pedido para que podamos adaptar su plato con el mayor cuidado.',
-        is_reservation_enabled INTEGER DEFAULT 1
+        is_reservation_enabled INTEGER DEFAULT 1,
+        gourmand_image_url TEXT DEFAULT '/static/images/dishes/bento_gourmand.jpg',
+        gourmand_badge_top TEXT DEFAULT 'EXPÉRIENCE ROYALE • グルマン弁当',
+        gourmand_price_badge TEXT DEFAULT 'FORMULE',
+        gourmand_price TEXT DEFAULT '+6 €',
+        gourmand_sumo_title TEXT DEFAULT 'Gourmandise Sumo',
+        gourmand_sumo_desc TEXT DEFAULT 'Riz à volonté inclus',
+        gourmand_title TEXT DEFAULT 'Transformez votre Bento en Formule Gourmande !',
+        gourmand_desc TEXT DEFAULT 'Pour seulement +6 €, complétez votre bento préféré (Katsu Curry, Lunch Katsu ou Tataki de Thon) avec une sélection généreuse d''accompagnements traditionnels tokyoïtes :',
+        gourmand_item1 TEXT DEFAULT 'Riz japonais à volonté',
+        gourmand_item2 TEXT DEFAULT 'Soupe miso fumante',
+        gourmand_item3 TEXT DEFAULT 'Salade mesclun croquante',
+        gourmand_item4 TEXT DEFAULT 'Aubergine miso fondante 🌱',
+        gourmand_item5 TEXT DEFAULT 'Sushi signature du Chef',
+        gourmand_item6 TEXT DEFAULT 'Tamagoyaki ou œuf ajitama',
+        gourmand_btn_text TEXT DEFAULT 'Choisir mon bento & formule',
+        gourmand_btn_url TEXT DEFAULT '#menu'
     )
     ''')
 
@@ -170,7 +186,29 @@ def init_db():
     for tbl, cols in [
         ('categories', [('name_es', 'TEXT')]),
         ('dishes', [('name_es', 'TEXT'), ('description_es', 'TEXT')]),
-        ('restaurant_info', [('story_es', 'TEXT'), ('allergen_title_es', 'TEXT'), ('allergen_desc_es', 'TEXT'), ('allergen_note_es', 'TEXT'), ('is_reservation_enabled', 'INTEGER DEFAULT 1')]),
+        ('restaurant_info', [
+            ('story_es', 'TEXT'),
+            ('allergen_title_es', 'TEXT'),
+            ('allergen_desc_es', 'TEXT'),
+            ('allergen_note_es', 'TEXT'),
+            ('is_reservation_enabled', 'INTEGER DEFAULT 1'),
+            ('gourmand_image_url', "TEXT DEFAULT '/static/images/dishes/bento_gourmand.jpg'"),
+            ('gourmand_badge_top', "TEXT DEFAULT 'EXPÉRIENCE ROYALE • グルマン弁当'"),
+            ('gourmand_price_badge', "TEXT DEFAULT 'FORMULE'"),
+            ('gourmand_price', "TEXT DEFAULT '+6 €'"),
+            ('gourmand_sumo_title', "TEXT DEFAULT 'Gourmandise Sumo'"),
+            ('gourmand_sumo_desc', "TEXT DEFAULT 'Riz à volonté inclus'"),
+            ('gourmand_title', "TEXT DEFAULT 'Transformez votre Bento en Formule Gourmande !'"),
+            ('gourmand_desc', "TEXT DEFAULT 'Pour seulement +6 €, complétez votre bento préféré (Katsu Curry, Lunch Katsu ou Tataki de Thon) avec une sélection généreuse d''accompagnements traditionnels tokyoïtes :'"),
+            ('gourmand_item1', "TEXT DEFAULT 'Riz japonais à volonté'"),
+            ('gourmand_item2', "TEXT DEFAULT 'Soupe miso fumante'"),
+            ('gourmand_item3', "TEXT DEFAULT 'Salade mesclun croquante'"),
+            ('gourmand_item4', "TEXT DEFAULT 'Aubergine miso fondante 🌱'"),
+            ('gourmand_item5', "TEXT DEFAULT 'Sushi signature du Chef'"),
+            ('gourmand_item6', "TEXT DEFAULT 'Tamagoyaki ou œuf ajitama'"),
+            ('gourmand_btn_text', "TEXT DEFAULT 'Choisir mon bento & formule'"),
+            ('gourmand_btn_url', "TEXT DEFAULT '#menu'")
+        ]),
         ('lexicon', [('definition_es', 'TEXT')]),
         ('allergens', [('name_es', 'TEXT'), ('example_dish_es', 'TEXT')])
     ]:
@@ -198,7 +236,7 @@ def seed_data(cursor):
         ('bento-gourmand', 'Formule Bento Gourmand', 'Set Bento Đại Tiệc', 'Gourmet Bento Set', 'グルマン弁当', 3),
         ('kids-supplements', 'Menu Enfant & Suppléments', 'Thực Đơn Trẻ Em & Topping Thêm', 'Kids Menu & Extras', 'お子さまメニュー・追加', 4),
         ('desserts', 'Desserts', 'Món Tráng Miệng', 'Desserts', 'デザート', 5),
-        ('boissons', 'Boissons & Saké', 'Đồ Uống & Rượu Saké', 'Drinks & Sake', 'ドリンク', 6)
+        ('boissons', 'Boissons', 'Đồ Uống', 'Drinks', 'ドリンク', 6)
     ]
     cursor.executemany('''
     INSERT INTO categories (slug, name_fr, name_vi, name_en, kanji, sort_order)
