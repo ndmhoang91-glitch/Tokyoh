@@ -231,16 +231,16 @@ def init_db():
 def seed_data(cursor):
     # Categories
     categories_data = [
-        ('entrees', 'Entrées', 'Món Khai Vị', 'Starters', '前菜', 1),
-        ('bentos-classiques', 'Bentos Classiques', 'Bento Truyền Thống', 'Classic Bentos', 'クラシック弁当', 2),
-        ('bento-gourmand', 'Formule Bento Gourmand', 'Set Bento Đại Tiệc', 'Gourmet Bento Set', 'グルマン弁当', 3),
-        ('kids-supplements', 'Menu Enfant & Suppléments', 'Thực Đơn Trẻ Em & Topping Thêm', 'Kids Menu & Extras', 'お子さまメニュー・追加', 4),
-        ('desserts', 'Desserts', 'Món Tráng Miệng', 'Desserts', 'デザート', 5),
-        ('boissons', 'Boissons', 'Đồ Uống', 'Drinks', 'ドリンク', 6)
+        ('entrees', 'Entrées', 'Món Khai Vị', 'Starters', 'Entrantes', '前菜', 1),
+        ('bentos-classiques', 'Bentos Classiques', 'Bento Truyền Thống', 'Classic Bentos', 'Bentos Clásicos', 'クラシック弁当', 2),
+        ('bento-gourmand', 'Formule Bento Gourmand', 'Set Bento Đại Tiệc', 'Gourmet Bento Set', 'Menú Bento Gourmet', 'グルマン弁当', 3),
+        ('kids-supplements', 'Menu Enfant & Suppléments', 'Thực Đơn Trẻ Em & Topping Thêm', 'Kids Menu & Extras', 'Menú Infantil y Extras', 'お子さまメニュー・追加', 4),
+        ('desserts', 'Desserts', 'Món Tráng Miệng', 'Desserts', 'Postres', 'デザート', 5),
+        ('boissons', 'Boissons', 'Đồ Uống', 'Drinks', 'Bebidas', 'ドリンク', 6)
     ]
     cursor.executemany('''
-    INSERT INTO categories (slug, name_fr, name_vi, name_en, kanji, sort_order)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO categories (slug, name_fr, name_vi, name_en, name_es, kanji, sort_order)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
     ''', categories_data)
 
     cat_map = {

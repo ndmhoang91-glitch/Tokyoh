@@ -132,14 +132,14 @@
         <div class="max-w-[1440px] 2xl:max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo & Brand -->
-                <a href="#hero" class="flex items-center gap-3 group shrink-0 mr-4 lg:mr-8 xl:mr-12">
-                    <img src="/static/images/logo.png" alt="TokyOh! Logo" class="h-13 sm:h-14 w-auto object-contain transition group-hover:scale-105 duration-300">
-                    <div class="hidden sm:block">
-                        <div class="flex items-center gap-2">
-                            <img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-7 sm:h-7.5 w-auto object-contain transition group-hover:scale-105 duration-300">
-                            <span class="text-[10px] bg-red-100 text-red-700 font-bold px-1.5 py-0.5 rounded tracking-widest uppercase">Anglet</span>
+                <a href="#hero" class="flex items-center gap-2 sm:gap-3 group shrink-0 mr-2 sm:mr-4 lg:mr-8 xl:mr-12">
+                    <img src="/static/images/logo.png" alt="TokyOh! Logo" class="h-10 sm:h-14 w-auto object-contain transition group-hover:scale-105 duration-300">
+                    <div class="flex flex-col justify-center">
+                        <div class="flex items-center gap-1.5 sm:gap-2">
+                            <img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-6 sm:h-7.5 w-auto object-contain transition group-hover:scale-105 duration-300">
+                            <span class="text-[9px] sm:text-[10px] bg-red-100 text-red-700 font-bold px-1 sm:px-1.5 py-0.5 rounded tracking-widest uppercase">Anglet</span>
                         </div>
-                        <p class="text-[10px] text-stone-500 font-medium tracking-wide">JAPANESE STREET FOOD & BENTOS</p>
+                        <p class="hidden sm:block text-[10px] text-stone-500 font-medium tracking-wide">JAPANESE STREET FOOD & BENTOS</p>
                     </div>
                 </a>
 
@@ -172,17 +172,17 @@
                 </div>
 
                 <!-- Action CTAs -->
-                <div class="flex items-center gap-3 shrink-0">
-                    <a id="nav-reserve-btn" href="#reservation" class="hidden sm:inline-flex items-center gap-2 bg-stone-900 hover:bg-stone-800 text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg whitespace-nowrap">
+                <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+                    <a id="nav-reserve-btn" href="#reservation" class="hidden sm:inline-flex items-center gap-1.5 sm:gap-2 bg-stone-900 hover:bg-stone-800 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg whitespace-nowrap">
                         <i class="far fa-calendar-alt text-amber-400"></i>
                         <span data-i18n="nav_reserve">Réserver</span>
                     </a>
-                    <a id="nav-ubereats-btn" href="https://www.ubereats.com" target="_blank" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg whitespace-nowrap">
-                        <i class="fas fa-motorcycle"></i>
+                    <a id="nav-ubereats-btn" href="https://www.ubereats.com" target="_blank" class="inline-flex items-center gap-1.5 sm:gap-2 bg-red-600 hover:bg-red-700 text-white px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg whitespace-nowrap">
+                        <i class="fas fa-motorcycle text-xs"></i>
                         <span data-i18n="nav_order">Commander</span>
                     </a>
                     <!-- Mobile Hamburger -->
-                    <button onclick="toggleMobileMenu()" class="lg:hidden text-stone-700 hover:text-red-600 text-xl p-2">
+                    <button onclick="toggleMobileMenu()" aria-label="Menu" class="lg:hidden text-stone-700 hover:text-red-600 text-xl p-1.5 sm:p-2 focus:outline-none">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -221,8 +221,8 @@
                         <span class="hidden sm:block absolute -left-10 -top-4 text-stone-700/40 text-4xl font-mincho select-none text-vertical">
                             東京弁当美味
                         </span>
-                        <h1 id="hero-main-title" class="font-mincho text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight flex flex-wrap items-center gap-2 sm:gap-3.5">
-                            <img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-10 sm:h-12 lg:h-14 w-auto object-contain drop-shadow-lg">
+                        <h1 id="hero-main-title" class="font-mincho text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-tight flex flex-wrap items-center gap-2 sm:gap-3.5">
+                            <img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-8 sm:h-12 lg:h-14 w-auto object-contain drop-shadow-lg">
                             <span>Anglet</span>
                         </h1>
                         <p id="hero-slogan" class="text-xl sm:text-2xl lg:text-3xl text-amber-300 font-mincho font-medium mt-2">
@@ -392,7 +392,7 @@
             </button>
 
             <!-- Scrollable container -->
-            <div class="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 px-1 no-scrollbar justify-start border-b border-stone-200 scroll-smooth" id="category-tabs-container">
+            <div class="flex items-center gap-2.5 overflow-x-auto pb-3 pt-1 px-1 no-scrollbar justify-start border-b border-stone-200 scroll-smooth touch-pan-x" id="category-tabs-container">
                 <button onclick="selectCategory('all')" id="cat-tab-all" class="cat-tab shrink-0 whitespace-nowrap px-5 py-2.5 rounded-xl font-bold text-sm bg-red-600 text-white shadow-sm transition flex items-center">
                     <span class="mr-1.5 font-mincho text-xs opacity-80">全部</span> Tous les plats
                 </button>
@@ -406,7 +406,7 @@
         </div>
 
         <!-- DISHES GRID -->
-        <div id="dishes-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div id="dishes-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
             <!-- Dishes injected via JS -->
             <div class="col-span-full py-16 text-center text-stone-400">
                 <i class="fas fa-spinner fa-spin text-3xl mb-3 text-red-500"></i>
@@ -424,13 +424,13 @@
                     <div class="relative bg-stone-800 rounded-3xl p-4 sm:p-6 border border-stone-700 shadow-2xl">
                         <img id="gourmand-img" src="/static/images/dishes/bento_gourmand.jpg" alt="Formule Bento Gourmand TokyOh" class="w-full h-80 sm:h-96 object-cover rounded-2xl">
                         
-                        <div class="absolute -top-4 -right-4 bg-red-600 text-white px-5 py-3 rounded-2xl shadow-xl text-center border-2 border-stone-900">
+                        <div class="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 bg-red-600 text-white px-4 sm:px-5 py-2 sm:py-3 rounded-2xl shadow-xl text-center border-2 border-stone-900">
                             <span id="gourmand-price-badge" class="text-[10px] font-extrabold uppercase tracking-widest block opacity-90">Formule</span>
                             <span id="gourmand-price" class="text-2xl sm:text-3xl font-black font-mincho">+6 €</span>
                         </div>
 
                         <!-- Sumo sticker badge -->
-                        <div class="absolute -bottom-4 -left-4 bg-stone-900 border border-stone-700 px-4 py-2 rounded-xl flex items-center gap-3 shadow-lg">
+                        <div class="absolute -bottom-3 -left-3 sm:-bottom-4 sm:-left-4 bg-stone-900 border border-stone-700 px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl flex items-center gap-2.5 sm:gap-3 shadow-lg">
                             <span class="text-2xl">🥋</span>
                             <div>
                                 <span id="gourmand-sumo-title" class="text-xs font-bold text-amber-400 block uppercase tracking-wider">Gourmandise Sumo</span>
@@ -540,7 +540,7 @@
 
                 <!-- Allergen Icons Badge Matrix -->
                 <div class="lg:col-span-7">
-                    <div id="allergens-grid" class="bg-white p-6 rounded-3xl border border-stone-200 shadow-sm grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
+                    <div id="allergens-grid" class="bg-white p-4 sm:p-6 rounded-3xl border border-stone-200 shadow-sm grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2.5 sm:gap-3 text-center">
                         <!-- Dynamically injected via JS -->
                         <div class="col-span-full py-8 text-center text-stone-400 text-xs">
                             <i class="fas fa-spinner fa-spin mr-1"></i> Chargement des allergènes...
@@ -569,17 +569,17 @@
                     </p>
                     
                     <!-- 10 stamp circles illustration -->
-                    <div class="grid grid-cols-5 gap-3 max-w-md mx-auto mb-6">
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">1</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">2</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">3</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">4</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">5</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">6</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">7</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">8</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">9</div>
-                        <div class="w-12 h-12 rounded-full border-2 border-red-600 bg-red-600 text-white flex items-center justify-center font-black text-xs shadow-md">🎁</div>
+                    <div class="grid grid-cols-5 gap-2 sm:gap-3 max-w-xs sm:max-w-md mx-auto mb-6">
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">1</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">2</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">3</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">4</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">5</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">6</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">7</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">8</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-dashed border-red-400 bg-white flex items-center justify-center font-bold text-red-600 text-xs shadow-sm">9</div>
+                        <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-red-600 bg-red-600 text-white flex items-center justify-center font-black text-xs shadow-md">🎁</div>
                     </div>
                 </div>
                 <div class="text-xs text-stone-500 font-medium text-center">
@@ -882,7 +882,7 @@
 
                     <!-- Protein options if applicable -->
                     <div id="modal-protein-box" class="hidden bg-stone-50 p-3.5 rounded-xl border border-stone-200">
-                        <span class="text-xs font-bold text-stone-700 uppercase tracking-wider block mb-1">
+                        <span id="modal-protein-title" class="text-xs font-bold text-stone-700 uppercase tracking-wider block mb-1">
                             <i class="fas fa-check-circle text-red-500 mr-1"></i> Choix de la protéine :
                         </span>
                         <span id="modal-protein-text" class="text-xs text-stone-600"></span>
@@ -890,7 +890,7 @@
 
                     <!-- Allergens list -->
                     <div id="modal-allergens-box" class="pt-2 border-t border-stone-100">
-                        <span class="text-xs font-bold text-stone-500 uppercase tracking-wider block mb-2">
+                        <span id="modal-allergens-title" class="text-xs font-bold text-stone-500 uppercase tracking-wider block mb-2">
                             Allergènes & Caractéristiques :
                         </span>
                         <div id="modal-allergens-tags" class="flex flex-wrap gap-1.5"></div>
@@ -899,14 +899,14 @@
             </div>
 
             <!-- Sticky Fixed Footer for Action Buttons -->
-            <div class="p-4 sm:p-5 bg-stone-50/95 backdrop-blur-md border-t border-stone-200 shrink-0 flex gap-3 rounded-b-3xl">
-                <a id="modal-order-btn" href="https://www.ubereats.com" target="_blank" class="flex-1 bg-red-600 hover:bg-red-700 text-white text-center py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition shadow-md shadow-red-600/20 hover:shadow-red-600/40 flex items-center justify-center gap-1.5">
-                    <i class="fas fa-motorcycle"></i>
-                    <span data-i18n="modal_order">Commander en livraison</span>
+            <div class="p-3 sm:p-5 bg-stone-50/95 backdrop-blur-md border-t border-stone-200 shrink-0 flex gap-2 sm:gap-3 rounded-b-3xl">
+                <a id="modal-order-btn" href="https://www.ubereats.com" target="_blank" class="flex-1 bg-red-600 hover:bg-red-700 text-white text-center py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider transition shadow-md shadow-red-600/20 hover:shadow-red-600/40 flex items-center justify-center gap-1 sm:gap-1.5">
+                    <i class="fas fa-motorcycle text-xs"></i>
+                    <span id="modal-order-text" data-i18n="modal_order">Commander en livraison</span>
                 </a>
-                <a id="modal-reserve-btn" href="#reservation" onclick="closeDishModal()" class="flex-1 bg-stone-900 hover:bg-stone-800 text-white text-center py-3 px-3 rounded-xl text-xs font-bold uppercase tracking-wider transition flex items-center justify-center gap-1.5">
-                    <i class="far fa-calendar-alt text-amber-400"></i>
-                    <span data-i18n="modal_reserve">Réserver sur place</span>
+                <a id="modal-reserve-btn" href="#reservation" onclick="closeDishModal()" class="flex-1 bg-stone-900 hover:bg-stone-800 text-white text-center py-2.5 sm:py-3 px-2 sm:px-3 rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider transition flex items-center justify-center gap-1 sm:gap-1.5">
+                    <i class="far fa-calendar-alt text-amber-400 text-xs"></i>
+                    <span id="modal-reserve-text" data-i18n="modal_reserve">Réserver sur place</span>
                 </a>
             </div>
         </div>
@@ -1047,6 +1047,67 @@
             if (dateInput) dateInput.value = today;
         });
 
+        // Translation helpers for badges and allergens
+        function getTranslatedBadge(badge, lang) {
+            if (!badge) return '';
+            const norm = badge.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toUpperCase().replace(/Œ/g, 'OE');
+            const badgeMap = {
+                'BEST SELLER': { fr: 'BEST SELLER', es: 'MÁS VENDIDO', en: 'BEST SELLER' },
+                'SELECTION': { fr: 'SÉLECTION', es: 'SELECCIÓN', en: "CHEF'S PICK" },
+                'OFFRE SPECIALE': { fr: 'OFFRE SPÉCIALE', es: 'OFERTA ESPECIAL', en: 'SPECIAL OFFER' },
+                'POUR ENFANTS': { fr: 'POUR ENFANTS', es: 'PARA NIÑOS', en: 'FOR KIDS' },
+                'COUP DE COEUR': { fr: 'COUP DE CŒUR', es: 'FAVORITO', en: 'STAFF PICK' },
+                'POPULAIRE': { fr: 'POPULAIRE', es: 'POPULAR', en: 'POPULAR' },
+                'GOURMAND': { fr: 'GOURMAND', es: 'GOURMET', en: 'GOURMET' },
+                'INCONTOURNABLE': { fr: 'INCONTOURNABLE', es: 'IMPRESCINDIBLE', en: 'MUST TRY' },
+                'HEALTHY': { fr: 'HEALTHY', es: 'SALUDABLE', en: 'HEALTHY' },
+                'VEGAN': { fr: 'VÉGAN', es: 'VEGANO', en: 'VEGAN' },
+                'VEGAN DISPONIBLE': { fr: 'VÉGAN DISPONIBLE', es: 'VEGANO DISPONIBLE', en: 'VEGAN OPTION' },
+                'CREATION MAISON': { fr: 'CRÉATION MAISON', es: 'CREACIÓN CASERA', en: 'HOMEMADE' },
+                'TRADITION': { fr: 'TRADITION', es: 'TRADICIÓN', en: 'TRADITIONAL' },
+                'REFRESHING': { fr: 'RAFRAÎCHISSANT', es: 'REFRESCANTE', en: 'REFRESHING' },
+                'JAPON': { fr: 'JAPON', es: 'JAPÓN', en: 'JAPAN' },
+                'TYPIQUE': { fr: 'TYPIQUE', es: 'TÍPICO', en: 'TRADITIONAL' },
+                'LOCAL': { fr: 'LOCAL', es: 'LOCAL', en: 'LOCAL' },
+                'SIGNATURE': { fr: 'SIGNATURE', es: 'SIGNATURE', en: 'SIGNATURE' },
+                'NOUVEAU': { fr: 'NOUVEAU', es: 'NUEVO', en: 'NEW' },
+                'FAIT MAISON': { fr: 'FAIT MAISON', es: 'CASERO', en: 'HOMEMADE' }
+            };
+            if (badgeMap[norm] && badgeMap[norm][lang]) {
+                return badgeMap[norm][lang];
+            }
+            return badge;
+        }
+
+        function getTranslatedAllergen(name, lang) {
+            if (!name) return '';
+            const norm = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase().replace(/œ/g, 'oe');
+            const allergenMap = {
+                'gluten': { fr: 'Gluten', es: 'Gluten', en: 'Gluten' },
+                'soja': { fr: 'Soja', es: 'Soja', en: 'Soy' },
+                'sesame': { fr: 'Sésame', es: 'Sésamo', en: 'Sesame' },
+                'poisson': { fr: 'Poisson', es: 'Pescado', en: 'Fish' },
+                'poissons': { fr: 'Poisson', es: 'Pescado', en: 'Fish' },
+                'crustace': { fr: 'Crustacés', es: 'Crustáceos', en: 'Shellfish' },
+                'crustaces': { fr: 'Crustacés', es: 'Crustáceos', en: 'Shellfish' },
+                'oeuf': { fr: 'Œufs', es: 'Huevos', en: 'Eggs' },
+                'oeufs': { fr: 'Œufs', es: 'Huevos', en: 'Eggs' },
+                'lait': { fr: 'Lait', es: 'Lácteos', en: 'Dairy' },
+                'moutarde': { fr: 'Moutarde', es: 'Mostaza', en: 'Mustard' },
+                'celeri': { fr: 'Céleri', es: 'Apio', en: 'Celery' },
+                'arachide': { fr: 'Arachides', es: 'Cacahuetes', en: 'Peanuts' },
+                'arachides': { fr: 'Arachides', es: 'Cacahuetes', en: 'Peanuts' },
+                'mollusque': { fr: 'Mollusques', es: 'Moluscos', en: 'Molluscs' },
+                'mollusques': { fr: 'Mollusques', es: 'Moluscos', en: 'Molluscs' },
+                'fruits a coque': { fr: 'Fruits à coque', es: 'Frutos de cáscara', en: 'Nuts' },
+                'sulfites': { fr: 'Sulfites', es: 'Sulfitos', en: 'Sulfites' }
+            };
+            if (allergenMap[norm] && allergenMap[norm][lang]) {
+                return allergenMap[norm][lang];
+            }
+            return name.trim();
+        }
+
         // Language switch
         function setLanguage(lang) {
             currentLang = lang;
@@ -1069,16 +1130,47 @@
                 }
             });
 
-            // Re-render menu, lexicon & allergens in chosen language
-            if (menuData) renderMenu();
+            // Update dietary filter pills text
+            const dietTexts = {
+                all: { fr: 'Tous', es: 'Todos', en: 'All' },
+                vegan: { fr: '🌱 Végane', es: '🌱 Vegano', en: '🌱 Vegan' },
+                healthy: { fr: '🥗 Healthy', es: '🥗 Saludable', en: '🥗 Healthy' },
+                bestseller: { fr: '🔥 Best Seller', es: '🔥 Más Vendido', en: '🔥 Best Seller' }
+            };
+            ['all', 'vegan', 'healthy', 'bestseller'].forEach(d => {
+                const el = document.getElementById(`filter-diet-${d}`);
+                if (el && dietTexts[d]) {
+                    el.textContent = dietTexts[d][lang];
+                }
+            });
+
+            // Update search input placeholder
+            const searchInput = document.getElementById('menu-search-input');
+            if (searchInput) {
+                if (lang === 'es') searchInput.placeholder = 'Buscar un plato, ingrediente...';
+                else if (lang === 'en') searchInput.placeholder = 'Search a dish, ingredient...';
+                else searchInput.placeholder = 'Rechercher un plat, ingrédient...';
+            }
+
+            // Re-render menu, category tabs, lexicon & allergens in chosen language
+            if (menuData) {
+                renderCategoryTabs();
+                renderMenu();
+            }
             renderLexicon();
             renderAllergens();
             updateHeroStory(lang);
             updateAllergenTexts(lang);
 
-            if (restaurantInfoData && restaurantInfoData.hero_badge && restaurantInfoData.hero_badge !== 'NOUVEAU À ANGLET • HALLES DES 5 CANTONS') {
-                const badgeEl = document.getElementById('hero-badge-text');
-                if (badgeEl) badgeEl.textContent = restaurantInfoData.hero_badge;
+            if (restaurantInfoData) {
+                if (restaurantInfoData.hero_badge && restaurantInfoData.hero_badge !== 'NOUVEAU À ANGLET • HALLES DES 5 CANTONS') {
+                    const badgeEl = document.getElementById('hero-badge-text');
+                    if (badgeEl) badgeEl.textContent = restaurantInfoData.hero_badge;
+                }
+                if (restaurantInfoData.hero_dish_badge) {
+                    const overlayBadge = document.getElementById('hero-badge-overlay');
+                    if (overlayBadge) overlayBadge.textContent = getTranslatedBadge(restaurantInfoData.hero_dish_badge, lang);
+                }
             }
         }
 
@@ -1101,7 +1193,7 @@
                     const titleEl = document.getElementById('hero-main-title');
                     if (titleEl) {
                         const remainingText = info.name.replace('TokyOh!', '').trim();
-                        titleEl.innerHTML = `<img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-10 sm:h-12 lg:h-14 w-auto object-contain drop-shadow-lg">${remainingText ? `<span>${remainingText}</span>` : ''}`;
+                        titleEl.innerHTML = `<img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-8 sm:h-12 lg:h-14 w-auto object-contain drop-shadow-lg">${remainingText ? `<span>${remainingText}</span>` : ''}`;
                     }
                 }
                 if (info.slogan) {
@@ -1117,7 +1209,7 @@
                 }
                 if (info.hero_dish_badge) {
                     const overlayBadge = document.getElementById('hero-badge-overlay');
-                    if (overlayBadge) overlayBadge.textContent = info.hero_dish_badge;
+                    if (overlayBadge) overlayBadge.textContent = getTranslatedBadge(info.hero_dish_badge, currentLang);
                 }
                 if (info.hero_dish_name) {
                     const dishName = document.getElementById('hero-dish-name');
@@ -1382,11 +1474,13 @@
             });
 
             if (filtered.length === 0) {
+                const noResultMsg = currentLang === 'es' ? 'Ningún plato coincide con sus criterios de búsqueda.' : (currentLang === 'en' ? 'No dishes match your search criteria.' : 'Aucun plat ne correspond à vos critères de recherche.');
+                const resetBtnText = currentLang === 'es' ? 'Restablecer los filtros' : (currentLang === 'en' ? 'Reset filters' : 'Réinitialiser les filtres');
                 grid.innerHTML = `
-                    <div class="col-span-full text-center py-16 text-stone-500 bg-white rounded-3xl border border-stone-200">
+                    <div class="col-span-full text-center py-16 px-4 text-stone-500 bg-white rounded-3xl border border-stone-200">
                         <i class="fas fa-search text-3xl text-stone-300 mb-3"></i>
-                        <p class="font-semibold">Aucun plat ne correspond à vos critères de recherche.</p>
-                        <button onclick="resetFilters()" class="mt-3 text-xs text-red-600 font-bold hover:underline">Réinitialiser les filtres</button>
+                        <p class="font-semibold text-sm sm:text-base">${noResultMsg}</p>
+                        <button onclick="resetFilters()" class="mt-3 text-xs sm:text-sm text-red-600 font-bold hover:underline">${resetBtnText}</button>
                     </div>
                 `;
                 return;
@@ -1398,20 +1492,29 @@
                 const desc = currentLang === 'es' ? (dish.description_es || dish.description_fr) : (currentLang === 'en' ? (dish.description_en || dish.description_fr) : dish.description_fr);
                 const priceFormatted = dish.price.toFixed(2).replace('.', ',') + ' €';
 
-                // Badge badge styling
+                // Badge styling with multi-language support
                 let badgeHtml = '';
                 if (dish.badge) {
-                    badgeHtml = `<span class="bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">${dish.badge}</span>`;
+                    const transBadge = getTranslatedBadge(dish.badge, currentLang);
+                    badgeHtml = `<span class="bg-red-600 text-white text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full shadow-sm">${transBadge}</span>`;
                 }
 
-                // Dietary tags icons
+                // Dietary tags with multi-language support
                 let tagBadges = '';
+                const veganLabel = currentLang === 'es' ? '🌱 Vegano' : (currentLang === 'en' ? '🌱 Vegan' : '🌱 Végan');
+                const healthyLabel = currentLang === 'es' ? '🥗 Saludable' : (currentLang === 'en' ? '🥗 Healthy' : '🥗 Healthy');
                 if (dish.dietary_tags && dish.dietary_tags.includes('vegan')) {
-                    tagBadges += `<span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-semibold" title="Végane">🌱 Végan</span>`;
+                    tagBadges += `<span class="text-[11px] sm:text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-semibold" title="${veganLabel}">${veganLabel}</span>`;
                 }
                 if (dish.dietary_tags && dish.dietary_tags.includes('healthy')) {
-                    tagBadges += `<span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold" title="Healthy">🥗 Healthy</span>`;
+                    tagBadges += `<span class="text-[11px] sm:text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold" title="${healthyLabel}">${healthyLabel}</span>`;
                 }
+
+                // Multilingual card actions
+                const detailsLabel = currentLang === 'es' ? 'Detalles' : (currentLang === 'en' ? 'Details' : 'Détails');
+                const soldOutLabel = currentLang === 'es' ? 'Agotado hoy' : (currentLang === 'en' ? 'Sold out today' : 'Épuisé aujourd\'hui');
+                const allergensLabel = currentLang === 'es' ? 'Alérgenos & Ingredientes' : (currentLang === 'en' ? 'Allergens & Ingredients' : 'Allergènes & Ingrédients');
+                const viewLabel = currentLang === 'es' ? 'Ver' : (currentLang === 'en' ? 'View' : 'Voir');
 
                 // Image placeholder fallback
                 const imgSrc = dish.image_url || '/static/images/dishes/hero_bento.jpg';
@@ -1420,34 +1523,34 @@
                     <div class="bg-white rounded-3xl overflow-hidden border border-stone-200/80 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between group">
                         <div>
                             <!-- Card Image -->
-                            <div class="relative h-52 sm:h-56 bg-stone-100 overflow-hidden cursor-pointer" onclick="openDishModal(${dish.id})">
-                                <img src="${imgSrc}" alt="${dish.name_fr}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                            <div class="relative h-48 sm:h-56 bg-stone-100 overflow-hidden cursor-pointer" onclick="openDishModal(${dish.id})">
+                                <img src="${imgSrc}" alt="${dish.name_fr}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                                 
                                 <div class="absolute top-3 left-3 flex flex-col gap-1 items-start">
                                     ${badgeHtml}
                                 </div>
 
                                 ${!dish.is_available ? `
-                                    <div class="absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center">
-                                        <span class="bg-stone-900 text-white font-bold text-xs uppercase tracking-widest px-3 py-1.5 rounded-full border border-stone-700">Épuisé aujourd'hui</span>
+                                    <div class="absolute inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-2 text-center">
+                                        <span class="bg-stone-900 text-white font-bold text-xs uppercase tracking-widest px-3 py-1.5 rounded-full border border-stone-700">${soldOutLabel}</span>
                                     </div>
                                 ` : ''}
 
-                                <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-stone-800 text-xs font-bold shadow">
-                                    <i class="fas fa-eye text-stone-400 mr-1"></i> Détails
+                                <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-stone-800 text-[11px] sm:text-xs font-bold shadow">
+                                    <i class="fas fa-eye text-stone-400 mr-1"></i> ${detailsLabel}
                                 </div>
                             </div>
 
                             <!-- Card Content -->
-                            <div class="p-5 sm:p-6">
+                            <div class="p-4 sm:p-6">
                                 <div class="flex justify-between items-start gap-2 mb-1.5">
-                                    <div>
+                                    <div class="min-w-0 flex-1">
                                         ${dish.kanji ? `<span class="font-mincho text-xs text-stone-400 tracking-wider block">${dish.kanji}</span>` : ''}
-                                        <h3 class="font-mincho text-lg sm:text-xl font-bold text-stone-900 group-hover:text-red-600 transition cursor-pointer" onclick="openDishModal(${dish.id})">
+                                        <h3 class="font-mincho text-base sm:text-lg lg:text-xl font-bold text-stone-900 group-hover:text-red-600 transition cursor-pointer truncate" onclick="openDishModal(${dish.id})" title="${title}">
                                             ${title}
                                         </h3>
                                     </div>
-                                    <span class="text-lg sm:text-xl font-bold font-mincho text-stone-900 whitespace-nowrap bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60">
+                                    <span class="text-base sm:text-lg font-bold font-mincho text-stone-900 whitespace-nowrap bg-amber-50 px-2.5 py-1 rounded-lg border border-amber-200/60 shrink-0">
                                         ${priceFormatted}
                                     </span>
                                 </div>
@@ -1461,12 +1564,12 @@
                         </div>
 
                         <!-- Card Footer -->
-                        <div class="px-5 sm:px-6 pb-5 pt-0 flex items-center justify-between border-t border-stone-100 pt-3 text-xs text-stone-400">
-                            <span class="hover:text-stone-700 cursor-pointer" onclick="openDishModal(${dish.id})">
-                                <i class="fas fa-info-circle text-stone-400 mr-1"></i> Allergènes & Ingrédients
+                        <div class="px-4 sm:px-6 pb-4 sm:pb-5 flex items-center justify-between border-t border-stone-100 pt-3 text-[11px] sm:text-xs text-stone-400">
+                            <span class="hover:text-stone-700 cursor-pointer truncate mr-2 flex items-center" onclick="openDishModal(${dish.id})">
+                                <i class="fas fa-info-circle text-stone-400 mr-1 shrink-0"></i> <span class="truncate">${allergensLabel}</span>
                             </span>
-                            <button onclick="openDishModal(${dish.id})" class="text-red-600 font-bold hover:underline">
-                                Voir <i class="fas fa-chevron-right text-[10px] ml-0.5"></i>
+                            <button onclick="openDishModal(${dish.id})" class="text-red-600 font-bold hover:underline shrink-0 flex items-center">
+                                <span>${viewLabel}</span> <i class="fas fa-chevron-right text-[10px] ml-0.5"></i>
                             </button>
                         </div>
                     </div>
@@ -1506,7 +1609,8 @@
             // Badge
             const badgeContainer = document.getElementById('modal-badge-container');
             if (dish.badge) {
-                badgeContainer.innerHTML = `<span class="bg-red-600 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow">${dish.badge}</span>`;
+                const transBadge = getTranslatedBadge(dish.badge, currentLang);
+                badgeContainer.innerHTML = `<span class="bg-red-600 text-white text-xs font-black uppercase tracking-widest px-3 py-1 rounded-full shadow">${transBadge}</span>`;
             } else {
                 badgeContainer.innerHTML = '';
             }
@@ -1514,11 +1618,21 @@
             // Protein options
             const proteinBox = document.getElementById('modal-protein-box');
             const proteinText = document.getElementById('modal-protein-text');
+            const proteinTitle = document.getElementById('modal-protein-title');
             if (dish.protein_options) {
                 proteinBox.classList.remove('hidden');
                 proteinText.textContent = dish.protein_options;
+                if (proteinTitle) {
+                    proteinTitle.innerHTML = `<i class="fas fa-check-circle text-red-500 mr-1"></i> ${currentLang === 'es' ? 'Elección de proteína:' : (currentLang === 'en' ? 'Choice of protein:' : 'Choix de la protéine :')}`;
+                }
             } else {
                 proteinBox.classList.add('hidden');
+            }
+
+            // Modal allergens section title
+            const allergensSectionTitle = document.getElementById('modal-allergens-title');
+            if (allergensSectionTitle) {
+                allergensSectionTitle.textContent = currentLang === 'es' ? 'Alérgenos & Características:' : (currentLang === 'en' ? 'Allergens & Details:' : 'Allergènes & Caractéristiques :');
             }
 
             // Allergens tags
@@ -1527,19 +1641,35 @@
             if (dish.allergens) {
                 const list = dish.allergens.split(',');
                 list.forEach(a => {
-                    tagsHtml += `<span class="bg-stone-100 text-stone-700 text-xs px-2.5 py-1 rounded-md font-medium capitalize border border-stone-200"><i class="fas fa-shield-alt text-amber-500 mr-1"></i> ${a.trim()}</span>`;
+                    if (a.trim()) {
+                        const transAllergen = getTranslatedAllergen(a.trim(), currentLang);
+                        tagsHtml += `<span class="bg-stone-100 text-stone-700 text-xs px-2.5 py-1 rounded-md font-medium capitalize border border-stone-200"><i class="fas fa-shield-alt text-amber-500 mr-1"></i> ${transAllergen}</span>`;
+                    }
                 });
             }
+            const modalVeganText = currentLang === 'es' ? '100% Vegano' : (currentLang === 'en' ? '100% Vegan' : '100% Végane');
+            const modalHealthyText = currentLang === 'es' ? 'Saludable & Ligero' : (currentLang === 'en' ? 'Healthy & Light' : 'Healthy & Léger');
             if (dish.dietary_tags && dish.dietary_tags.includes('vegan')) {
-                tagsHtml += `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-md font-bold"><i class="fas fa-leaf mr-1"></i> 100% Végane</span>`;
+                tagsHtml += `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-md font-bold"><i class="fas fa-leaf mr-1"></i> ${modalVeganText}</span>`;
             }
             if (dish.dietary_tags && dish.dietary_tags.includes('healthy')) {
-                tagsHtml += `<span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-md font-bold"><i class="fas fa-heart mr-1"></i> Healthy & Léger</span>`;
+                tagsHtml += `<span class="bg-blue-100 text-blue-800 text-xs px-2.5 py-1 rounded-md font-bold"><i class="fas fa-heart mr-1"></i> ${modalHealthyText}</span>`;
             }
             if (!tagsHtml) {
-                tagsHtml = `<span class="text-xs text-stone-400 italic">Aucun allergène majeur signalé</span>`;
+                const noAllergensText = currentLang === 'es' ? 'Ningún alérgeno principal declarado' : (currentLang === 'en' ? 'No major allergens reported' : 'Aucun allergène majeur signalé');
+                tagsHtml = `<span class="text-xs text-stone-400 italic">${noAllergensText}</span>`;
             }
             allergensContainer.innerHTML = tagsHtml;
+
+            // Modal action buttons text
+            const orderBtnText = document.getElementById('modal-order-text');
+            if (orderBtnText && i18n[currentLang]) {
+                orderBtnText.textContent = i18n[currentLang].modal_order;
+            }
+            const reserveBtnText = document.getElementById('modal-reserve-text');
+            if (reserveBtnText && i18n[currentLang]) {
+                reserveBtnText.textContent = i18n[currentLang].modal_reserve;
+            }
 
             modal.classList.remove('hidden');
             document.body.style.overflow = 'hidden';
