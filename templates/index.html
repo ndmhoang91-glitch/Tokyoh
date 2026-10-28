@@ -110,7 +110,7 @@
 
     <!-- TOP ANNOUNCEMENT BAR -->
     <div class="bg-stone-900 text-stone-200 text-xs py-2 px-4 border-b border-stone-800">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+        <div class="max-w-[1440px] 2xl:max-w-[1560px] mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
             <div class="flex items-center gap-2">
                 <span class="bg-red-600 text-white px-2 py-0.5 rounded text-[10px] font-bold tracking-wider uppercase">Anglet (64)</span>
                 <span id="top-location-text">999 allée du Cadran, 64600 Anglet — À deux pas des Halles des 5 Cantons</span>
@@ -129,60 +129,60 @@
 
     <!-- MAIN NAVBAR -->
     <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-stone-200 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="max-w-[1440px] 2xl:max-w-[1560px] mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-20">
                 <!-- Logo & Brand -->
-                <a href="#hero" class="flex items-center gap-3 group">
-                    <img src="/static/images/logo.png" alt="TokyOh! Logo" class="h-14 w-auto object-contain transition group-hover:scale-105 duration-300">
+                <a href="#hero" class="flex items-center gap-3 group shrink-0 mr-4 lg:mr-8 xl:mr-12">
+                    <img src="/static/images/logo.png" alt="TokyOh! Logo" class="h-13 sm:h-14 w-auto object-contain transition group-hover:scale-105 duration-300">
                     <div class="hidden sm:block">
                         <div class="flex items-center gap-2">
-                            <img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-8 w-auto object-contain transition group-hover:scale-105 duration-300">
-                            <span class="text-[11px] bg-red-100 text-red-700 font-bold px-1.5 py-0.5 rounded tracking-widest uppercase">Anglet</span>
+                            <img src="/static/images/3D81CB48-6895-423D-8C39-367D4A3A69E0.png" alt="TokyOh!" class="h-7 sm:h-7.5 w-auto object-contain transition group-hover:scale-105 duration-300">
+                            <span class="text-[10px] bg-red-100 text-red-700 font-bold px-1.5 py-0.5 rounded tracking-widest uppercase">Anglet</span>
                         </div>
-                        <p class="text-[11px] text-stone-500 font-medium tracking-wide">JAPANESE STREET FOOD & BENTOS</p>
+                        <p class="text-[10px] text-stone-500 font-medium tracking-wide">JAPANESE STREET FOOD & BENTOS</p>
                     </div>
                 </a>
 
                 <!-- Desktop Navigation Links -->
-                <div class="hidden md:flex items-center space-x-8 text-sm font-semibold">
-                    <a href="#menu" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                <div class="hidden lg:flex items-center space-x-4 xl:space-x-7 text-sm font-semibold">
+                    <a href="#menu" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i class="fas fa-utensils text-red-500 text-xs"></i>
                         <span data-i18n="nav_menu">Le Menu</span>
                     </a>
-                    <a href="#bento-gourmand-sec" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                    <a href="#bento-gourmand-sec" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i class="fas fa-crown text-amber-500 text-xs"></i>
                         <span data-i18n="nav_gourmand">Formule Gourmande</span>
                     </a>
-                    <a href="#lexique" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                    <a href="#lexique" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i class="fas fa-book-open text-blue-500 text-xs"></i>
                         <span data-i18n="nav_lexicon">Lexique Japonais</span>
                     </a>
-                    <a href="#allergenes" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                    <a href="#allergenes" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i class="fas fa-shield-halved text-emerald-500 text-xs"></i>
                         <span data-i18n="nav_allergens">Allergènes</span>
                     </a>
-                    <a href="#fidelite" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                    <a href="#fidelite" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i class="fas fa-stamp text-red-500 text-xs"></i>
                         <span data-i18n="nav_fidelity">Fidélité</span>
                     </a>
-                    <a href="#contact" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5">
+                    <a href="#contact" class="text-stone-700 hover:text-red-600 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i class="fas fa-map-marker-alt text-red-500 text-xs"></i>
                         <span data-i18n="nav_contact">Accès & Contact</span>
                     </a>
                 </div>
 
                 <!-- Action CTAs -->
-                <div class="flex items-center gap-3">
-                    <a id="nav-reserve-btn" href="#reservation" class="hidden sm:inline-flex items-center gap-2 bg-stone-900 hover:bg-stone-800 text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg">
+                <div class="flex items-center gap-3 shrink-0">
+                    <a id="nav-reserve-btn" href="#reservation" class="hidden sm:inline-flex items-center gap-2 bg-stone-900 hover:bg-stone-800 text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg whitespace-nowrap">
                         <i class="far fa-calendar-alt text-amber-400"></i>
                         <span data-i18n="nav_reserve">Réserver</span>
                     </a>
-                    <a id="nav-ubereats-btn" href="https://www.ubereats.com" target="_blank" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg">
+                    <a id="nav-ubereats-btn" href="https://www.ubereats.com" target="_blank" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider transition shadow-md hover:shadow-lg whitespace-nowrap">
                         <i class="fas fa-motorcycle"></i>
                         <span data-i18n="nav_order">Commander</span>
                     </a>
                     <!-- Mobile Hamburger -->
-                    <button onclick="toggleMobileMenu()" class="md:hidden text-stone-700 hover:text-red-600 text-xl p-2">
+                    <button onclick="toggleMobileMenu()" class="lg:hidden text-stone-700 hover:text-red-600 text-xl p-2">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -190,7 +190,7 @@
         </div>
 
         <!-- Mobile dropdown menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-stone-200 px-6 py-4 space-y-3">
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-stone-200 px-6 py-4 space-y-3">
             <a href="#menu" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold border-b border-stone-100" data-i18n="nav_menu">Le Menu</a>
             <a href="#bento-gourmand-sec" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold border-b border-stone-100" data-i18n="nav_gourmand">Formule Gourmande (+6 €)</a>
             <a href="#lexique" onclick="toggleMobileMenu()" class="block py-2 text-stone-800 font-semibold border-b border-stone-100" data-i18n="nav_lexicon">Lexique Culinaire Japonais</a>
